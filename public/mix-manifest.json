@@ -1,0 +1,12 @@
+{
+    "/js/app.js": "/js/app.js",
+    "/js/web/main.js": "/js/web/main.js",
+    "/js/admin/setting.js": "/js/admin/setting.js",
+    "/css/app.css": "/css/app.css",
+    "/css/web/contact-detail.css": "/css/web/contact-detail.css",
+    "/css/web/news-detail.css": "/css/web/news-detail.css",
+    "/css/web/news-home.css": "/css/web/news-home.css",
+    "/css/web/style.css": "/css/web/style.css",
+    "/css/web/design.css": "/css/web/design.css",
+    "/css/web/about.css": "/css/web/about.css"
+}

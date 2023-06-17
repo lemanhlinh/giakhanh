@@ -1,0 +1,45 @@
+.navbar-finalstyle{
+  background: #E8FFF6;
+  .navbar-brand{
+    .logo-fs{
+      max-height: 64px;
+    }
+  }
+  #main-menu{
+    ul{
+      li{
+        a{
+          font-weight: 700;
+          &:hover{
+            color: #007EC3;
+          }
+        }
+      }
+    }
+  }
+}
+#app{
+  >.content{
+    .top-content{
+     background: linear-gradient(180deg, #E8FFF6 0%, #FFFFFF 100%);
+    }
+    .content-why{
+      background: linear-gradient(180deg, #FFFFFF 0%, #E8FFF6 100%);
+    }
+    .content-design-app{
+      background: linear-gradient(180deg, #E8FFF6 0%, #FFFFFF 100%);
+    }
+    .content-customer{
+      background: linear-gradient(180deg, #FFFFFF 0%, #E8FFF6 100%);
+    }
+    .content-jobs-we{
+      background: linear-gradient(180deg, #E8FFF6 0%, #FFFFFF 100%);
+    }
+    .content-news{
+      background: linear-gradient(180deg, #FFFFFF 0%, #E8FFF6 100%);
+    }
+  }
+}
+.main-footer{
+  background: #141515;
+}
