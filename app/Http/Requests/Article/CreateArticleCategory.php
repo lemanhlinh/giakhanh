@@ -27,7 +27,10 @@ class CreateArticleCategory extends FormRequest
             'title' => 'required',
             'image' => 'required_if:type,file|image|mimes:jpg,jpeg,png',
             'slug' => 'nullable',
-            'active' => 'required|numeric|integer|min:0'
+            'active' => 'required|numeric|integer|min:0',
+            'seo_title' => 'nullable',
+            'seo_keyword' => 'nullable',
+            'seo_description' => 'nullable',
         ];
     }
 }

@@ -17,14 +17,14 @@
                 @if(!empty($article_categories))
                     @foreach($article_categories as $k => $article_category)
                         <li>
-                            <input type="checkbox" id="article_category_{{ $article_category->id }}" value="{{ $article_category->id }}" data-link="{{ route('catArticle',$article_category->slug) }}" data-name="{{ $article_category->name }}"><label for="article_category_{{ $article_category->id }}">{{ $article_category->name }}</label>
+                            <input type="checkbox" id="article_category_{{ $article_category->id }}" value="{{ $article_category->id }}" data-link="{{ route('catArticle',$article_category->slug) }}" data-name="{{ $article_category->title }}"><label for="article_category_{{ $article_category->id }}">{{ $article_category->title }}</label>
                         </li>
                     @endforeach
                 @endif
                 @if(!empty($articles))
                     @foreach($articles as $k => $article)
                         <li>
-                            <input type="checkbox" id="article_{{ $article->id }}" value="{{ $article->id }}"  data-link="{{ route('catArticle',$article->slug) }}" data-name="{{ $article->name }}"><label for="article_{{ $article->id }}">{{ $article->name }}</label>
+                            <input type="checkbox" id="article_{{ $article->id }}" value="{{ $article->id }}"  data-link="{{ route('catArticle',$article->slug) }}" data-name="{{ $article->title }}"><label for="article_{{ $article->id }}">{{ $article->title }}</label>
                         </li>
                     @endforeach
                 @endif

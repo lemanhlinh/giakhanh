@@ -27,10 +27,10 @@ class ProductCategoryDataTable extends DataTable
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\ProductCategoryDataTable $model
+     * @param \App\Models\ProductsCategories $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(ProductCategoryDataTable $model)
+    public function query(ProductsCategories $model)
     {
         return $model->newQuery();
     }
@@ -43,7 +43,7 @@ class ProductCategoryDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('productcategorydatatable-table')
+                    ->setTableId('product-category-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('Bfrtip')
@@ -65,15 +65,16 @@ class ProductCategoryDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
             Column::make('id'),
-            Column::make('add your columns'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
+            Column::make('title')->title(trans('form.product_category.title')),
+            Column::make('active')->title(trans('form.product_category.active')),
+            Column::make('created_at')->title(trans('form.created_at')),
+            Column::make('updated_at')->title(trans('form.updated_at')),
+            Column::computed('action')
+                ->exportable(false)
+                ->printable(false)
+                ->width(60)
+                ->addClass('text-center'),
         ];
     }
 

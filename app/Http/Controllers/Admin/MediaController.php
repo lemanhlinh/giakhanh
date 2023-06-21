@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Media;
 use Illuminate\Http\Request;
+use App\DataTables\MediaImageDataTable;
+use App\DataTables\MediaVideoDataTable;
 
 class MediaController extends Controller
 {
@@ -13,9 +15,14 @@ class MediaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(MediaImageDataTable $dataTable)
     {
-        //
+        return $dataTable->render('admin.media-image.index');
+    }
+
+    public function indexVideo(MediaVideoDataTable $dataTable)
+    {
+        return $dataTable->render('admin.media-video.index');
     }
 
     /**
@@ -25,7 +32,7 @@ class MediaController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.media-image.create');
     }
 
     /**

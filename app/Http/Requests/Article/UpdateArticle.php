@@ -27,14 +27,16 @@ class UpdateArticle extends FormRequest
             'title' => 'required',
             'category_id' => 'required',
             'slug' => 'required',
-            'content' => 'required',
-            'date' => 'required',
-            'status' => 'required',
+            'content' => 'nullable',
+            'active' => 'required',
+            'is_home' => 'required',
             'description' => 'required',
+            'type' => 'required',
+            'ordering' => 'nullable',
             'image' => 'required_if:type,file|image|mimes:jpg,jpeg,png',
-            'seo_title' => 'required',
-            'seo_keyword' => 'required',
-            'seo_description' => 'required',
+            'seo_title' => 'nullable',
+            'seo_keyword' => 'nullable',
+            'seo_description' => 'nullable',
         ];
     }
 }

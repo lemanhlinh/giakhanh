@@ -9,7 +9,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class MediaDataTable extends DataTable
+class MediaVideoDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -21,18 +21,18 @@ class MediaDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->addColumn('action', 'mediadatatable.action');
+            ->addColumn('action', 'mediavideo.action');
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\MediaDataTable $model
+     * @param \App\Models\Media $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(MediaDataTable $model)
+    public function query(Media $model)
     {
-        return $model->newQuery();
+        return $model->newQuery()->where('type', 1);
     }
 
     /**
@@ -43,7 +43,7 @@ class MediaDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('mediadatatable-table')
+                    ->setTableId('media-video-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('Bfrtip')
@@ -65,15 +65,15 @@ class MediaDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
             Column::make('id'),
-            Column::make('add your columns'),
+            Column::make('title'),
             Column::make('created_at'),
             Column::make('updated_at'),
+            Column::computed('action')
+                ->exportable(false)
+                ->printable(false)
+                ->width(60)
+                ->addClass('text-center'),
         ];
     }
 
@@ -84,6 +84,6 @@ class MediaDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'Media_' . date('YmdHis');
+        return 'MediaVideo_' . date('YmdHis');
     }
 }

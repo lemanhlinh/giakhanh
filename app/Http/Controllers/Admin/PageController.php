@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Page;
 use Illuminate\Http\Request;
+use App\DataTables\PageDataTable;
 
 class PageController extends Controller
 {
@@ -13,9 +14,9 @@ class PageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(PageDataTable $dataTable)
     {
-        //
+        return $dataTable->render('admin.page.index');
     }
 
     /**

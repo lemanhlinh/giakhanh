@@ -27,10 +27,10 @@ class PageDataTable extends DataTable
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\PageDataTable $model
+     * @param \App\Models\Page $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(PageDataTable $model)
+    public function query(Page $model)
     {
         return $model->newQuery();
     }
@@ -43,7 +43,7 @@ class PageDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('pagedatatable-table')
+                    ->setTableId('page-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('Bfrtip')
@@ -65,15 +65,16 @@ class PageDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
+
             Column::make('id'),
-            Column::make('add your columns'),
+            Column::make('title'),
             Column::make('created_at'),
             Column::make('updated_at'),
+            Column::computed('action')
+                ->exportable(false)
+                ->printable(false)
+                ->width(60)
+                ->addClass('text-center'),
         ];
     }
 

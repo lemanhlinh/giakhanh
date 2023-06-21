@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\BookTable;
 use Illuminate\Http\Request;
+use App\DataTables\BooksTableDataTable;
 
 class BookTableController extends Controller
 {
@@ -13,9 +14,9 @@ class BookTableController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(BooksTableDataTable $dataTable)
     {
-        //
+        return $dataTable->render('admin.book-table.index');
     }
 
     /**

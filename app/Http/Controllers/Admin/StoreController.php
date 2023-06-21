@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Store;
 use Illuminate\Http\Request;
+use App\DataTables\StoreDataTable;
 
 class StoreController extends Controller
 {
@@ -13,9 +14,9 @@ class StoreController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(StoreDataTable $dataTable)
     {
-        //
+        return $dataTable->render('admin.store.index');
     }
 
     /**

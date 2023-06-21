@@ -35,7 +35,7 @@ class ArticleController extends Controller
     {
         $data = request()->all();
         $categories = $this->articleCategoryRepository->getAll();
-        if (!empty($categories)){
+        if ($categories->count() === 0){
             Session::flash('danger', 'Chưa có danh mục nào');
             return redirect()->route('admin.article-category.index');
         }
@@ -49,11 +49,7 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        $categoriesTree = $this->articleCategoryRepository->getWithDepth();
-        $categories = array();
-        foreach ($categoriesTree as $item) {
-            $categories[$item->id] = str_repeat('-', $item->depth) . $item->name;
-        }
+        $categories = $this->articleCategoryRepository->getAll();
         return view('admin.article.create',compact('categories'));
     }
 
@@ -68,19 +64,11 @@ class ArticleController extends Controller
         DB::beginTransaction();
         try {
             $data = $req->validated();
-            $this->articleRepository->store([
-                'title' => $data['title'],
-                'slug' => $req->input('slug')?\Str::slug($req->input('slug'), '-'):\Str::slug($data['title'], '-'),
-                'category_id' => $req->input('category_id'),
-                'description' => $data['description'],
-                'content' => $req->input('content'),
-                'date' => $data['date'],
-                'status' => intval($data['status']),
-                'image' =>  $data['image'],
-                'seo_title' => $req->input('seo_title'),
-                'seo_keyword' => $req->input('seo_keyword'),
-                'seo_description' => $req->input('seo_description')
-            ]);
+            $data['slug'] = $req->input('slug')?\Str::slug($req->input('slug'), '-'):\Str::slug($data['title'], '-');
+            if (\request()->hasFile('image')) {
+                $data['image'] = $this->articleRepository->saveFileUpload($data['image'],'images');
+            }
+            $this->articleRepository->create($data);
             DB::commit();
             Session::flash('success', trans('message.create_article_success'));
             return redirect()->back();
@@ -116,11 +104,7 @@ class ArticleController extends Controller
     public function edit($id)
     {
         $article = $this->articleRepository->getOneById($id);
-        $categoriesTree = $this->articleCategoryRepository->getWithDepth();
-        $categories = array();
-        foreach ($categoriesTree as $item) {
-            $categories[$item->id] = str_repeat('-', $item->depth) . $item->name;
-        }
+        $categories = $this->articleCategoryRepository->getAll();
         return view('admin.article.update', compact('article','categories'));
     }
 
@@ -133,26 +117,18 @@ class ArticleController extends Controller
      */
     public function update($id, UpdateArticle $req)
     {
+        DB::beginTransaction();
         try {
             $data = $req->validated();
-
             $article = $this->articleRepository->getOneById($id);
-
-            $article->title = $data['title'];
-            $article->slug = $data['slug'];
-            $article->description = $data['description'];
-            $article->category_id = $req->input('category_id');
-            $article->content = $req->input('content');
-            $article->date = $data['date'];
-            $article->status = intval($data['status']);
-            $article->seo_title = $req->input('seo_title');
-            $article->seo_keyword = $req->input('seo_keyword');
-            $article->seo_description = $req->input('seo_description');
             if (\request()->hasFile('image')) {
-                $article->image = $this->articleCategoryRepository->saveFileUpload($data['image'],'images');
+                $data['image'] = $this->articleRepository->saveFileUpload($data['image'],'images');
             }
-
-            $article->save();
+            if (!empty($data['slug'])){
+                $data['slug'] = $req->input('slug')?\Str::slug($req->input('slug'), '-'):\Str::slug($data['title'], '-');
+            }
+            $article->update($data);
+            DB::commit();
             Session::flash('success', trans('message.update_article_success'));
             return redirect()->route('admin.article.edit', $id);
         } catch (\Exception $exception) {
@@ -174,6 +150,11 @@ class ArticleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->articleRepository->delete($id);
+
+        return [
+            'status' => true,
+            'message' => trans('message.delete_article_success')
+        ];
     }
 }

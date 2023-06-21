@@ -56,6 +56,8 @@ return [
     'status' => [
         'active' => 'Hoạt động',
         'inactive' => 'Không hoạt động',
+        'is_home' => 'Hiển thị trang chủ',
+        'is_not_home' => 'Ẩn trang chủ',
     ],
     'created_at' => 'Ngày tạo',
     'updated_at' => 'Ngày sửa',
@@ -124,16 +126,20 @@ return [
         'price' => 'Giá',
         'is_home' => 'Hiển thị trang chủ',
         'active' => 'Trạng thái',
-        'category' => 'Danh mục tin tức',
+        'category' => 'Danh mục sản phẩm',
         'date' => 'Ngày',
+        'create' => 'Tạo mới',
         'ordering' => 'Thứ tự'
     ],
 
     'product_category' => [
         '' => 'Danh mục sản phẩm',
-        'title' => 'Tên',
+        'title' => 'Tên danh mục',
         'slug' => 'Link',
-        'active' => 'Trạng thái'
+        'active' => 'Trạng thái',
+        'create' => 'Tạo danh mục sản phẩm',
+        'update' => 'Sửa danh mục sản phẩm',
+        'image' => 'Ảnh',
     ],
 
     'setting' => [

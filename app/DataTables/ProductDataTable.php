@@ -27,10 +27,10 @@ class ProductDataTable extends DataTable
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\ProductDataTable $model
+     * @param \App\Models\Product $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(ProductDataTable $model)
+    public function query(Product $model)
     {
         return $model->newQuery();
     }
@@ -43,7 +43,7 @@ class ProductDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('productdatatable-table')
+                    ->setTableId('product-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('Bfrtip')
@@ -65,15 +65,15 @@ class ProductDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
             Column::make('id'),
-            Column::make('add your columns'),
+            Column::make('title'),
             Column::make('created_at'),
             Column::make('updated_at'),
+            Column::computed('action')
+                ->exportable(false)
+                ->printable(false)
+                ->width(60)
+                ->addClass('text-center'),
         ];
     }
 

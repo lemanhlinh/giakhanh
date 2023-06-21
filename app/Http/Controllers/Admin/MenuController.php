@@ -33,12 +33,12 @@ class MenuController extends Controller
     {
         $category_id = request()->query('category_id');
         $article_categories = $this->articleCategoryRepository->getAll();
-        if (!empty($article_categories)){
+        $articles = $this->articleRepository->getAll();
+        $menu_categories = $this->menuCategoryRepository->getAll();
+        if ($menu_categories->count() === 0){
             Session::flash('danger', 'Chưa có nhóm menu nào');
             return redirect()->route('admin.menu-category.index');
         }
-        $articles = $this->articleRepository->getAll();
-        $menu_categories = $this->menuCategoryRepository->getAll();
         if (empty($category_id)){
             $category_id = $menu_categories->first()->id;
         }

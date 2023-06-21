@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Sliders;
 use Illuminate\Http\Request;
+use App\DataTables\SliderDataTable;
 
 class SliderController extends Controller
 {
@@ -13,9 +14,9 @@ class SliderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(SliderDataTable $dataTable)
     {
-        //
+        return $dataTable->render('admin.slider.index');
     }
 
     /**

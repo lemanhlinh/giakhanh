@@ -8,5 +8,5 @@ interface ArticleInterface extends BaseInterface
      * @param array $data
      * @return mixed
      */
-    public function store(array $data);
+//    public function store(array $data);
 }

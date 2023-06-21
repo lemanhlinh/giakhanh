@@ -19,14 +19,14 @@ class ArticleRepository extends BaseRepository implements ArticleInterface
      * @param array $data
      * @return mixed
      */
-    public function store(array $data)
-    {
-        if (\request()->hasFile('image')) {
-            $data['image'] = $this->saveFileUpload($data['image'], 'images');
-        }
-
-        return $this->create($data);
-    }
+//    public function store(array $data)
+//    {
+//        if (\request()->hasFile('image')) {
+//            $data['image'] = $this->saveFileUpload($data['image'], 'images');
+//        }
+//
+//        return $this->create($data);
+//    }
 
     /**
      * @param $file

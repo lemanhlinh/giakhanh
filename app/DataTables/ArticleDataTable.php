@@ -29,7 +29,7 @@ class ArticleDataTable extends DataTable
                 return Carbon::parse($q->updated_at)->format('H:i:s Y/m/d');
             })
             ->editColumn('category_id', function ($q) {
-                return optional($q->category)->name;
+                return optional($q->category)->title;
             })
             ->addColumn('action', function ($q) {
                 $urlEdit = route('admin.article.edit', $q->id);
@@ -82,10 +82,16 @@ class ArticleDataTable extends DataTable
         return [
             Column::make('id'),
             Column::make('title'),
-            Column::make('image')->title(trans('form.article_category.image'))->render([
+            Column::make('image')->title(trans('form.article.image'))->render([
                 'renderImage(data)'
             ]),
-            Column::make('category_id')->title(trans('form.article_category.manage')),
+            Column::make('category_id')->title(trans('form.article_category.')),
+            Column::make('active')->title(trans('form.article.active'))->render([
+                'renderLabelActive(data)'
+            ]),
+            Column::make('is_home')->title(trans('form.home_page'))->render([
+                'renderLabelShowHomeOrder(data)'
+            ]),
             Column::make('created_at')->title(trans('form.created_at')),
             Column::make('updated_at')->title(trans('form.updated_at')),
             Column::computed('action')

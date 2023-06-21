@@ -13,7 +13,7 @@ class CreateCategoryProduct extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,13 @@ class CreateCategoryProduct extends FormRequest
     public function rules()
     {
         return [
-            //
+            'title' => 'required',
+            'image' => 'required_if:type,file|image|mimes:jpg,jpeg,png',
+            'slug' => 'nullable',
+            'active' => 'required|numeric|integer|min:0',
+            'seo_title' => 'nullable',
+            'seo_keyword' => 'nullable',
+            'seo_description' => 'nullable',
         ];
     }
 }

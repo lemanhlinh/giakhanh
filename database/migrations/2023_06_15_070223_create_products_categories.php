@@ -17,6 +17,7 @@ class CreateProductsCategories extends Migration
             $table->increments('id');
             $table->string('title');
             $table->string('slug')->default('');
+            $table->string('image')->nullable();
             $table->string('seo_title')->nullable();
             $table->string('seo_keyword')->nullable();
             $table->text('seo_description')->nullable();

@@ -2,17 +2,17 @@
 
 namespace App\Repositories\Eloquents;
 
-use App\Models\Article;
-use App\Repositories\Contracts\ArticleInterface;
+use App\Models\Product;
+use App\Repositories\Contracts\ProductInterface;
 
-class ProductRepository extends BaseRepository implements ArticleInterface
+class ProductRepository extends BaseRepository implements ProductInterface
 {
     /**
      * @return string
      */
     public function getModelClass(): string
     {
-        return 'App\Models\Article';
+        return 'App\Models\Product';
     }
 
     /**

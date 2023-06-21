@@ -8,6 +8,11 @@ class ArticlesCategories extends Model
 {
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 0;
-    protected $fillable = ['title','slug','image','active'];
+
     protected $guarded = ['id'];
+
+    public function articles()
+    {
+        return $this->belongsTo(Article::class, 'id', 'category_id');
+    }
 }

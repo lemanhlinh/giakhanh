@@ -5,17 +5,39 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Repositories\Contracts\ProductInterface;
+use App\Repositories\Contracts\ProductCategoryInterface;
+use App\DataTables\ProductDataTable;
+use App\Http\Requests\Product\CreateProduct;
+use App\Http\Requests\Product\UpdateProduct;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class ProductController extends Controller
 {
+
+    protected $productResponstory, $productCategoryResponstory;
+    function __construct(ProductCategoryInterface $productCategoryResponstory,ProductInterface $productResponstory)
+    {
+        $this->middleware('auth');
+        $this->productCategoryResponstory = $productCategoryResponstory;
+        $this->productResponstory = $productResponstory;
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(ProductDataTable $dataTable)
     {
-        //
+        $data = $this->productResponstory->getAll();
+        $categories = $this->productCategoryResponstory->getAll();
+        if ($categories->count() === 0){
+            Session::flash('danger', 'Chưa có danh mục nào');
+            return redirect()->route('admin.product-category.index');
+        }
+        return $dataTable->render('admin.product.index', compact('data', 'categories'));
     }
 
     /**
@@ -25,7 +47,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $categories = $this->productCategoryResponstory->getAll();
+        return view('admin.product.create', compact('categories'));
     }
 
     /**
@@ -34,9 +57,29 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateProduct $req)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $data = $req->validated();
+            $data['slug'] = $req->input('slug')?\Str::slug($req->input('slug'), '-'):\Str::slug($data['title'], '-');
+            if (\request()->hasFile('image')) {
+                $data['image'] = $this->productResponstory->saveFileUpload($data['image'],'images');
+            }
+            $this->productResponstory->create($data);
+            DB::commit();
+            Session::flash('success', trans('message.create_product_success'));
+            return redirect()->back();
+        } catch (\Exception $ex) {
+            DB::rollBack();
+            \Log::info([
+                'message' => $ex->getMessage(),
+                'line' => __LINE__,
+                'method' => __METHOD__
+            ]);
+            Session::flash('danger', trans('message.create_product_error'));
+            return redirect()->back();
+        }
     }
 
     /**
