@@ -5,6 +5,7 @@
 # @Last modified by:   Manh Linh
 # @Last modified time: 2023-01-01T16:49:02+07:00
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,25 +18,29 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::get('/', function () {
-//    return view('welcome');
-//});
-Route::group(['namespace' => 'Web'], function (){
+Route::group(['namespace' => 'Web', 'middleware' => 'language'], function (){
     Route::get('/', 'HomeController@index')->name('home');
     Route::get('/gioi-thieu', 'HomeController@getContent')->name('getContent');
-    Route::get('/thiet-ke-app', 'HomeController@getContentApp')->name('getContentApp');
-    Route::get('/tin-cong-nghe', 'ArticleController@index')->name('homeArticle');
+    Route::get('/tin-tuc', 'ArticleController@index')->name('homeArticle');
     Route::get('/danh-muc-tin/{slug}', 'ArticleController@cat')->name('catArticle');
     Route::get('/chi-tiet-tin/{slug}/{id}', 'ArticleController@detail')->name('detailArticle');
     Route::get('/lien-he', 'ContactController@index')->name('detailContact');
     Route::post('/lien-he', 'ContactController@store')->name('detailContactStore');
+    Route::post('/language/switch', function(Request $request) {
+        $locale = $request->input('locale');
+        if (in_array($locale, ['en', 'vi'])) {
+            session(['locale' => $locale]);
+            config(['app.locale' => session('locale')]);
+        }
+        return redirect()->back();
+    })->name('language.switch');
 });
 
-Route::any('/ckfinder/connector', '\CKSource\CKFinderBridge\Controller\CKFinderController@requestAction')
-    ->name('ckfinder_connector');
-
-Route::any('/ckfinder/browser', '\CKSource\CKFinderBridge\Controller\CKFinderController@browserAction')
-    ->name('ckfinder_browser');
+//Route::any('/ckfinder/connector', '\CKSource\CKFinderBridge\Controller\CKFinderController@requestAction')
+//    ->name('ckfinder_connector');
+//
+//Route::any('/ckfinder/browser', '\CKSource\CKFinderBridge\Controller\CKFinderController@browserAction')
+//    ->name('ckfinder_browser');
 
 //Route::any('/ckfinder/examples/{example?}', '\CKSource\CKFinderBridge\Controller\CKFinderController@examplesAction')
 //    ->name('ckfinder_examples');

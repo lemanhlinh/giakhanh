@@ -27,28 +27,17 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-12">
+            <div class="col-sm-6">
                 <div class="form-group">
                     <label>@lang('form.article_category.image')</label> <span class="text-danger">*</span>
                     <div class="input-group">
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="image" name="image"
-                                   value="{{ isset($article_category->image) ? $article_category->image : old('image') }}">
-                            <label class="custom-file-label" for="image">Choose file</label>
-                            <span id="output"></span>
-                        </div>
-                        <div class="input-group-append">
-                            <span class="input-group-text">Upload</span>
-                        </div>
+                        @include('admin.components.buttons.image',['src' => isset($article_category->image) ? $article_category->image : old('image'),'name' => 'image'])
+                        @if ($errors->has('image'))
+                            <span class="help-block text-danger">
+                                <strong>{{ $errors->first('image') }}</strong>
+                            </span>
+                        @endif
                     </div>
-                    @if(isset($article_category->image) && $article_category->image != null)
-                        <img src="{{ asset($article_category->image) }}" width="200px" alt="">
-                    @endif
-                    @if ($errors->has('image'))
-                        <span class="help-block text-danger">
-                    <strong>{{ $errors->first('image') }}</strong>
-                </span>
-                    @endif
                 </div>
             </div>
             <div class="col-sm-12">
@@ -112,3 +101,7 @@
     </div>
 </div>
 
+@section('script')
+    @parent
+    <script src="{{ asset('ckfinder/ckfinder.js') }}"></script>
+@endsection

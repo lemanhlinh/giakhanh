@@ -27,6 +27,6 @@ class MenuRepository extends BaseRepository implements MenuInterface
 
     public function getMenusByCategoryId($categoryId)
     {
-        return $this->model->where('category_id', $categoryId)->get();
+        return $this->model->where('category_id', $categoryId)->withDepth()->defaultOrder()->get();
     }
 }

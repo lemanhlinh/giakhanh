@@ -84,26 +84,15 @@
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
-                    <label>@lang('form.article.image')</label>
+                    <label>@lang('form.article.image')</label> <span class="text-danger">*</span>
                     <div class="input-group">
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="image" name="image"
-                                   value="{{ isset($article->image) ? $article->image : old('image') }}">
-                            <label class="custom-file-label" for="image">Choose file</label>
-                            <span id="output"></span>
-                        </div>
-                        <div class="input-group-append">
-                            <span class="input-group-text">Upload</span>
-                        </div>
+                        @include('admin.components.buttons.image',['src' => isset($article->image) ? $article->image : old('image'),'name' => 'image'])
+                        @if ($errors->has('image'))
+                            <span class="help-block text-danger">
+                                <strong>{{ $errors->first('image') }}</strong>
+                            </span>
+                        @endif
                     </div>
-                    @if(isset($article->image) && $article->image != null)
-                        <img src="{{ asset($article->image) }}" width="200px" alt="">
-                    @endif
-                    @if ($errors->has('image'))
-                        <span class="help-block text-danger">
-                    <strong>{{ $errors->first('image') }}</strong>
-                </span>
-                    @endif
                 </div>
             </div>
             <div class="col-sm-6">
@@ -180,45 +169,22 @@
         </div>
     </div>
 </div>
-
 @section('script')
     @parent
     <script src="{{ asset('ckeditor5/ckeditor.js') }}"></script>
+    <script src="{{ asset('ckfinder/ckfinder.js') }}"></script>
     <script>
-        const watchdog = new CKSource.EditorWatchdog();
-        window.watchdog = watchdog;
-
-        watchdog.setCreator((element, config) => {
-            return CKSource.Editor.create(element, config)
-                .then(editor => {
-                    return editor;
-                });
-        });
-
-        watchdog.setDestructor(editor => {
-            return editor.destroy();
-        });
-
-        watchdog.on('error', handleError);
-
-        watchdog
-            .create(document.querySelector('#content'), {
-                ckFinder: {
-                    uploadUrl: '{{route('ckfinder_connector')}}?command=QuickUpload&type=Images&responseType=json',
-                },
-                removePlugins: ['MediaEmbedToolbar', 'Markdown'],
-                mediaEmbed: {
-                    previewsInData: true
+        InlineEditor
+            .create( document.querySelector( '#content' ),{
+                ckfinder: {
+                    uploadUrl: '{!! asset('ckfinder/core/connector/php/connector.php').'?command=QuickUpload&type=Images&responseType=json' !!}',
+                    options: {
+                        resourceType: 'Images'
+                    }
                 }
-            })
-            .catch(handleError);
-
-        function handleError(error) {
-            console.error('Oops, something went wrong!');
-            console.error('Please report the following error on https://github.com/ckeditor/ckeditor5/issues with the build id and the error stack trace:');
-            console.warn('Build id: ryu56eng8wy8-nohdljl880ze');
-            console.error(error);
-        }
+            } )
+            .catch( error => {
+                console.error( error );
+            } );
     </script>
-    @include('ckfinder::setup')
 @endsection

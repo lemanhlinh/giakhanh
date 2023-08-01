@@ -1,35 +1,54 @@
-.navbar-finalstyle {
-  background: #E8FFF6;
+@font-face {
+  font-family: GoogleSans;
+  src: url(/fonts/GoogleSans-Regular.ttf?4b411db491ad6ae789b840fb3a5e6107);
 }
-.navbar-finalstyle .navbar-brand .logo-fs {
+@font-face {
+  font-family: GoogleSans-Bold;
+  src: url(/fonts/GoogleSans-Bold.ttf?6b36bf67d979283ff19fb8a20f0d8abe);
+}
+h1, h2, h3, h4 {
+  font-family: "GoogleSans-Bold", sans-serif;
+}
+
+body {
+  background-color: #fff;
+  font-family: "GoogleSans", sans-serif;
+  font-size: 16px;
+}
+
+a {
+  text-decoration: unset;
+}
+a:hover {
+  color: #BC2330;
+}
+
+#app {
+  position: relative;
+  overflow-x: hidden;
+}
+#app .navbar-finalstyle {
+  z-index: 3;
+}
+#app .navbar-finalstyle .navbar-brand .logo-fs {
   max-height: 64px;
 }
-.navbar-finalstyle #main-menu ul li a {
-  font-weight: 700;
+#app .navbar-finalstyle #main-menu ul {
+  margin: 0;
 }
-.navbar-finalstyle #main-menu ul li a:hover {
-  color: #007EC3;
+#app .navbar-finalstyle #main-menu ul li {
+  display: inline-block;
 }
-
-#app > .content .top-content {
-  background: linear-gradient(180deg, #E8FFF6 0%, #FFFFFF 100%);
+#app .navbar-finalstyle #main-menu ul li a {
+  color: #FFF;
+  font-family: HelveticaNeue-Bold;
 }
-#app > .content .content-why {
-  background: linear-gradient(180deg, #FFFFFF 0%, #E8FFF6 100%);
+#app .navbar-finalstyle #main-menu ul li a:hover {
+  color: #FFF;
 }
-#app > .content .content-design-app {
-  background: linear-gradient(180deg, #E8FFF6 0%, #FFFFFF 100%);
+#app .navbar-finalstyle #main-menu ul li:hover a {
+  color: #BC2330;
 }
-#app > .content .content-customer {
-  background: linear-gradient(180deg, #FFFFFF 0%, #E8FFF6 100%);
-}
-#app > .content .content-jobs-we {
-  background: linear-gradient(180deg, #E8FFF6 0%, #FFFFFF 100%);
-}
-#app > .content .content-news {
-  background: linear-gradient(180deg, #FFFFFF 0%, #E8FFF6 100%);
-}
-
-.main-footer {
-  background: #141515;
+#app .main-footer {
+  background: linear-gradient(180deg, #800E13 0%, #620B0E 100%);
 }

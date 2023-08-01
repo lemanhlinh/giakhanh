@@ -1,45 +1,49 @@
-.navbar-finalstyle{
-  background: #E8FFF6;
-  .navbar-brand{
-    .logo-fs{
-      max-height: 64px;
+@import "fonts";
+@import "variables";
+body{
+    background-color: #fff;
+    font-family: $font-family-sans-serif;
+    font-size: 16px;
+}
+a{
+    text-decoration: unset;
+    &:hover{
+        color: #BC2330;
     }
-  }
-  #main-menu{
-    ul{
-      li{
-        a{
-          font-weight: 700;
-          &:hover{
-            color: #007EC3;
-          }
-        }
-      }
-    }
-  }
 }
 #app{
-  >.content{
-    .top-content{
-     background: linear-gradient(180deg, #E8FFF6 0%, #FFFFFF 100%);
+    position: relative;
+    overflow-x: hidden;
+    .navbar-finalstyle{
+        z-index: 3;
+        .navbar-brand{
+            .logo-fs{
+                max-height: 64px;
+            }
+        }
+        #main-menu{
+            ul{
+                margin: 0;
+                li{
+                    display: inline-block;
+                    a{
+                        color: #FFF;
+                        font-family: HelveticaNeue-Bold;
+                        &:hover{
+                            color: #FFF;
+                        }
+                    }
+                    &:hover{
+                        a{
+                            color: #BC2330;
+                        }
+                    }
+                }
+            }
+        }
     }
-    .content-why{
-      background: linear-gradient(180deg, #FFFFFF 0%, #E8FFF6 100%);
+    .main-footer{
+        background: linear-gradient(180deg, #800E13 0%, #620B0E 100%);
     }
-    .content-design-app{
-      background: linear-gradient(180deg, #E8FFF6 0%, #FFFFFF 100%);
-    }
-    .content-customer{
-      background: linear-gradient(180deg, #FFFFFF 0%, #E8FFF6 100%);
-    }
-    .content-jobs-we{
-      background: linear-gradient(180deg, #E8FFF6 0%, #FFFFFF 100%);
-    }
-    .content-news{
-      background: linear-gradient(180deg, #FFFFFF 0%, #E8FFF6 100%);
-    }
-  }
 }
-.main-footer{
-  background: #141515;
-}
+

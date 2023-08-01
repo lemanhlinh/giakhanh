@@ -13,7 +13,7 @@ class CreateSlide extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,10 @@ class CreateSlide extends FormRequest
     public function rules()
     {
         return [
-            //
+            'title' => 'required',
+            'active' => 'required',
+            'ordering' => 'nullable',
+            'image' => 'nullable',
         ];
     }
 }

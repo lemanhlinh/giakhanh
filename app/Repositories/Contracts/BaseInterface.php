@@ -59,4 +59,13 @@ interface BaseInterface
      * @return Collection
      */
     public function getWithDepth(): Collection;
+
+    /**
+     * @param array $where
+     * @param array $column
+     * @param array $relationships
+     * @param int $limit
+     * @return mixed
+     */
+    public function getList(array $where, array $column = ['*'], int $limit, array $relationships = []);
 }

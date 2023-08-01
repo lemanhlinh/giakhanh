@@ -13,7 +13,7 @@ class UpdatePage extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,18 @@ class UpdatePage extends FormRequest
     public function rules()
     {
         return [
-            //
+            'title' => 'required',
+            'slug' => 'nullable',
+            'active' => 'nullable',
+            'is_home' => 'nullable',
+            'content' => 'nullable',
+            'description' => 'nullable',
+            'image' => 'nullable',
+            'image_title' => 'nullable',
+            'ordering' => 'nullable',
+            'seo_title' => 'nullable',
+            'seo_keyword' => 'nullable',
+            'seo_description' => 'nullable',
         ];
     }
 }

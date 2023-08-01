@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\Sliders;
+use Carbon\Carbon;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
@@ -21,7 +22,18 @@ class SliderDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->addColumn('action', 'sliderdatatable.action');
+            ->editColumn('created_at', function ($q) {
+                return Carbon::parse($q->created_at)->format('H:i:s Y/m/d');
+            })
+            ->editColumn('updated_at', function ($q) {
+                return Carbon::parse($q->updated_at)->format('H:i:s Y/m/d');
+            })
+            ->addColumn('action', function ($q) {
+                $urlEdit = route('admin.slider.edit', $q->id);
+                $urlDelete = route('admin.slider.destroy', $q->id);
+                $lowerModelName = strtolower(class_basename(new Sliders()));
+                return view('admin.components.buttons.edit', compact('urlEdit'))->render() . view('admin.components.buttons.delete', compact('urlDelete', 'lowerModelName'))->render();
+            });
     }
 
     /**
@@ -67,6 +79,9 @@ class SliderDataTable extends DataTable
         return [
             Column::make('id'),
             Column::make('title'),
+            Column::make('image')->title(trans('form.article.image'))->render([
+                'renderImage(data)'
+            ]),
             Column::make('created_at'),
             Column::make('updated_at'),
             Column::computed('action')

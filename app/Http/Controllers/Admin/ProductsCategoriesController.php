@@ -57,8 +57,9 @@ class ProductsCategoriesController extends Controller
         try {
             $data = $req->validated();
             $data['slug'] = $req->input('slug')?\Str::slug($req->input('slug'), '-'):\Str::slug($data['title'], '-');
-            if (\request()->hasFile('image')) {
-                $data['image'] = $this->productCategoryRepository->saveFileUpload($data['image'],'images');
+            if (!empty($data['image'])){
+                $image_root = $data['image'];
+                $data['image'] = urldecode($image_root);
             }
             $this->productCategoryRepository->create($data);
             DB::commit();
@@ -94,9 +95,10 @@ class ProductsCategoriesController extends Controller
      * @param  \App\Models\ProductsCategories  $productsCategories
      * @return \Illuminate\Http\Response
      */
-    public function edit(ProductsCategories $productsCategories)
+    public function edit($id)
     {
-        //
+        $product_category = $this->productCategoryRepository->getOneById($id);
+        return view('admin.product-category.update', compact('product_category'));
     }
 
     /**
@@ -106,9 +108,32 @@ class ProductsCategoriesController extends Controller
      * @param  \App\Models\ProductsCategories  $productsCategories
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ProductsCategories $productsCategories)
+    public function update($id, UpdateCategoryProduct $req)
     {
-        //
+        $data_root = $this->productCategoryRepository->getOneById($id);
+        DB::beginTransaction();
+        try {
+            $data = $req->validated();
+            $page = $this->productCategoryRepository->getOneById($id);
+            if (!empty($data['image']) && $data_root->image != $data['image']){
+                $data['image'] = rawurldecode($data['image']);
+            }
+            if (!empty($data['slug'])){
+                $data['slug'] = $req->input('slug')?\Str::slug($req->input('slug'), '-'):\Str::slug($data['title'], '-');
+            }
+            $page->update($data);
+            DB::commit();
+            Session::flash('success', trans('message.update_product_category_success'));
+            return redirect()->route('admin.product-category.edit', $id);
+        } catch (\Exception $exception) {
+            \Log::info([
+                'message' => $exception->getMessage(),
+                'line' => __LINE__,
+                'method' => __METHOD__
+            ]);
+            Session::flash('danger', trans('message.update_product_category_error'));
+            return back();
+        }
     }
 
     /**
@@ -117,8 +142,13 @@ class ProductsCategoriesController extends Controller
      * @param  \App\Models\ProductsCategories  $productsCategories
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ProductsCategories $productsCategories)
+    public function destroy($id)
     {
-        //
+        $this->productCategoryRepository->delete($id);
+
+        return [
+            'status' => true,
+            'message' => trans('message.delete_product_category_success')
+        ];
     }
 }

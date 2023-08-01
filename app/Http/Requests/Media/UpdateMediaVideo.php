@@ -13,7 +13,7 @@ class UpdateMediaVideo extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,12 @@ class UpdateMediaVideo extends FormRequest
     public function rules()
     {
         return [
-            //
+            'title' => 'required',
+            'image' => 'nullable',
+            'link_video' => 'nullable',
+            'is_home' => 'required',
+            'active' => 'nullable',
+            'ordering' => 'nullable',
         ];
     }
 }

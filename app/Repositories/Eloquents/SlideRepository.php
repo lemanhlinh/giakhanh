@@ -2,17 +2,17 @@
 
 namespace App\Repositories\Eloquents;
 
-use App\Models\Article;
-use App\Repositories\Contracts\ArticleInterface;
+use App\Models\Sliders;
+use App\Repositories\Contracts\SlideInterface;
 
-class SlideRepository extends BaseRepository implements ArticleInterface
+class SlideRepository extends BaseRepository implements SlideInterface
 {
     /**
      * @return string
      */
     public function getModelClass(): string
     {
-        return 'App\Models\Article';
+        return 'App\Models\Sliders';
     }
 
     /**

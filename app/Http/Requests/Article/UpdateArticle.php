@@ -33,7 +33,7 @@ class UpdateArticle extends FormRequest
             'description' => 'required',
             'type' => 'required',
             'ordering' => 'nullable',
-            'image' => 'required_if:type,file|image|mimes:jpg,jpeg,png',
+            'image' => 'nullable',
             'seo_title' => 'nullable',
             'seo_keyword' => 'nullable',
             'seo_description' => 'nullable',

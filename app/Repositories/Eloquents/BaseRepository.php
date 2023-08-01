@@ -94,4 +94,32 @@ abstract class BaseRepository implements BaseInterface
     {
         return $this->model->withDepth()->defaultOrder()->get();
     }
+
+    /**
+     * @param array $where
+     * @param array $columns
+     * @param array $relationships
+     * @param int $limit
+     * @return mixed
+     */
+    public function getList(array $where, array $columns = ['*'], int $limit, array $relationships = [])
+    {
+        $query = $this->model->select($columns);
+
+        if($where){
+            foreach($where as $key => $value){
+                if (gettype($value) === 'array'){
+                    $query->where($key, $value[0], $value[1]);
+                }else{
+                    $query->where($key, $value);
+                }
+
+            }
+        }
+        if (!empty($limit)){
+            $query->limit($limit);
+        }
+
+        return $query->with($relationships)->get();
+    }
 }

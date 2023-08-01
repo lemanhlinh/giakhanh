@@ -6,9 +6,20 @@ use App\Http\Controllers\Controller;
 use App\Models\Store;
 use Illuminate\Http\Request;
 use App\DataTables\StoreDataTable;
+use App\Http\Requests\Store\UpdateStore;
+use App\Http\Requests\Store\CreateStore;
+use App\Repositories\Contracts\StoreInterface;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class StoreController extends Controller
 {
+    protected $storeRepository;
+
+    public function __construct(StoreInterface $storeRepository)
+    {
+        $this->storeRepository = $storeRepository;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -26,7 +37,7 @@ class StoreController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.store.create');
     }
 
     /**
@@ -35,9 +46,25 @@ class StoreController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateStore $req)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $data = $req->validated();
+            $model = $this->storeRepository->create($data);
+            DB::commit();
+            Session::flash('success', trans('message.create_store_success'));
+            return redirect()->back();
+        } catch (\Exception $ex) {
+            DB::rollBack();
+            \Log::info([
+                'message' => $ex->getMessage(),
+                'line' => __LINE__,
+                'method' => __METHOD__
+            ]);
+            Session::flash('danger', trans('message.create_store_error'));
+            return redirect()->back();
+        }
     }
 
     /**
@@ -57,9 +84,10 @@ class StoreController extends Controller
      * @param  \App\Models\Store  $store
      * @return \Illuminate\Http\Response
      */
-    public function edit(Store $store)
+    public function edit($id)
     {
-        //
+        $store = $this->storeRepository->getOneById($id);
+        return view('admin.store.update', compact('store'));
     }
 
     /**
@@ -69,9 +97,25 @@ class StoreController extends Controller
      * @param  \App\Models\Store  $store
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Store $store)
+    public function update($id, UpdateStore $req)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $data = $req->validated();
+            $page = $this->storeRepository->getOneById($id);
+            $page->update($data);
+            DB::commit();
+            Session::flash('success', trans('message.update_store_success'));
+            return redirect()->route('admin.store.edit', $id);
+        } catch (\Exception $exception) {
+            \Log::info([
+                'message' => $exception->getMessage(),
+                'line' => __LINE__,
+                'method' => __METHOD__
+            ]);
+            Session::flash('danger', trans('message.update_store_error'));
+            return back();
+        }
     }
 
     /**
@@ -80,8 +124,13 @@ class StoreController extends Controller
      * @param  \App\Models\Store  $store
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Store $store)
+    public function destroy($id)
     {
-        //
+        $this->storeRepository->delete($id);
+
+        return [
+            'status' => true,
+            'message' => trans('message.delete_store_success')
+        ];
     }
 }

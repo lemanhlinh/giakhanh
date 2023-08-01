@@ -1,67 +1,92 @@
 <div class="row">
-    <div class="col-sm-3">
-        <!-- text input -->
-        <div class="form-group">
-            <label>@lang('form.setting.name')</label> <span class="text-danger">*</span>
-            <input type="text" class="form-control" name="name" value="{{ isset($setting) ? $setting->name : old('name') }}" required>
-            @if ($errors->has('name'))
-                <span class="help-block text-danger">
-                    <strong>{{ $errors->first('name') }}</strong>
+    <div class="col-sm-7">
+        <div class="row">
+            <div class="col-sm-6">
+                <!-- text input -->
+                <div class="form-group">
+                    <label>@lang('form.store.title')</label> <span class="text-danger">*</span>
+                    <input type="text" class="form-control" name="title" value="{{ isset($store) ? $store->title : old('title') }}" required>
+                    @if ($errors->has('title'))
+                        <span class="help-block text-danger">
+                    <strong>{{ $errors->first('title') }}</strong>
                 </span>
-            @endif
-        </div>
-    </div>
-    <div class="col-sm-3">
-        <!-- text input -->
-        <div class="form-group">
-            <label>@lang('form.setting.key')</label> <span class="text-danger">*</span>
-            <input type="text" class="form-control" name="key" value="{{ isset($setting) ? $setting->key : old('key') }}" required>
-            @if ($errors->has('key'))
-                <span class="help-block text-danger">
-                    <strong>{{ $errors->first('key') }}</strong>
-                </span>
-            @endif
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-sm-3">
-        <div class="form-group">
-            <label>@lang('form.setting.description')</label> <span class="text-danger">*</span>
-            <textarea class="form-control" rows="3" name="description" >{{ isset($setting) ? $setting->description : old('description') }}</textarea>
-            @if ($errors->has('description'))
-                <span class="help-block text-danger">
-                    <strong>{{ $errors->first('description') }}</strong>
-                </span>
-            @endif
-        </div>
-    </div>
-    <div class="col-sm-3">
-        <div class="form-group clearfix">
-            <label>@lang('form.setting.active')</label> <span class="text-danger">*</span>
-            <div class="form-group">
-                <div class="icheck-success d-inline">
-                    <input class="" type="radio" id="statusRadio1" name="active" value="{{ \App\Models\Setting::STATUS_ACTIVE }}" {{ isset($setting->active) && $setting->active == \App\Models\Setting::STATUS_ACTIVE ? 'checked' : 'checked' }} required>
-                    <label for="statusRadio1" class="custom-control-label">@lang('form.status.active')&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                </div>
-                <div class="icheck-danger d-inline">
-                    <input class="" type="radio" id="statusRadio2" name="active" value="{{ \App\Models\Setting::STATUS_INACTIVE }}" {{ isset($setting->active) && $setting->active == \App\Models\Setting::STATUS_INACTIVE ? 'checked' : '' }} required>
-                    <label for="statusRadio2" class="custom-control-label">@lang('form.status.inactive')</label>
+                    @endif
                 </div>
             </div>
-            @if ($errors->has('active'))
-                <span class="help-block text-danger">
+            <div class="col-sm-6">
+                <!-- text input -->
+                <div class="form-group">
+                    <label>@lang('form.store.phone')</label>
+                    <input type="text" class="form-control" name="phone" value="{{ isset($store) ? $store->phone : old('phone') }}">
+                    @if ($errors->has('phone'))
+                        <span class="help-block text-danger">
+                    <strong>{{ $errors->first('phone') }}</strong>
+                </span>
+                    @endif
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <!-- text input -->
+                <div class="form-group">
+                    <label>@lang('form.store.address')</label>
+                    <input type="text" class="form-control" name="address" value="{{ isset($store) ? $store->address : old('address') }}">
+                    @if ($errors->has('address'))
+                        <span class="help-block text-danger">
+                    <strong>{{ $errors->first('address') }}</strong>
+                </span>
+                    @endif
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <!-- text input -->
+                <div class="form-group">
+                    <label>@lang('form.store.latitude')</label>
+                    <input type="text" class="form-control" name="latitude" value="{{ isset($store) ? $store->latitude : old('latitude') }}">
+                    @if ($errors->has('latitude'))
+                        <span class="help-block text-danger">
+                    <strong>{{ $errors->first('latitude') }}</strong>
+                </span>
+                    @endif
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <!-- text input -->
+                <div class="form-group">
+                    <label>@lang('form.store.longitude')</label>
+                    <input type="text" class="form-control" name="longitude" value="{{ isset($store) ? $store->longitude : old('longitude') }}">
+                    @if ($errors->has('longitude'))
+                        <span class="help-block text-danger">
+                    <strong>{{ $errors->first('longitude') }}</strong>
+                </span>
+                    @endif
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <!-- text input -->
+                <div class="form-group clearfix">
+                    <label>@lang('form.page.active')</label> <span class="text-danger">*</span>
+                    <div class="form-group">
+                        <div class="icheck-success d-inline">
+                            <input class="" type="radio" id="statusRadio1" name="active" value="{{ \App\Models\Store::STATUS_ACTIVE }}" {{ (isset($store->active) && $store->active == \App\Models\Store::STATUS_ACTIVE) ? 'checked' : (old('active') && (old('active') == \App\Models\Page::STATUS_ACTIVE)) ? 'checked' : '' }}  required>
+                            <label for="statusRadio1" class="custom-control-label">@lang('form.status.active')&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                        </div>
+                        <div class="icheck-danger d-inline">
+                            <input class="" type="radio" id="statusRadio2" name="active" value="{{ \App\Models\Store::STATUS_INACTIVE }}" {{ (isset($store) && $store->active == \App\Models\Store::STATUS_INACTIVE) ? 'checked' : (old('active') && (old('active') == \App\Models\Page::STATUS_INACTIVE)) ? 'checked' : '' }}  required>
+                            <label for="statusRadio2" class="custom-control-label">@lang('form.status.inactive')</label>
+                        </div>
+                    </div>
+                    @if ($errors->has('active'))
+                        <span class="help-block text-danger">
                     <strong>{{ $errors->first('active') }}</strong>
                 </span>
-            @endif
+                    @endif
+                </div>
+            </div>
         </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-sm-12">
-        <div class="form-group">
-            <label>@lang('form.setting.value')</label> <span class="text-danger">*</span>
-
-        </div>
+    <div class="col-sm-5">
     </div>
 </div>
+@section('script')
+    @parent
+@endsection

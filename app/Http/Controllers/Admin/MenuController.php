@@ -67,11 +67,7 @@ class MenuController extends Controller
         DB::beginTransaction();
         try {
             $data = $req->validated();
-            $menu = $this->menuRepository->create([
-                'name' => $data['name'],
-                'category_id' => $data['category_id'],
-                'link' => $data['link']
-            ]);
+            $menu = $this->menuRepository->create($data);
             DB::commit();
             $id_menu = [
                 'id' => $menu->id
@@ -148,7 +144,7 @@ class MenuController extends Controller
     public function updateTree(Request $request)
     {
         $data = $request->data;
-        $this->menuRepository->updateTreeRebuild(null, $data);
+        $this->menuRepository->updateTreeRebuild('id', $data);
         return response()->json($data);
     }
 }

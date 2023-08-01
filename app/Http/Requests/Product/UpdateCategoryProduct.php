@@ -26,7 +26,7 @@ class UpdateCategoryProduct extends FormRequest
         return [
             'title' => 'required',
             'slug' => 'nullable',
-            'image' => 'required_if:type,file|image|mimes:jpg,jpeg,png',
+            'image' => 'nullable',
             'active' => 'required|numeric|integer|min:0',
             'seo_title' => 'nullable',
             'seo_keyword' => 'nullable',

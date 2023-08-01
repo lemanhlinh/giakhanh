@@ -63,8 +63,9 @@ class ProductController extends Controller
         try {
             $data = $req->validated();
             $data['slug'] = $req->input('slug')?\Str::slug($req->input('slug'), '-'):\Str::slug($data['title'], '-');
-            if (\request()->hasFile('image')) {
-                $data['image'] = $this->productResponstory->saveFileUpload($data['image'],'images');
+            if (!empty($data['image'])){
+                $image_root = $data['image'];
+                $data['image'] = urldecode($image_root);
             }
             $this->productResponstory->create($data);
             DB::commit();
@@ -99,9 +100,11 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit($id)
     {
-        //
+        $categories = $this->productCategoryResponstory->getAll();
+        $product = $this->productResponstory->getOneById($id);
+        return view('admin.product.update', compact('product','categories'));
     }
 
     /**
@@ -111,9 +114,32 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update($id, UpdateProduct $req)
     {
-        //
+        $data_root = $this->productResponstory->getOneById($id);
+        DB::beginTransaction();
+        try {
+            $data = $req->validated();
+            $page = $this->productResponstory->getOneById($id);
+            if (!empty($data['image']) && $data_root->image != $data['image']){
+                $data['image'] = rawurldecode($data['image']);
+            }
+            if (!empty($data['slug'])){
+                $data['slug'] = $req->input('slug')?\Str::slug($req->input('slug'), '-'):\Str::slug($data['title'], '-');
+            }
+            $page->update($data);
+            DB::commit();
+            Session::flash('success', trans('message.update_product_success'));
+            return redirect()->route('admin.product.edit', $id);
+        } catch (\Exception $exception) {
+            \Log::info([
+                'message' => $exception->getMessage(),
+                'line' => __LINE__,
+                'method' => __METHOD__
+            ]);
+            Session::flash('danger', trans('message.update_product_error'));
+            return back();
+        }
     }
 
     /**
@@ -122,8 +148,13 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy($id)
     {
-        //
+        $this->productResponstory->delete($id);
+
+        return [
+            'status' => true,
+            'message' => trans('message.delete_product_success')
+        ];
     }
 }

@@ -6,6 +6,23 @@
         .dd-empty {
             display: none;
         }
+        .dd-handle{
+            background: #58cbbb;
+            font-size: 15px;
+            height: 40px;
+            line-height: 28px;
+            cursor: pointer;
+        }
+        .dd-remove{
+            cursor: pointer;
+            background: red;
+            display: inline-block;
+            color: #fff;
+            padding: 2px 13px;
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
     </style>
 @endsection
 @section('title_file', trans('form.menu.'))
@@ -14,35 +31,41 @@
     <div class="row">
         <div class="col-sm-6">
             <ul id="item-list">
-                @if(!empty($article_categories))
-                    @foreach($article_categories as $k => $article_category)
-                        <li>
-                            <input type="checkbox" id="article_category_{{ $article_category->id }}" value="{{ $article_category->id }}" data-link="{{ route('catArticle',$article_category->slug) }}" data-name="{{ $article_category->title }}"><label for="article_category_{{ $article_category->id }}">{{ $article_category->title }}</label>
-                        </li>
-                    @endforeach
-                @endif
-                @if(!empty($articles))
-                    @foreach($articles as $k => $article)
-                        <li>
-                            <input type="checkbox" id="article_{{ $article->id }}" value="{{ $article->id }}"  data-link="{{ route('catArticle',$article->slug) }}" data-name="{{ $article->title }}"><label for="article_{{ $article->id }}">{{ $article->title }}</label>
-                        </li>
-                    @endforeach
-                @endif
                 <li>
-                    <input type="checkbox" id="home_article" value="0" data-link="{{ route('homeArticle') }}" data-name="Trang chủ tin tức"><label for="home_article">Trang chủ tin tức</label>
+                    <input type="checkbox" id="home" value="0" data-link="{{ route('home') }}" data-name="Trang chủ"><label for="home">Trang chủ</label>
                 </li>
-                <li>
-                    <input type="checkbox" id="content_about" value="0" data-link="{{ route('getContent') }}" data-name="Giới thiệu"><label for="content_about">Giới thiệu</label>
-                </li>
-                <li>
-                    <input type="checkbox" id="content_about_app" value="0" data-link="{{ route('getContentApp') }}" data-name="Thiết kế app"><label for="content_about_app">Thiết kế app</label>
-                </li>
-                <li>
-                    <input type="checkbox" id="home_contact" value="0" data-link="{{ route('detailContact') }}" data-name="Liên hệ"><label for="home_contact">Liên hệ</label>
-                </li>
+{{--                <li>--}}
+{{--                    <input type="checkbox" id="home_program" value="0" data-link="{{ route('homeCourse') }}" data-name="Trang chủ khóa học"><label for="home_program">Trang chủ khóa học</label>--}}
+{{--                </li>--}}
+{{--                <li>--}}
+{{--                    <input type="checkbox" id="home_article" value="0" data-link="{{ route('homeArticle') }}" data-name="Trang chủ tin tức"><label for="home_article">Trang chủ tin tức</label>--}}
+{{--                </li>--}}
+{{--                <li>--}}
+{{--                    <input type="checkbox" id="home_contact" value="0" data-link="{{ route('detailContact') }}" data-name="Liên hệ"><label for="home_contact">Liên hệ</label>--}}
+{{--                </li>--}}
+{{--                <li>--}}
+{{--                    <input type="checkbox" id="home_advisory" value="0" data-link="{{ route('detailAdvisory') }}" data-name="Tư vấn"><label for="home_advisory">Tư vấn</label>--}}
+{{--                </li>--}}
                 <li>
                     <input type="checkbox" id="menu_other" value="0" data-link="#" data-name="Link bên ngoài"><label for="menu_other">Link bên ngoài</label>
                 </li>
+{{--
+                @if(!empty($articles))--}}
+{{--                    @foreach($articles as $k => $article)--}}
+{{--                        <li>--}}
+{{--                            <input type="checkbox" id="article_{{ $article->id }}" value="{{ $article->id }}"  data-link="{{ route('detailArticle',[$article->slug,$article->id]) }}" data-name="{{ $article->title }}"><label for="article_{{ $article->id }}">{{ $article->title }}</label>--}}
+{{--                        </li>--}}
+{{--                    @endforeach--}}
+{{--                @endif--}}
+
+                @if(!empty($pages))
+                    `@foreach($pages as $k => $page)
+                        <li>
+                            <input type="checkbox" id="article_{{ $page->id }}" value="{{ $page->id }}"  data-link="{{ route('detailPage',[$page->slug]) }}" data-name="{{ $page->title }}"><label for="article_{{ $page->id }}">{{ $page->title }}</label>
+                        </li>
+                    @endforeach
+                @endif`
+
             </ul>
             <button id="add-btn" class="btn btn-primary" data-url="{{ route('admin.menu.store') }}">Thêm vào menu</button>
         </div>
@@ -66,7 +89,7 @@
 
 @section('script')
     @parent
-    <script src="//cdnjs.cloudflare.com/ajax/libs/nestable2/1.6.0/jquery.nestable.min.js"></script>
+    <script src="{{ asset('js/admin/jquery.nestable.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         // Lấy phần tử HTML của button "Add"
@@ -220,6 +243,7 @@
         }
 
         const selectElement = document.getElementById('category_id');
+        let initialSelectedValue = selectElement.value;
 
         selectElement.addEventListener('change', (event) => {
             Swal.fire({
@@ -234,6 +258,9 @@
                 if (result.isConfirmed) {
                     const selectedRoute = event.target.value;
                     window.location.href = `{{ route('admin.menu.index') }}?category_id=${selectedRoute}`;
+                }else {
+                    // Gán giá trị ban đầu lại cho select option nếu nhấn "Cancel"
+                    selectElement.value = initialSelectedValue;
                 }
             })
 

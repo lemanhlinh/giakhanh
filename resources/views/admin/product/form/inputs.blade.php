@@ -84,26 +84,15 @@
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
-                    <label>@lang('form.product.image')</label>
+                    <label>@lang('form.page.image')</label> <span class="text-danger">*</span>
                     <div class="input-group">
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="image" name="image"
-                                   value="{{ isset($product->image) ? $product->image : old('image') }}">
-                            <label class="custom-file-label" for="image">Choose file</label>
-                            <span id="output"></span>
-                        </div>
-                        <div class="input-group-append">
-                            <span class="input-group-text">Upload</span>
-                        </div>
+                        @include('admin.components.buttons.image',['src' => isset($page->image) ? $page->image : old('image'),'name' => 'image'])
+                        @if ($errors->has('image'))
+                            <span class="help-block text-danger">
+                                <strong>{{ $errors->first('image') }}</strong>
+                            </span>
+                        @endif
                     </div>
-                    @if(isset($product->image) && $product->image != null)
-                        <img src="{{ asset($product->image) }}" width="200px" alt="">
-                    @endif
-                    @if ($errors->has('image'))
-                        <span class="help-block text-danger">
-                    <strong>{{ $errors->first('image') }}</strong>
-                </span>
-                    @endif
                 </div>
             </div>
             <div class="col-sm-6">
@@ -118,24 +107,25 @@
                     @endif
                 </div>
             </div>
-            <div class="col-sm-12">
+            <div class="col-sm-6">
+                <!-- text input -->
                 <div class="form-group">
-                    <label>@lang('form.description')</label> <span class="text-danger">*</span>
-                    <textarea class="form-control" rows="3" name="description" required >{{ isset($product) ? $product->description : old('description') }}</textarea>
-                    @if ($errors->has('description'))
+                    <label>@lang('form.product.price')</label>
+                    <input type="text" class="form-control" name="price" value="{{ isset($product) ? $product->price : old('price') }}" >
+                    @if ($errors->has('price'))
                         <span class="help-block text-danger">
-                            <strong>{{ $errors->first('description') }}</strong>
-                        </span>
+                    <strong>{{ $errors->first('price') }}</strong>
+                </span>
                     @endif
                 </div>
             </div>
             <div class="col-sm-12">
                 <div class="form-group">
-                    <label>@lang('form.content')</label> <span class="text-danger">*</span>
-                    <textarea id="content" name="content" class="form-control" rows="10" >{{ isset($product->content) ? $product->content : old('content') }}</textarea>
-                    @if ($errors->has('content'))
+                    <label>@lang('form.content_include')</label> <span class="text-danger">*</span>
+                    <textarea id="content_include" name="content_include" class="form-control" rows="10" >{{ isset($product->content_include) ? $product->content_include : old('content_include') }}</textarea>
+                    @if ($errors->has('content_include'))
                         <span class="help-block text-danger">
-                    <strong>{{ $errors->first('content') }}</strong>
+                    <strong>{{ $errors->first('content_include') }}</strong>
                 </span>
                     @endif
                     <div class="editor"></div>
@@ -180,45 +170,22 @@
         </div>
     </div>
 </div>
-
 @section('script')
     @parent
     <script src="{{ asset('ckeditor5/ckeditor.js') }}"></script>
+    <script src="{{ asset('ckfinder/ckfinder.js') }}"></script>
     <script>
-        const watchdog = new CKSource.EditorWatchdog();
-        window.watchdog = watchdog;
-
-        watchdog.setCreator((element, config) => {
-            return CKSource.Editor.create(element, config)
-                .then(editor => {
-                    return editor;
-                });
-        });
-
-        watchdog.setDestructor(editor => {
-            return editor.destroy();
-        });
-
-        watchdog.on('error', handleError);
-
-        watchdog
-            .create(document.querySelector('#content'), {
-                ckFinder: {
-                    uploadUrl: '{{route('ckfinder_connector')}}?command=QuickUpload&type=Images&responseType=json',
-                },
-                removePlugins: ['MediaEmbedToolbar', 'Markdown'],
-                mediaEmbed: {
-                    previewsInData: true
+        InlineEditor
+            .create( document.querySelector( '#content_include' ),{
+                ckfinder: {
+                    uploadUrl: '{!! asset('ckfinder/core/connector/php/connector.php').'?command=QuickUpload&type=Images&responseType=json' !!}',
+                    options: {
+                        resourceType: 'Images'
+                    }
                 }
-            })
-            .catch(handleError);
-
-        function handleError(error) {
-            console.error('Oops, something went wrong!');
-            console.error('Please report the following error on https://github.com/ckeditor/ckeditor5/issues with the build id and the error stack trace:');
-            console.warn('Build id: ryu56eng8wy8-nohdljl880ze');
-            console.error(error);
-        }
+            } )
+            .catch( error => {
+                console.error( error );
+            } );
     </script>
-    @include('ckfinder::setup')
 @endsection

@@ -54,7 +54,7 @@
                 </li>
                 @can(['view_page'])
                     <li class="nav-item">
-                        <a href="{{ route('admin.page.index') }}" class="nav-link @if (request()->is('admin/page')) active @endif">
+                        <a href="{{ route('admin.page.index') }}" class="nav-link @if (request()->is('admin/page*')) active @endif">
                             <i class="nav-icon fas fa-pager"></i>
                             <p>
                                 @lang('form.page.')
@@ -102,7 +102,7 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{{ route('admin.product-category.index') }}" class="nav-link @if (request()->is('admin/product-category')) active @endif">
+                                <a href="{{ route('admin.product-category.index') }}" class="nav-link @if (request()->is('admin/product-category*')) active @endif">
                                     <i class="nav-icon fas fa-layer-group"></i>
                                     <p>
                                         @lang('form.product_category.')
@@ -190,7 +190,7 @@
                     <ul class="nav nav-treeview">
                         @can(['view_media_image'])
                             <li class="nav-item">
-                                <a href="{{ route('admin.media-image.index') }}" class="nav-link @if (request()->is('admin/media-image')) active @endif">
+                                <a href="{{ route('admin.media-image.index') }}" class="nav-link @if (request()->is('admin/media-image*')) active @endif">
                                     <i class="nav-icon fas fa-images"></i>
                                     <p>
                                         @lang('form.media._image')
@@ -200,7 +200,7 @@
                         @endcan
                         @can(['view_media_video'])
                             <li class="nav-item">
-                                <a href="{{ route('admin.media-video.index') }}" class="nav-link @if (request()->is('admin/media-video')) active @endif">
+                                <a href="{{ route('admin.media-video.index') }}" class="nav-link @if (request()->is('admin/media-video*')) active @endif">
                                     <i class="nav-icon fas fa-video"></i>
                                     <p>
                                         @lang('form.media._video')

@@ -52,9 +52,6 @@ class PermissionSeeder extends Seeder
             ['name' => 'delete_role', 'display_name' => 'Xóa phân quyền', 'guard_name' => 'web'],
 
             ['name' => 'view_contact', 'display_name' => 'Xem danh sách liên hệ', 'guard_name' => 'web'],
-//            ['name' => 'create_contact', 'display_name' => 'Thêm mới liên hệ', 'guard_name' => 'web'],
-//            ['name' => 'edit_contact', 'display_name' => 'Sửa liên hệ', 'guard_name' => 'web'],
-//            ['name' => 'delete_contact', 'display_name' => 'Xóa liên hệ', 'guard_name' => 'web'],
 
             ['name' => 'view_menu_categories', 'display_name' => 'Xem danh sách nhóm menu', 'guard_name' => 'web'],
             ['name' => 'create_menu_categories', 'display_name' => 'Thêm mới nhóm menu', 'guard_name' => 'web'],

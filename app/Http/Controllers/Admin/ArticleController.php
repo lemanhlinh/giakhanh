@@ -65,8 +65,9 @@ class ArticleController extends Controller
         try {
             $data = $req->validated();
             $data['slug'] = $req->input('slug')?\Str::slug($req->input('slug'), '-'):\Str::slug($data['title'], '-');
-            if (\request()->hasFile('image')) {
-                $data['image'] = $this->articleRepository->saveFileUpload($data['image'],'images');
+            if (!empty($data['image'])){
+                $image_root = $data['image'];
+                $data['image'] = urldecode($image_root);
             }
             $this->articleRepository->create($data);
             DB::commit();
@@ -121,8 +122,8 @@ class ArticleController extends Controller
         try {
             $data = $req->validated();
             $article = $this->articleRepository->getOneById($id);
-            if (\request()->hasFile('image')) {
-                $data['image'] = $this->articleRepository->saveFileUpload($data['image'],'images');
+            if (!empty($data['image'])){
+                $data['image'] = rawurldecode($data['image']);
             }
             if (!empty($data['slug'])){
                 $data['slug'] = $req->input('slug')?\Str::slug($req->input('slug'), '-'):\Str::slug($data['title'], '-');

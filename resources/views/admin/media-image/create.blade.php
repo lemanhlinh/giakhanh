@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-@section('title_file', trans('form.setting.create'))
+@section('title_file', trans('form.media-image.create'))
 
 @section('content')
     <div class="card card-primary card-body">
@@ -12,8 +12,3 @@
 {{--        <button id="ckfinder-popup" class="button-a button-a-background" style="float: left">Open Popup</button>--}}
     </div>
 @endsection
-
-@section('script')
-    @parent
-@endsection
-
