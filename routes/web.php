@@ -20,12 +20,17 @@ use Illuminate\Http\Request;
 
 Route::group(['namespace' => 'Web', 'middleware' => 'language'], function (){
     Route::get('/', 'HomeController@index')->name('home');
-    Route::get('/gioi-thieu', 'HomeController@getContent')->name('getContent');
-    Route::get('/tin-tuc', 'ArticleController@index')->name('homeArticle');
+    Route::get('/trang/{slug}', 'PageController@index')->name('page');
     Route::get('/danh-muc-tin/{slug}', 'ArticleController@cat')->name('catArticle');
     Route::get('/chi-tiet-tin/{slug}/{id}', 'ArticleController@detail')->name('detailArticle');
     Route::get('/lien-he', 'ContactController@index')->name('detailContact');
     Route::post('/lien-he', 'ContactController@store')->name('detailContactStore');
+    Route::get('/hinh-anh', 'MediaController@album')->name('album');
+    Route::get('/video', 'MediaController@video')->name('video');
+    Route::get('/he-thong-cua-hang', 'StoreController@index')->name('store');
+    Route::get('/thuc-don', 'ProductController@index')->name('productHome');
+    Route::get('/thuc-don/{slug}', 'ProductController@cat')->name('productCat');
+    Route::get('/thuc-don/{slugCat}/{slug}', 'ProductController@detail')->name('productDetail');
     Route::post('/language/switch', function(Request $request) {
         $locale = $request->input('locale');
         if (in_array($locale, ['en', 'vi'])) {

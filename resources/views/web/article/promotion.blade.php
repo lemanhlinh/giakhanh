@@ -3,7 +3,7 @@
 @section('content')
     <div class="top-content-news">
         <div class="container">
-            <h1>Tin tức</h1>
+            <h1>Ưu đãi nổi bật</h1>
         </div>
     </div>
     <div class="list-news-home">

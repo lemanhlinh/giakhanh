@@ -27,6 +27,7 @@ class CreateCategoryProduct extends FormRequest
             'title' => 'required',
             'image' => 'nullable',
             'slug' => 'nullable',
+            'ordering' => 'nullable',
             'active' => 'required|numeric|integer|min:0',
             'seo_title' => 'nullable',
             'seo_keyword' => 'nullable',

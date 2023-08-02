@@ -8,20 +8,31 @@ use App\Repositories\Contracts\ArticleCategoryInterface;
 use App\Repositories\Contracts\ArticleInterface;
 use App\Repositories\Contracts\MenuCategoryInterface;
 use App\Repositories\Contracts\MenuInterface;
+use App\Repositories\Contracts\PageInterface;
+use App\Repositories\Contracts\ProductCategoryInterface;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use App\Http\Requests\Menu\CreateMenu;
 
 class MenuController extends Controller
 {
-    protected $articleCategoryRepository, $articleRepository, $menuCategoryRepository, $menuRepository;
+    protected $articleCategoryRepository, $articleRepository, $menuCategoryRepository, $menuRepository, $pageRepository, $productRepository;
 
-    public function __construct(ArticleCategoryInterface $articleCategoryRepository, ArticleInterface $articleRepository, MenuCategoryInterface $menuCategoryRepository, MenuInterface $menuRepository)
+    public function __construct(
+        ArticleCategoryInterface $articleCategoryRepository,
+        ArticleInterface $articleRepository,
+        MenuCategoryInterface $menuCategoryRepository,
+        MenuInterface $menuRepository,
+        PageInterface $pageRepository,
+        ProductCategoryInterface $productRepository
+    )
     {
         $this->articleCategoryRepository = $articleCategoryRepository;
         $this->articleRepository = $articleRepository;
         $this->menuCategoryRepository = $menuCategoryRepository;
         $this->menuRepository = $menuRepository;
+        $this->pageRepository = $pageRepository;
+        $this->productRepository = $productRepository;
     }
 
     /**
@@ -33,8 +44,9 @@ class MenuController extends Controller
     {
         $category_id = request()->query('category_id');
         $article_categories = $this->articleCategoryRepository->getAll();
-        $articles = $this->articleRepository->getAll();
+        $product_categories = $this->productRepository->getAll();
         $menu_categories = $this->menuCategoryRepository->getAll();
+        $pages = $this->pageRepository->getAll();
         if ($menu_categories->count() === 0){
             Session::flash('danger', 'Chưa có nhóm menu nào');
             return redirect()->route('admin.menu-category.index');
@@ -43,7 +55,7 @@ class MenuController extends Controller
             $category_id = $menu_categories->first()->id;
         }
         $menu = $this->menuRepository->getMenusByCategoryId($category_id)->toTree();
-        return view('admin.menu.index', compact('article_categories','articles','menu_categories','menu','category_id'));
+        return view('admin.menu.index', compact('article_categories','menu_categories','menu','category_id','pages','product_categories'));
     }
 
     /**

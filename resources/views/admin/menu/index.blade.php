@@ -34,38 +34,45 @@
                 <li>
                     <input type="checkbox" id="home" value="0" data-link="{{ route('home') }}" data-name="Trang chủ"><label for="home">Trang chủ</label>
                 </li>
-{{--                <li>--}}
-{{--                    <input type="checkbox" id="home_program" value="0" data-link="{{ route('homeCourse') }}" data-name="Trang chủ khóa học"><label for="home_program">Trang chủ khóa học</label>--}}
-{{--                </li>--}}
-{{--                <li>--}}
-{{--                    <input type="checkbox" id="home_article" value="0" data-link="{{ route('homeArticle') }}" data-name="Trang chủ tin tức"><label for="home_article">Trang chủ tin tức</label>--}}
-{{--                </li>--}}
-{{--                <li>--}}
-{{--                    <input type="checkbox" id="home_contact" value="0" data-link="{{ route('detailContact') }}" data-name="Liên hệ"><label for="home_contact">Liên hệ</label>--}}
-{{--                </li>--}}
-{{--                <li>--}}
-{{--                    <input type="checkbox" id="home_advisory" value="0" data-link="{{ route('detailAdvisory') }}" data-name="Tư vấn"><label for="home_advisory">Tư vấn</label>--}}
-{{--                </li>--}}
+                <li>
+                    <input type="checkbox" id="home_video" value="0" data-link="{{ route('video') }}" data-name="Video"><label for="home_video">Video</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="home_album" value="0" data-link="{{ route('album') }}" data-name="Hình ảnh"><label for="home_album">Hình ảnh</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="home_store" value="0" data-link="{{ route('store') }}" data-name="Hệ thống"><label for="home_store">Hệ thống</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="home_contact" value="0" data-link="{{ route('detailContact') }}" data-name="Liên hệ"><label for="home_contact">Liên hệ</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="home_product" value="0" data-link="{{ route('productHome') }}" data-name="Thực đơn"><label for="home_product">Thực đơn</label>
+                </li>
+                @if(!empty($product_categories))
+                    @foreach($product_categories as $k => $product)
+                        <li>
+                            <input type="checkbox" id="product_{{ $product->id }}" value="{{ $product->id }}"  data-link="{{ route('productCat',[$product->slug]) }}" data-name="{{ $product->title }}"><label for="product_{{ $product->id }}">{{ $product->title }}</label>
+                        </li>
+                    @endforeach
+                @endif
+                @if(!empty($article_categories))
+                    @foreach($article_categories as $k => $article)
+                        <li>
+                            <input type="checkbox" id="article_{{ $article->id }}" value="{{ $article->id }}"  data-link="{{ route('catArticle',[$article->slug]) }}" data-name="{{ $article->title }}"><label for="article_{{ $article->id }}">{{ $article->title }}</label>
+                        </li>
+                    @endforeach
+                @endif
+                @if(!empty($pages))
+                    @foreach($pages as $k => $page)
+                        <li>
+                            <input type="checkbox" id="page_{{ $page->id }}" value="{{ $page->id }}"  data-link="{{ route('page',[$page->slug]) }}" data-name="{{ $page->title }}"><label for="page_{{ $page->id }}">{{ $page->title }}</label>
+                        </li>
+                    @endforeach
+                @endif
                 <li>
                     <input type="checkbox" id="menu_other" value="0" data-link="#" data-name="Link bên ngoài"><label for="menu_other">Link bên ngoài</label>
                 </li>
-{{--
-                @if(!empty($articles))--}}
-{{--                    @foreach($articles as $k => $article)--}}
-{{--                        <li>--}}
-{{--                            <input type="checkbox" id="article_{{ $article->id }}" value="{{ $article->id }}"  data-link="{{ route('detailArticle',[$article->slug,$article->id]) }}" data-name="{{ $article->title }}"><label for="article_{{ $article->id }}">{{ $article->title }}</label>--}}
-{{--                        </li>--}}
-{{--                    @endforeach--}}
-{{--                @endif--}}
-
-                @if(!empty($pages))
-                    `@foreach($pages as $k => $page)
-                        <li>
-                            <input type="checkbox" id="article_{{ $page->id }}" value="{{ $page->id }}"  data-link="{{ route('detailPage',[$page->slug]) }}" data-name="{{ $page->title }}"><label for="article_{{ $page->id }}">{{ $page->title }}</label>
-                        </li>
-                    @endforeach
-                @endif`
-
             </ul>
             <button id="add-btn" class="btn btn-primary" data-url="{{ route('admin.menu.store') }}">Thêm vào menu</button>
         </div>

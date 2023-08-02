@@ -118,7 +118,7 @@ class ProductsCategoriesController extends Controller
             if (!empty($data['image']) && $data_root->image != $data['image']){
                 $data['image'] = rawurldecode($data['image']);
             }
-            if (!empty($data['slug'])){
+            if (empty($data['slug'])){
                 $data['slug'] = $req->input('slug')?\Str::slug($req->input('slug'), '-'):\Str::slug($data['title'], '-');
             }
             $page->update($data);

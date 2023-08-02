@@ -19,6 +19,13 @@ interface BaseInterface
     public function getOneById(int $id, array $relationships = []);
 
     /**
+     * @param string $slug
+     * @param array $relationships
+     * @return mixed
+     */
+    public function getOneBySlug(string $slug, array $relationships = []);
+
+    /**
      * @param array $ids
      * @return Collection
      */
@@ -51,9 +58,10 @@ interface BaseInterface
     /**
      * @param int $limit
      * @param array $column
+     * @param array $where
      * @return mixed
      */
-    public function paginate(int $limit, array $column = ['*']);
+    public function paginate(int $limit, array $column = ['*'], array $where = []);
 
     /**
      * @return Collection

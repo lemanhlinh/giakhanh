@@ -3,24 +3,31 @@
 @section('content')
     <div class="top-content-news">
         <div class="container">
-            <h1>Tin tức</h1>
+            <h1>Hình ảnh</h1>
+            <ul>
+                <li>
+                    <a href="{{ route('album') }}">Hình ảnh</a>
+                </li>
+                <li>
+                    <a href="{{ route('video') }}">Video</a>
+                </li>
+            </ul>
         </div>
     </div>
     <div class="list-news-home">
         <div class="container">
             <div class="row">
-                @foreach($articles as $k => $item)
+                @foreach($images as $k => $item)
                     <div class="col-md-4 position-relative">
-                        <img src="{{ asset($item->image) }}" alt="" class="img-fluid">
+                        <img src="{{ isset($item->image)?asset($item->image):'' }}" alt="" class="img-fluid">
                         <div class="title-new">
                             <p>Thứ bảy, 27/11/2021 06:00 (GMT+7)</p>
                             <h4>{{ $item->title }}</h4>
                         </div>
-                        <a href="{{ route('detailArticle',['slug' => $item->slug,'id' => $item->id]) }}" class="stretched-link"></a>
                     </div>
                 @endforeach
             </div>
-            {{ $articles->links('web.components.pagination') }}
+{{--            {{ $images->links('web.components.pagination') }}--}}
         </div>
     </div>
 @endsection

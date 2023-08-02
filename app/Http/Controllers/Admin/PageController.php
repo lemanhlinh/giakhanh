@@ -118,7 +118,10 @@ class PageController extends Controller
             if (!empty($data['image']) && $data_root->image != $data['image']){
                 $data['image'] = rawurldecode($data['image']);
             }
-            if (!empty($data['slug'])){
+            if (!empty($data['image_title']) && $data_root->image_title != $data['image_title']){
+                $data['image_title'] = rawurldecode($data['image_title']);
+            }
+            if (empty($data['slug'])){
                 $data['slug'] = $req->input('slug')?\Str::slug($req->input('slug'), '-'):\Str::slug($data['title'], '-');
             }
             $page->update($data);

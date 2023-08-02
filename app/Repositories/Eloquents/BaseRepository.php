@@ -33,6 +33,16 @@ abstract class BaseRepository implements BaseInterface
     }
 
     /**
+     * @param string $slug
+     * @param array $relationships
+     * @return mixed
+     */
+    public function getOneBySlug(string $slug, array $relationships = [])
+    {
+        return $this->model->with($relationships)->where(['slug' => $slug])->first();
+    }
+
+    /**
      * @param array $ids
      * @return \Illuminate\Support\Collection
      */
@@ -82,9 +92,9 @@ abstract class BaseRepository implements BaseInterface
      * @param array $columns
      * @return mixed
      */
-    public function paginate(int $limit, array $columns = ['*'])
+    public function paginate(int $limit, array $columns = ['*'], array $where = [])
     {
-        return $this->model->select($columns)->latest()->paginate($limit ?? config('data.limit', 20));
+        return $this->model->select($columns)->where($where)->latest()->paginate($limit ?? config('data.limit', 20));
     }
 
     /**

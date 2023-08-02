@@ -42,6 +42,18 @@
             </div>
             <div class="col-sm-6">
                 <!-- text input -->
+                <div class="form-group">
+                    <label>@lang('form.product_category.ordering')</label>
+                    <input type="text" class="form-control" name="ordering" value="{{ isset($product_category) ? $product_category->ordering : old('ordering') }}" >
+                    @if ($errors->has('ordering'))
+                        <span class="help-block text-danger">
+                    <strong>{{ $errors->first('ordering') }}</strong>
+                </span>
+                    @endif
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <!-- text input -->
                 <div class="form-group clearfix">
                     <label>@lang('form.product_category.active')</label> <span class="text-danger">*</span>
                     <div class="form-group">

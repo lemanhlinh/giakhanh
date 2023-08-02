@@ -2,17 +2,28 @@
 
 @section('content')
     <div class="content-detail">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <p>Liên hệ</p>
-                    <h1>
-                        Finalstyle rất hân
-                        hạnh được hợp tác!</h1>
-                    <span>Cảm ơn quí khách đã quan tâm đến dịch vụ thiết kế website của Final Style! <br> Nếu có bất cứ điều gì băn khoăn hoặc cần tư vấn, góp ý, đề xuất hợp tác xin vui lòng liên lạc với chúng tôi.</span>
+        <div class="container text-center">
+            <h1>{{ $setting['site_name'] }}</h1>
+            <div class="row">
+                <div class="col-md-3">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <p>Trụ sở chính</p>
+                    <p>{{ $setting['main_local'] }}</p>
                 </div>
-                <div class="col-md-6">
-                    <img src="{{ asset('images/contact.png') }}" alt="" class="img-fluid">
+                <div class="col-md-3">
+                    <i class="fas fa-phone-alt"></i>
+                    <p>Điện thoại</p>
+                    <p>{{ $setting['hotline'] }}</p>
+                </div>
+                <div class="col-md-3">
+                    <i class="fas fa-envelope"></i>
+                    <p>Email</p>
+                    <p>{{ $setting['email'] }}</p>
+                </div>
+                <div class="col-md-3">
+                    <i class="fas fa-globe"></i>
+                    <p>Website</p>
+                    <p>{{ $setting['website'] }}</p>
                 </div>
             </div>
         </div>
@@ -21,16 +32,10 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    CÔNG TY TNHH PHONG CÁCH SỐ - FINALSTYLE
-                    <ul>
-                        <li>Hà Nội: Phòng 103, Tầng 1, Lô 2bx3, khu đô thị Mỹ Đình I - Hà Nội</li>
-                        <li>TP HCM: 701 Lê Hồng Phong, P.10, Quận 10, TP HCM.</li>
-                        <li>Điện thoại: (024) 6287 2977</li>
-                    </ul>
-                    <p>Mở rộng hợp tác và tư vấn kỹ thuật chuyên sâu: 0986 919925</p>
-                    <p>Email: web@finalstyle.com</p>
+                    {!! $setting['map_contact'] !!}
                 </div>
                 <div class="col-md-6">
+                    {!! $setting['info_contact'] !!}
                     <form action="{{ route('detailContactStore') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @include('web.contact.form')
