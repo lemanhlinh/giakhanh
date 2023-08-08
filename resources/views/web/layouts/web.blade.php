@@ -9,6 +9,7 @@
         </div>
         <!-- Main Footer -->
         @include('web.partials._footer')
+        @include('web.partials._offcanvas')
     </div>
 @endsection
 

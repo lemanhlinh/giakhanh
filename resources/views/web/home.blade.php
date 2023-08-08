@@ -8,26 +8,45 @@
             @empty
             @endforelse
         </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <div class="slider-nav-slide-home">
+                        @foreach($slider as $item)
+                            <div class="img-slide-item">
+                                @include('web.components.image',['src' => $item->image,'title' => $item->name ])
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+        </div>
     </div>
     <div class="page-about">
         <div class="container">
-            <div class="row">
+            <div class="row align-items-center">
                 <div class="col-md-6">
                     <div class="col-md-10">
-                        @if($page)
-                            @include('web.components.image', ['src' => $page->image, 'title' => $page->title])
-                        @endif
+                        <div class="img-about">
+                            @if($page)
+                                @include('web.components.image', ['src' => $page->image, 'title' => $page->title])
+                            @endif
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-6">
-                    @if($page)
-                        <p># Giới thiệu</p>
-                        <h3>{{ $page->title }}</h3>
-                        <div class="about-description">
-                            {{ $page->description }}
-                        </div>
-                        <a href="" class="btn btn-danger">Tìm hiểu thêm</a>
-                    @endif
+                    <div class="content-home-page">
+                        @if($page)
+                            <p class="hashtag-about"># Giới thiệu</p>
+                            <h3 class="title-about">{{ $page->title }}</h3>
+                            <div class="about-description">
+                                {{ $page->description }}
+                            </div>
+                            <a href="{{ route('page',$page->slug) }}}" class="btn btn-see-about">Tìm hiểu thêm <i class="fas fa-angle-right"></i></a>
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>
@@ -36,7 +55,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6 pe-5">
-                    Thực đơn
+                    <p class="title-order">Thực đơn</p>
                     @if(!empty($categories_product))
                         @forelse($categories_product as $category)
                             <span>{{ $category->title }}</span>
@@ -51,9 +70,9 @@
                     @endif
                 </div>
                 <div class="col-md-6 ps-5">
-                    Đặt bàn trước
-                    <p>Quý khách vui lòng đặt bàn trước 1 giờ để được phục vụ tốt nhất, mọi chi tiết liên hệ: <b>1900 0056 – 0909 911 112</b></p>
-                    <form action="">
+                    <p class="title-order">Đặt bàn trước</p>
+                    <p class="des-order">Quý khách vui lòng đặt bàn trước 1 giờ để được phục vụ tốt nhất, mọi chi tiết liên hệ: <b>1900 0056 – 0909 911 112</b></p>
+                    <form action="{{ route('order') }}" method="post">
                         <input type="text" class="form-control" placeholder="Họ và tên" name="full_name">
                         <div class="row">
                             <div class="col-md-6">
@@ -63,8 +82,8 @@
                                 <input type="text" class="form-control" placeholder="Địa chỉ Email" name="email">
                             </div>
                         </div>
-                        <select name="" id="">
-                            <option value="">Vui lòng chọn cơ sở</option>
+                        <select name="" id="" class="form-control">
+                            <option value="" selected disabled>Vui lòng chọn cơ sở</option>
                         </select>
                         <div class="row">
                             <div class="col-md-6">
@@ -83,7 +102,8 @@
                                 </div>
                             </div>
                         </div>
-                        <textarea name="" id="" cols="30" rows="5" class="form-control" placeholder="Ghi chú khi đặt bàn"></textarea>
+                        <textarea name="" id="" cols="30" rows="4" class="form-control" placeholder="Ghi chú khi đặt bàn"></textarea>
+                        <button class="btn btn-order-now" type="button" >Đặt bàn ngay <i class="fas fa-chevron-right"></i></button>
                     </form>
                 </div>
             </div>
@@ -91,33 +111,37 @@
     </div>
     <div class="box-media">
         <div class="container">
-            <div class="row">
+            <div class="row align-items-center">
                 <div class="col-md-5 pe-3">
-                    <p># Thư viện media</p>
-                    <h3>tinh túy từ thiên nhiên</h3>
-                    <div class="about-description">
-                        <p>Hãy để sản phẩm của Lẩu Nấm Gia Khánh đem đến sức khỏe, niềm vui và sự nhiệt tình trong từng bữa ăn cho thực khách.
-                            Chúng tôi cam kết luôn đồng hành cùng thực khách trong từng món ăn về giá trị dinh dưỡng, chất lượng và phong cách phục vụ. Với không gian kiến trúc mở, lấy thiên nhiên làm nền tảng, luôn thay đổi tạo cảm giác lạ và mới mẻ cho thực khách.</p>
+                    <div class="content-home-page">
+                        <p class="hashtag-about"># Thư viện media</p>
+                        <h3 class="title-about">tinh túy từ thiên nhiên</h3>
+                        <div class="about-description">
+                            <p>Hãy để sản phẩm của Lẩu Nấm Gia Khánh đem đến sức khỏe, niềm vui và sự nhiệt tình trong từng bữa ăn cho thực khách.
+                                Chúng tôi cam kết luôn đồng hành cùng thực khách trong từng món ăn về giá trị dinh dưỡng, chất lượng và phong cách phục vụ. Với không gian kiến trúc mở, lấy thiên nhiên làm nền tảng, luôn thay đổi tạo cảm giác lạ và mới mẻ cho thực khách.</p>
+                        </div>
+                        <a href="{{ route('page',$page->slug) }}}" class="btn btn-see-about">Xem tất cả <i class="fas fa-angle-right"></i></a>
                     </div>
-                    <a href="" class="btn btn-danger">Xem tất cả</a>
+
                 </div>
                 <div class="col-md-7">
                     <div class="list-media">
                         <div class="row">
                             @forelse($videos as $item)
                                 <div class="col-md-6">
-                                    <div class="content-media-home">
+                                    <div class="content-media-home for-image">
                                         @include('web.components.image', ['src' => $item->image, 'title' => $item->title])
-                                        <p>{{ $item->title }}</p>
+                                        <p class="title-media-item">{{ $item->title }}</p>
                                     </div>
                                 </div>
                             @empty
                             @endforelse
                             @forelse($images as $item)
                                 <div class="col-md-6">
-                                    <div class="content-media-home">
+                                    <div class="content-media-home for-video">
                                         @include('web.components.image', ['src' => $item->image, 'title' => $item->title])
-                                        <p>{{ $item->title }}</p>
+                                        <img src="{{ asset('images/Youtube.png') }}" alt="" class="play-youtube-video">
+                                        <p class="title-media-item">{{ $item->title }}</p>
                                     </div>
                                 </div>
                             @empty
@@ -130,18 +154,22 @@
     </div>
     <div class="box-new">
         <div class="container">
-            <h3 class="text-center">Tin tức mới nhất</h3>
+            <h3 class="text-center title-box-new">Tin tức mới nhất</h3>
             <div class="article-list-home">
                 @forelse($articles as $item)
                     <div class="article-item">
-                        <a href="{{ route('detailArticle',['slug' => $item->slug,'id' => $item->id]) }}">
-                            @include('web.components.image', ['src' => $item->image, 'title' => $item->title])
-                        </a>
-                        <p>{{ $item->created_at }}</p>
-                        <a href="{{ route('detailArticle',['slug' => $item->slug,'id' => $item->id]) }}">
-                            <h4>{{ $item->title }}</h4>
-                        </a>
-                        <p>{{ $item->description }}</p>
+                        <div class="article-item-content">
+                            <a href="{{ route('detailArticle',['slug' => $item->slug,'id' => $item->id]) }}">
+                                @include('web.components.image', ['src' => $item->image, 'title' => $item->title])
+                            </a>
+                            <div class="box-content-article">
+                                <p class="calendar-new"><i class="fas fa-calendar-alt"></i> {{ $item->created_at }}</p>
+                                <a href="{{ route('detailArticle',['slug' => $item->slug,'id' => $item->id]) }}">
+                                    <h4 class="title-article">{{ $item->title }}</h4>
+                                </a>
+                                <p class="description-article">{{ $item->description }}</p>
+                            </div>
+                        </div>
                     </div>
                 @empty
                 @endforelse
@@ -154,6 +182,7 @@
     @parent
     <link rel="stylesheet" href="{{ asset('/js/web/slick/slick.css') }}">
     <link rel="stylesheet" href="{{ asset('/js/web/slick/slick-theme.css') }}">
+    <link rel="stylesheet" href="{{ asset('/css/web/home.css') }}">
 @endsection
 
 @section('script')
@@ -161,9 +190,15 @@
     <script src="{{ asset('/js/web/slick/slick.js') }}"></script>
     <script>
         $('.slide-home').slick({
-            infinite: true,
             slidesToShow: 1,
             slidesToScroll: 1,
+            infinite: true,
+            arrows: true,
+            dot:false,
+            fade: true,
+            autoplay: true,
+            autoplaySpeed: 2000,
+            asNavFor: '.slider-nav-slide-home',
             responsive: [
                 {
                     breakpoint: 768,
@@ -184,6 +219,18 @@
                     }
                 }
             ]
+        });
+        $('.slider-nav-slide-home').slick({
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            asNavFor: '.slide-home',
+            dots: false,
+            centerMode: false,
+            arrows: false,
+            infinite: true,
+            autoplay: true,
+            autoplaySpeed: 2000,
+            focusOnSelect: true
         });
 
         $('.article-list-home').slick({

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\DataTables\Scopes\ProductDataTableScope;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -31,13 +32,13 @@ class ProductController extends Controller
      */
     public function index(ProductDataTable $dataTable)
     {
-        $data = $this->productResponstory->getAll();
+        $data = request()->all();
         $categories = $this->productCategoryResponstory->getAll();
         if ($categories->count() === 0){
             Session::flash('danger', 'Chưa có danh mục nào');
             return redirect()->route('admin.product-category.index');
         }
-        return $dataTable->render('admin.product.index', compact('data', 'categories'));
+        return $dataTable->addScope(new ProductDataTableScope())->render('admin.product.index', compact('data', 'categories'));
     }
 
     /**

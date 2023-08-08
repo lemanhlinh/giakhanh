@@ -84,9 +84,9 @@
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
-                    <label>@lang('form.page.image')</label> <span class="text-danger">*</span>
+                    <label>@lang('form.product.image')</label> <span class="text-danger">*</span>
                     <div class="input-group">
-                        @include('admin.components.buttons.image',['src' => isset($page->image) ? $page->image : old('image'),'name' => 'image'])
+                        @include('admin.components.buttons.image',['src' => isset($product->image) ? $product->image : old('image'),'name' => 'image'])
                         @if ($errors->has('image'))
                             <span class="help-block text-danger">
                                 <strong>{{ $errors->first('image') }}</strong>

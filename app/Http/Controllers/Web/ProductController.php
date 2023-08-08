@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Repositories\Contracts\ProductCategoryInterface;
 use App\Repositories\Contracts\ProductInterface;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class ProductController extends Controller
 {
@@ -35,5 +38,35 @@ class ProductController extends Controller
         $products = $this->productRepository->getList(['active' => 1],['id','title','slug','image','price'], 3);
         $product = $this->productRepository->getOneBySlug($slug);
         return view('web.product.detail',compact('cat','product','products'));
+    }
+
+    public function order (CreateContact $req){
+        DB::beginTransaction();
+        try {
+            $data = $req->validated();
+            Order::create(
+                [
+                    'name' => $data['name'],
+                    'content' => $data['content'],
+                    'phone' => $data['phone'],
+                    'email' => $data['email'],
+                    'address' =>  $data['address'],
+                ]
+            );
+            DB::commit();
+            Session::flash('success', trans('message.create_contact_success'));
+            return redirect()->back();
+        } catch (\Exception $ex) {
+            DB::rollBack();
+            \Log::info([
+                'message' => $ex->getMessage(),
+                'line' => __LINE__,
+                'method' => __METHOD__
+            ]);
+
+            Session::flash('danger', trans('message.create_contact_error'));
+            return redirect()->back();
+        }
+        return redirect()->back();
     }
 }

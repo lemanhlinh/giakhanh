@@ -6,10 +6,49 @@
   font-family: GoogleSans-Bold;
   src: url(/fonts/GoogleSans-Bold.ttf?6b36bf67d979283ff19fb8a20f0d8abe);
 }
+@font-face {
+  font-family: SVN-SVN-A-Love-Of-Thunder;
+  src: url(/fonts/SVN-SVN-A-Love-Of-Thunder.ttf?b6aff5c206bb6e771bbfa25bf5ce3941);
+}
 h1, h2, h3, h4 {
   font-family: "GoogleSans-Bold", sans-serif;
 }
 
+.container-top {
+  --bs-gutter-x: 1.5rem;
+  --bs-gutter-y: 0;
+  width: 100%;
+  padding-right: calc(var(--bs-gutter-x) * 0.5);
+  padding-left: calc(var(--bs-gutter-x) * 0.5);
+  margin-right: auto;
+  margin-left: auto;
+}
+
+@media (min-width: 576px) {
+  .container-top {
+    max-width: 540px;
+  }
+}
+@media (min-width: 768px) {
+  .container-top {
+    max-width: 720px;
+  }
+}
+@media (min-width: 992px) {
+  .container-top {
+    max-width: 960px;
+  }
+}
+@media (min-width: 1200px) {
+  .container-top {
+    max-width: 1680px;
+  }
+}
+@media (min-width: 1400px) {
+  .container-top {
+    max-width: 1680px;
+  }
+}
 body {
   background-color: #fff;
   font-family: "GoogleSans", sans-serif;
@@ -29,26 +68,177 @@ a:hover {
 }
 #app .navbar-finalstyle {
   z-index: 3;
+  height: 92px;
+}
+#app .navbar-finalstyle .navbar-brand {
+  display: block;
+  padding: 8px 0;
 }
 #app .navbar-finalstyle .navbar-brand .logo-fs {
-  max-height: 64px;
+  max-height: 80px;
 }
 #app .navbar-finalstyle #main-menu ul {
   margin: 0;
+  float: none;
+  display: flex;
 }
 #app .navbar-finalstyle #main-menu ul li {
-  display: inline-block;
+  float: none;
+  position: relative;
+  line-height: 50px;
 }
 #app .navbar-finalstyle #main-menu ul li a {
-  color: #FFF;
-  font-family: HelveticaNeue-Bold;
+  color: #fff;
+  text-decoration: none;
+  padding: 0 32px 0 0;
+  font-family: GoogleSans-Bold;
 }
 #app .navbar-finalstyle #main-menu ul li a:hover {
-  color: #FFF;
+  color: var(--primary-primary-500, #E91A22);
 }
-#app .navbar-finalstyle #main-menu ul li:hover a {
-  color: #BC2330;
+#app .navbar-finalstyle #main-menu ul li .sub-menu {
+  position: absolute;
+  list-style: none;
+  padding: 0;
+  display: none;
+}
+#app .navbar-finalstyle #main-menu ul li .sub-menu:before {
+  content: "";
+  width: 50px;
+  height: 2px;
+  background: #fff;
+  display: block;
+}
+#app .navbar-finalstyle #main-menu ul li .sub-menu li a {
+  padding: 11px 26px 9px 6px;
+  text-transform: unset;
+  display: block;
+  width: -moz-max-content;
+  width: max-content;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 18px;
+  color: #fff;
+}
+#app .navbar-finalstyle #main-menu ul li .sub-menu li a:hover {
+  color: var(--primary-primary-500, #E91A22);
+}
+#app .navbar-finalstyle #main-menu ul > li > a:hover {
+  background: unset;
+  color: var(--primary-primary-500, #E91A22);
+}
+#app .navbar-finalstyle #main-menu ul > li > ul > li {
+  border-bottom: 1px solid #EEEEEE;
+  background: rgba(0, 0, 0, 0.3294117647);
+}
+#app .navbar-finalstyle #main-menu ul > li > ul .level1-menu-item i {
+  margin-right: 15px;
+}
+#app .navbar-finalstyle #main-menu ul > li:hover .sub-menu {
+  display: block;
+}
+#app .navbar-finalstyle #main-menu ul > li:hover .sub-menu:before {
+  content: "";
+  width: 50px;
+  height: 2px;
+  background: #e40375;
+  display: block;
+}
+#app .navbar-finalstyle #main-menu ul > li > .sub-menu > li .sub-menu {
+  background: #fff;
+  display: none;
+}
+#app .navbar-finalstyle #main-menu ul > li > .sub-menu > li .sub-menu li {
+  border-bottom: 1px solid #E6E6E6;
+  padding: 0 15px;
+}
+#app .navbar-finalstyle #main-menu ul > li > .sub-menu > li .sub-menu li:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+#app .navbar-finalstyle #main-menu ul > li > .sub-menu > li:hover .sub-menu {
+  display: block;
+  top: 0;
+  left: 100%;
+  border: 1px solid #fbf8f8;
+}
+#app .navbar-finalstyle .form-select-lang {
+  color: #fff;
+}
+#app .navbar-finalstyle .form-select-lang select {
+  border: none;
+  background: none;
+  color: #fff;
+}
+#app .navbar-finalstyle .form-select-lang select:focus {
+  border: none;
+}
+#app .navbar-finalstyle .btn-order {
+  background: #E91A22;
+  color: #fff;
+  padding: 10px 24px;
+  border-radius: 8px;
 }
 #app .main-footer {
   background: linear-gradient(180deg, #800E13 0%, #620B0E 100%);
+}
+#app .main-footer .top-footer .info-ft-phone {
+  border-radius: 8px;
+  background: rgba(26, 3, 4, 0.28);
+  text-align: center;
+  padding: 5px 10px;
+  text-transform: uppercase;
+  margin-bottom: 15px;
+}
+#app .main-footer .top-footer .info-ft-phone p {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+#app .main-footer .top-footer .info-ft-phone span {
+  color: #E9B941;
+  font-size: 20px;
+  font-family: GoogleSans-Bold;
+}
+#app .main-footer .top-footer .btn-order {
+  border-radius: 8px;
+  background: #E4A812;
+  color: #620B0E;
+  display: block;
+  text-align: center;
+  padding: 11px 10px;
+  font-family: GoogleSans-Bold;
+  text-transform: uppercase;
+  margin: 0;
+  width: 100%;
+}
+#app .main-footer .top-footer .btn-order i {
+  margin-left: 5px;
+}
+#app .main-footer .top-footer .menu-bottom-ft .title-menu-bt {
+  color: var(--primary-primary-50, #FDE8E9);
+  text-align: center;
+  font-family: GoogleSans-Bold;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+#app .main-footer .top-footer .menu-bottom-ft .list-item-menu-bt li a {
+  color: var(--primary-primary-200, #F59699);
+  font-size: 14px;
+  margin-bottom: 16px;
+  display: block;
+}
+#app .main-footer .top-footer .link-to-restaurant {
+  margin-top: 13px;
+}
+#app .main-footer .top-footer .link-to-restaurant .btn-store {
+  border-radius: 8px;
+  background: rgba(26, 3, 4, 0.28);
+  padding: 16px;
+  width: 100%;
+  display: block;
+  color: #fff;
+}
+#app .main-footer .top-footer .link-to-restaurant .btn-store i {
+  margin-right: 10px;
 }
