@@ -2,7 +2,7 @@ $(document).ready(function() {
     var fixmeTop = $('.navbar-finalstyle').offset().top;
     $(window).scroll(function() {
         var currentScroll = $(window).scrollTop();
-        if (currentScroll > fixmeTop) {
+        if (currentScroll >= fixmeTop) {
             $('.navbar-finalstyle').css({
                 background: '#fff'
             });

@@ -44,11 +44,11 @@ class ArticleController extends Controller
             abort(404);
         }
         if ($category->type == 1){
-            $articles = $this->articleRepository->paginate(10,['id','slug','image','description','title','active','category_id'],['active'=>1,'category_id'=>$category->id]);
-            return view('web.article.home',compact('category','articles'));
-        }else{
-            $articles = $this->articleRepository->paginate(9,['id','slug','image','description','title','active','category_id'],['active'=>1,'category_id'=>$category->id]);
+            $articles = $this->articleRepository->paginate(10,['id','slug','image','description','title','active','category_id','created_at'],['active'=>1,'category_id'=>$category->id]);
             return view('web.article.promotion',compact('category','articles'));
+        }else{
+            $articles = $this->articleRepository->paginate(9,['id','slug','image','description','title','active','category_id','created_at'],['active'=>1,'category_id'=>$category->id]);
+            return view('web.article.home',compact('category','articles'));
         }
 
     }
@@ -61,7 +61,7 @@ class ArticleController extends Controller
     public function detail($slug, $id)
     {
         $articles = $this->articleRepository->getAll();
-        $article = $this->articleRepository->getOneById($id);
+        $article = $this->articleRepository->getOneById($id,['category']);
         return view('web.article.detail', compact('article','articles'));
     }
 }

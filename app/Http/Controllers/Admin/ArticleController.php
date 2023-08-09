@@ -69,6 +69,8 @@ class ArticleController extends Controller
                 $image_root = $data['image'];
                 $data['image'] = urldecode($image_root);
             }
+            $category = $this->articleCategoryRepository->getOneById($data['category_id']);
+            $data['type'] = $category->type;
             $this->articleRepository->create($data);
             DB::commit();
             Session::flash('success', trans('message.create_article_success'));
@@ -128,6 +130,8 @@ class ArticleController extends Controller
             if (!empty($data['slug'])){
                 $data['slug'] = $req->input('slug')?\Str::slug($req->input('slug'), '-'):\Str::slug($data['title'], '-');
             }
+            $category = $this->articleCategoryRepository->getOneById($data['category_id']);
+            $data['type'] = $category->type;
             $article->update($data);
             DB::commit();
             Session::flash('success', trans('message.update_article_success'));

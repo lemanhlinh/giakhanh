@@ -56,18 +56,39 @@
             <div class="row">
                 <div class="col-md-6 pe-5">
                     <p class="title-order">Thực đơn</p>
-                    @if(!empty($categories_product))
-                        @forelse($categories_product as $category)
-                            <span>{{ $category->title }}</span>
-                            @if(!empty($category->products))
-                                @forelse($category->products as $item)
-                                    <p>{{ $item->title }}</p>
+                    <div class="product-home">
+                        <ul class="nav nav-tabs" id="myTabProduct" role="tablist">
+                            @if(!empty($categories_product))
+                                @forelse($categories_product as $k => $category)
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link {{ $k === 0 ? 'active' : '' }}" id="{{ $category->slug }}-tab" data-bs-toggle="tab" data-bs-target="#{{ $category->slug }}" type="button" role="tab" aria-controls="{{ $category->slug }}" aria-selected="{{ $k === 0 ? 'true' : 'false' }}">{{ $category->title }}</button>
+                                    </li>
                                 @empty
                                 @endforelse
                             @endif
-                        @empty
-                        @endforelse
-                    @endif
+                        </ul>
+                        <div class="tab-content" id="myTabContentProduct">
+                            @if(!empty($categories_product))
+                                @forelse($categories_product as $k => $category)
+                                    <div class="tab-pane fade {{ $k === 0 ? 'show active' : '' }}" id="{{ $category->slug }}" role="tabpanel" aria-labelledby="{{ $category->slug }}-tab">
+                                        @if(!empty($category->products))
+                                            @forelse($category->products as $item)
+                                                <div class="d-flex align-items-center justify-content-between item-product">
+                                                    @include('web.components.image', ['src' => $item->image, 'title' => $item->title])
+                                                    <p class="title-product-box">{{ $item->title }}</p>
+                                                    <p class="price-product-box">{{ $item->price }}</p>
+                                                </div>
+                                            @empty
+                                            @endforelse
+                                        @endif
+                                        <a href="{{ route('productCat', $category->slug) }}" class="see-all-product">Xem tất cả <i class="fas fa-chevron-right"></i></a>
+                                    </div>
+                                @empty
+                                @endforelse
+                            @endif
+                        </div>
+                    </div>
+
                 </div>
                 <div class="col-md-6 ps-5">
                     <p class="title-order">Đặt bàn trước</p>

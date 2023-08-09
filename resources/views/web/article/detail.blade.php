@@ -1,30 +1,79 @@
 @extends('web.layouts.web')
 
 @section('content')
-    <div class="content-detail py-4">
+    <div class="content-detail">
         <div class="container">
-            <div class="bg-white py-4 px-5">
-                <h1 class="text-center">{{ $article->title }}</h1>
-                <div class="show-content ck-content">
-                    {!! $article->content !!}
+            <div class="box-content-top">
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <p class="title-category text-center">{{ $article->category->title }}</p>
+                        <h1 class="title-article">{{ $article->title }}</h1>
+                        <div class="time-article d-flex justify-content-between align-items-center">
+                            <span><i class="far fa-clock"></i> {{ $article->created_at }}</span>
+                            <span class="share-social"></span>
+                        </div>
+                        <div class="show-content ck-content">
+                            {!! $article->content !!}
+                        </div>
+                    </div>
+                    <div class="col-md-2"></div>
                 </div>
             </div>
         </div>
         <div class="content-news-related mt-4">
             <div class="container">
-                <div class="text-center">Bài viết liên quan</div>
-                <div class="row">
-                    @foreach($articles as $k => $item)
-                        <div class="col-md-4 position-relative">
-                            <img src="{{ asset($item->image) }}" alt="" class="img-fluid">
-                            <div class="title-new">
-                                <p>Thứ bảy, 27/11/2021 06:00 (GMT+7)</p>
-                                <h4>{{ $item->title }}</h4>
+                @if($article->category->type === 1)
+                    <div class="title-article-other">Ưu đãi hấp dẫn khác</div>
+                    <div class="row g-0 mg-for-article">
+                        @foreach($articles as $k => $item)
+                            <div class="col-md-4 position-relative">
+                                <div class="article-item">
+                                    <div class="article-item-content">
+                                        <a href="{{ route('detailArticle',['slug' => $item->slug,'id' => $item->id]) }}">
+                                            @include('web.components.image', ['src' => $item->image, 'title' => $item->title])
+                                        </a>
+                                        <div class="box-content-article">
+                                            <a href="{{ route('detailArticle',['slug' => $item->slug,'id' => $item->id]) }}">
+                                                <h4 class="title-article">{{ $item->title }}</h4>
+                                            </a>
+                                            <p class="calendar-new d-flex align-items-center justify-content-between">
+                                                <span><i class="fas fa-calendar-alt"></i> {{ $item->created_at }}</span>
+                                                <a href="{{ route('detailArticle',['slug' => $item->slug,'id' => $item->id]) }}" class="btn btn-detail-article">
+                                                    Chi tiết <i class="fas fa-angle-right"></i>
+                                                </a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <a href="{{ route('detailArticle',['slug' => $item->slug,'id' => $item->id]) }}" class="stretched-link"></a>
-                        </div>
-                    @endforeach
-                </div>
+                        @endforeach
+                    </div>
+                @else
+                    <div class="title-article-other">có thể bạn quan tâm</div>
+                    <div class="row article-list-other">
+                        @foreach($articles as $k => $item)
+                            <div class="col-md-3 position-relative">
+                                <div class="article-item">
+                                    <div class="article-item-content">
+                                        <a href="{{ route('detailArticle',['slug' => $item->slug,'id' => $item->id]) }}" class="image-other-article">
+                                            @include('web.components.image', ['src' => $item->image, 'title' => $item->title])
+                                        </a>
+                                        <div class="box-content-article">
+                                            <a href="{{ route('detailArticle',['slug' => $item->slug,'id' => $item->id]) }}">
+                                                <h4 class="title-article">{{ $item->title }}</h4>
+                                            </a>
+                                            <p class="calendar-new d-flex align-items-center justify-content-between">
+                                                <span><i class="far fa-clock"></i> {{ $item->created_at }}</span>
+                                            </p>
+                                            <p class="des-article-related">{{ $item->description }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
             </div>
         </div>
     </div>

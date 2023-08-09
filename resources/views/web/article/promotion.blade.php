@@ -1,26 +1,40 @@
 @extends('web.layouts.web')
 
 @section('content')
-    <div class="top-content-news">
+    <div class="top-content-promotion">
         <div class="container">
-            <h1>Ưu đãi nổi bật</h1>
+            <h1 class="title-page">Ưu đãi nổi bật</h1>
         </div>
     </div>
     <div class="list-news-home">
         <div class="container">
-            <div class="row">
+            <div class="row g-0">
                 @foreach($articles as $k => $item)
                     <div class="col-md-4 position-relative">
-                        <img src="{{ asset($item->image) }}" alt="" class="img-fluid">
-                        <div class="title-new">
-                            <p>Thứ bảy, 27/11/2021 06:00 (GMT+7)</p>
-                            <h4>{{ $item->title }}</h4>
+                        <div class="article-item">
+                            <div class="article-item-content">
+                                <a href="{{ route('detailArticle',['slug' => $item->slug,'id' => $item->id]) }}">
+                                    @include('web.components.image', ['src' => $item->image, 'title' => $item->title])
+                                </a>
+                                <div class="box-content-article">
+                                    <a href="{{ route('detailArticle',['slug' => $item->slug,'id' => $item->id]) }}">
+                                        <h4 class="title-article">{{ $item->title }}</h4>
+                                    </a>
+                                    <p class="calendar-new d-flex align-items-center justify-content-between">
+                                        <span><i class="fas fa-calendar-alt"></i> {{ $item->created_at }}</span>
+                                        <a href="{{ route('detailArticle',['slug' => $item->slug,'id' => $item->id]) }}" class="btn btn-detail-article">
+                                            Chi tiết <i class="fas fa-angle-right"></i>
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
                         </div>
-                        <a href="{{ route('detailArticle',['slug' => $item->slug,'id' => $item->id]) }}" class="stretched-link"></a>
                     </div>
                 @endforeach
             </div>
-            {{ $articles->links('web.components.pagination') }}
+            <div class="text-center">
+                {{ $articles->links('web.components.pagination') }}
+            </div>
         </div>
     </div>
 @endsection

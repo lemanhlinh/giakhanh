@@ -1,12 +1,12 @@
 @extends('web.layouts.web')
 
 @section('content')
-    <div class="top-content-news">
+    <div class="top-content-media">
         <div class="container">
-            <h1>Hình ảnh</h1>
-            <ul>
+            <h1 class="title-page">Thư viện</h1>
+            <ul class="list-menu-page list-unstyled">
                 <li>
-                    <a href="{{ route('album') }}">Hình ảnh</a>
+                    <a href="{{ route('album') }}" class="active">Hình ảnh</a>
                 </li>
                 <li>
                     <a href="{{ route('video') }}">Video</a>
@@ -16,13 +16,20 @@
     </div>
     <div class="list-news-home">
         <div class="container">
-            <div class="row">
+            <div class="row g-0 mg-for-article">
                 @foreach($images as $k => $item)
                     <div class="col-md-4 position-relative">
-                        <img src="{{ isset($item->image)?asset($item->image):'' }}" alt="" class="img-fluid">
-                        <div class="title-new">
-                            <p>Thứ bảy, 27/11/2021 06:00 (GMT+7)</p>
-                            <h4>{{ $item->title }}</h4>
+                        <div class="article-item">
+                            <div class="article-item-content">
+                                <a href="#">
+                                    @include('web.components.image', ['src' => $item->image, 'title' => $item->title])
+                                </a>
+                                <div class="box-content-article">
+                                    <a href="#">
+                                        <h4 class="title-article">{{ $item->title }}</h4>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 @endforeach
@@ -34,7 +41,7 @@
 
 @section('link')
     @parent
-    <link rel="stylesheet" href="{{ asset('/css/web/news-home.css') }}">
+    <link rel="stylesheet" href="{{ asset('/css/web/album-home.css') }}">
 @endsection
 
 @section('script')

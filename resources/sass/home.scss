@@ -73,6 +73,59 @@
         text-transform: uppercase;
         margin-bottom: 30px;
     }
+    .product-home{
+        #myTabProduct{
+            border: none;
+            margin-bottom: 36px;
+            li{
+                margin-right: 8px;
+                .nav-link{
+                    border: none;
+                    border-radius: 8px;
+                    background: rgba(26, 3, 4, 0.12);
+                    padding: 8px 16px;
+                    color: #FDE8E9;
+                    font-size: 14px;
+                    text-transform: uppercase;
+                }
+                .active{
+                    background: #A51218;
+                }
+            }
+        }
+        #myTabContentProduct{
+            .item-product{
+                border-radius: 8px;
+                background: rgba(0, 0, 0, 0.28);
+                margin-bottom: 16px;
+                padding: 16px;
+                img{
+                    max-width: 120px;
+                    border-radius: 4px;
+                }
+                .title-product-box{
+                    color: #FDE8E9;
+                    font-family: GoogleSans-Bold;
+                    text-transform: uppercase;
+                }
+                .price-product-box{
+                    color: #E9B941;
+                    text-align: right;
+                    font-size: 18px;
+                    font-family: GoogleSans-Bold;
+
+                }
+            }
+            .see-all-product{
+                border-radius: 8px;
+                background: rgba(26, 3, 4, 0.12);
+                padding: 15px 24px;
+                font-size: 14px;
+                color: #fff;
+                display: inline-block;
+            }
+        }
+    }
     .des-order{
         color: #fff;
         margin-bottom: 40px;

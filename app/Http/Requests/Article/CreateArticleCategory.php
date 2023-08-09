@@ -27,6 +27,7 @@ class CreateArticleCategory extends FormRequest
             'title' => 'required',
             'image' => 'nullable',
             'slug' => 'nullable',
+            'type' => 'required',
             'active' => 'required|numeric|integer|min:0',
             'seo_title' => 'nullable',
             'seo_keyword' => 'nullable',

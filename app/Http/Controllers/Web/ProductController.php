@@ -22,20 +22,20 @@ class ProductController extends Controller
 
     public function index(){
         $cat = $this->productCategoryRepository->getList(['active' => 1],['id','title','slug'], 0);
-        $products = $this->productRepository->paginate(12,['id','slug','image','title','price'],['active'=>1]);
+        $products = $this->productRepository->paginate(12,['id','slug','image','title','price','category_id'],['active'=>1],['category']);
         return view('web.product.home',compact('cat','products'));
     }
 
     public function cat($slug){
         $cat = $this->productCategoryRepository->getOneBySlug($slug);
         $cats = $this->productCategoryRepository->getList(['active' => 1],['id','title','slug'], 0);
-        $products = $this->productRepository->paginate(12,['id','slug','image','title','price'],['active'=>1,'category_id'=>$cat->id]);
+        $products = $this->productRepository->paginate(12,['id','slug','image','title','price','category_id'],['active'=>1,'category_id'=>$cat->id],['category']);
         return view('web.product.cat',compact('cat','cats','products'));
     }
 
     public function detail ($slugCat,$slug){
         $cat = $this->productCategoryRepository->getOneBySlug($slugCat);
-        $products = $this->productRepository->getList(['active' => 1],['id','title','slug','image','price'], 3);
+        $products = $this->productRepository->getList(['active' => 1],['id','title','slug','image','price','category_id'], 3,['category']);
         $product = $this->productRepository->getOneBySlug($slug);
         return view('web.product.detail',compact('cat','product','products'));
     }
@@ -68,5 +68,10 @@ class ProductController extends Controller
             return redirect()->back();
         }
         return redirect()->back();
+    }
+
+    public function success ($id){
+        $cat = $this->productCategoryRepository->getOneById($id);
+        return view('web.cart.register_success');
     }
 }

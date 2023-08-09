@@ -59,9 +59,10 @@ interface BaseInterface
      * @param int $limit
      * @param array $column
      * @param array $where
+     * @param array $relationships
      * @return mixed
      */
-    public function paginate(int $limit, array $column = ['*'], array $where = []);
+    public function paginate(int $limit, array $column = ['*'], array $where = [], array $relationships = []);
 
     /**
      * @return Collection

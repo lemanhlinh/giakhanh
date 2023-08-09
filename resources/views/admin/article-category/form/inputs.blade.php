@@ -40,7 +40,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-12">
+            <div class="col-sm-6">
                 <!-- text input -->
                 <div class="form-group clearfix">
                     <label>@lang('form.article_category.active')</label> <span class="text-danger">*</span>
@@ -57,6 +57,27 @@
                     @if ($errors->has('active'))
                         <span class="help-block text-danger">
                     <strong>{{ $errors->first('active') }}</strong>
+                </span>
+                    @endif
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <!-- text input -->
+                <div class="form-group clearfix">
+                    <label>@lang('form.article_category.type')</label> <span class="text-danger">*</span>
+                    <div class="form-group">
+                        <div class="icheck-success d-inline">
+                            <input class="" type="radio" id="typeRadio1" name="type" value="{{ \App\Models\ArticlesCategories::TYPE_ARTICLE }}" {{ isset($article_category) && $article_category->type == \App\Models\ArticlesCategories::TYPE_ARTICLE ? 'checked' : (old('type') && (old('type') == \App\Models\ArticlesCategories::TYPE_ARTICLE)) ? 'checked' : '' }}  required>
+                            <label for="typeRadio1" class="custom-control-label">Tin tức   </label>
+                        </div>
+                        <div class="icheck-danger d-inline">
+                            <input class="" type="radio" id="typeRadio2" name="type" value="{{ \App\Models\ArticlesCategories::TYPE_PROMOTION }}" {{ isset($article_category) && $article_category->type == \App\Models\ArticlesCategories::TYPE_PROMOTION ? 'checked' : (old('type') && (old('type') === \App\Models\ArticlesCategories::TYPE_PROMOTION)) ? 'checked' : '' }}  required>
+                            <label for="typeRadio2" class="custom-control-label">Ưu đãi</label>
+                        </div>
+                    </div>
+                    @if ($errors->has('type'))
+                        <span class="help-block text-danger">
+                    <strong>{{ $errors->first('type') }}</strong>
                 </span>
                     @endif
                 </div>

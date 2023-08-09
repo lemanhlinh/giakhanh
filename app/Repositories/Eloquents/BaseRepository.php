@@ -90,11 +90,12 @@ abstract class BaseRepository implements BaseInterface
     /**
      * @param int $limit
      * @param array $columns
+     * @param array $relationships
      * @return mixed
      */
-    public function paginate(int $limit, array $columns = ['*'], array $where = [])
+    public function paginate(int $limit, array $columns = ['*'], array $where = [], array $relationships = [])
     {
-        return $this->model->select($columns)->where($where)->latest()->paginate($limit ?? config('data.limit', 20));
+        return $this->model->select($columns)->where($where)->latest()->with($relationships)->paginate($limit ?? config('data.limit', 20));
     }
 
     /**

@@ -49,7 +49,7 @@ class HomeController extends Controller
             $page = null;
         }
         $categories_product = ProductsCategories::where('active',1)->with(['products' => function ($query) {
-            $query->limit(5);
+            $query->limit(3);
         }])->get();
         return view('web.home',compact('articles','slider','page','images','videos','categories_product'));
     }

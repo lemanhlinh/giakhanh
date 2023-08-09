@@ -1,3 +1,101 @@
-.top-content-news {
-  background: linear-gradient(180deg, #E8FFF6 0%, #FFFFFF 100%);
+#app .navbar-finalstyle #main-menu ul li a {
+  color: #000;
+}
+
+#app .navbar-finalstyle .form-select-lang {
+  color: #625B5B;
+}
+
+#app .navbar-finalstyle .form-select-lang select {
+  color: #625B5B;
+}
+
+.top-content-promotion {
+  padding-top: 176px;
+}
+.top-content-promotion .title-page {
+  font-family: SVN-SVN-A-Love-Of-Thunder;
+  color: #E91A22;
+  font-size: 48px;
+  text-transform: uppercase;
+  margin-bottom: 45px;
+  text-align: center;
+}
+
+.list-news-home .article-item {
+  padding: 0 24px;
+  margin-bottom: 48px;
+}
+.list-news-home .article-item .article-item-content {
+  border-radius: 8px;
+  background: #FBF1D9;
+  -webkit-backdrop-filter: blur(4px);
+          backdrop-filter: blur(4px);
+  overflow: hidden;
+}
+.list-news-home .article-item .article-item-content .box-content-article {
+  color: #000;
+  padding: 24px;
+}
+.list-news-home .article-item .article-item-content .box-content-article .calendar-new {
+  font-size: 14px;
+  margin-bottom: 0px;
+  color: #000;
+}
+.list-news-home .article-item .article-item-content .box-content-article .calendar-new .btn-detail-article {
+  background: #E91A22;
+  border-radius: 8px;
+  padding: 7px 20px;
+  color: #fff;
+}
+.list-news-home .article-item .article-item-content .box-content-article .title-article {
+  overflow: hidden;
+  color: #000;
+  text-overflow: ellipsis;
+  whitespace: nowrap;
+  font-family: GoogleSans-Bold;
+  margin-bottom: 12px;
+}
+
+.list-article-home .article-item {
+  margin-bottom: 24px;
+}
+.list-article-home .article-item .article-item-content .image-other-article {
+  display: block;
+  margin-bottom: 16px;
+}
+.list-article-home .article-item .article-item-content .image-other-article img {
+  border-radius: 8px;
+  overflow: hidden;
+}
+.list-article-home .article-item .article-item-content .box-content-article .title-article {
+  overflow: hidden;
+  color: #000;
+  text-overflow: ellipsis;
+  whitespace: nowrap;
+  font-family: GoogleSans-Bold;
+  margin-bottom: 16px;
+}
+.list-article-home .article-item .article-item-content .box-content-article .title-article-main {
+  font-size: 32px;
+}
+.list-article-home .article-item .article-item-content .box-content-article .title-article-normal {
+  font-size: 24px;
+}
+.list-article-home .article-item .article-item-content .box-content-article .calendar-new {
+  font-size: 14px;
+  margin-bottom: 16px;
+  color: #938D8D;
+}
+.list-article-home .article-item .article-item-content .box-content-article .des-article-related {
+  overflow: hidden;
+  color: #625B5B;
+  leading-trim: both;
+  text-edge: cap;
+  text-overflow: ellipsis;
+  whitespace: nowrap;
+  font-size: 14px;
+}
+.list-article-home .article-item .article-item-content .box-content-article .des-article-related-nomal, .list-article-home .article-item .article-item-content .box-content-article .calendar-new-normal {
+  font-size: 16px;
 }

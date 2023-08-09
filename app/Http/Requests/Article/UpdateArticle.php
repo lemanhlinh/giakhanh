@@ -31,7 +31,6 @@ class UpdateArticle extends FormRequest
             'active' => 'required',
             'is_home' => 'required',
             'description' => 'required',
-            'type' => 'required',
             'ordering' => 'nullable',
             'image' => 'nullable',
             'seo_title' => 'nullable',

@@ -1,9 +1,78 @@
-/*
- * CKEditor 5 (v36.0.1) content styles.
- * Generated on Tue, 28 Feb 2023 14:37:02 GMT.
- * For more information, check out https://ckeditor.com/docs/ckeditor5/latest/installation/advanced/content-styles.html
- */
-:root {
+.content-detail {
+  /* @ckeditor/ckeditor5-basic-styles/theme/code.css */
+  /* @ckeditor/ckeditor5-block-quote/theme/blockquote.css */
+  /* @ckeditor/ckeditor5-block-quote/theme/blockquote.css */
+  /* @ckeditor/ckeditor5-font/theme/fontsize.css */
+  /* @ckeditor/ckeditor5-font/theme/fontsize.css */
+  /* @ckeditor/ckeditor5-font/theme/fontsize.css */
+  /* @ckeditor/ckeditor5-font/theme/fontsize.css */
+  /* @ckeditor/ckeditor5-highlight/theme/highlight.css */
+  /* @ckeditor/ckeditor5-highlight/theme/highlight.css */
+  /* @ckeditor/ckeditor5-highlight/theme/highlight.css */
+  /* @ckeditor/ckeditor5-highlight/theme/highlight.css */
+  /* @ckeditor/ckeditor5-highlight/theme/highlight.css */
+  /* @ckeditor/ckeditor5-highlight/theme/highlight.css */
+  /* @ckeditor/ckeditor5-image/theme/image.css */
+  /* @ckeditor/ckeditor5-image/theme/image.css */
+  /* @ckeditor/ckeditor5-image/theme/image.css */
+  /* @ckeditor/ckeditor5-image/theme/image.css */
+  /* @ckeditor/ckeditor5-image/theme/image.css */
+  /* @ckeditor/ckeditor5-image/theme/imagecaption.css */
+  /* @ckeditor/ckeditor5-image/theme/imageresize.css */
+  /* @ckeditor/ckeditor5-image/theme/imageresize.css */
+  /* @ckeditor/ckeditor5-image/theme/imageresize.css */
+  /* @ckeditor/ckeditor5-image/theme/imagestyle.css */
+  /* @ckeditor/ckeditor5-image/theme/imagestyle.css */
+  /* @ckeditor/ckeditor5-image/theme/imagestyle.css */
+  /* @ckeditor/ckeditor5-image/theme/imagestyle.css */
+  /* @ckeditor/ckeditor5-image/theme/imagestyle.css */
+  /* @ckeditor/ckeditor5-image/theme/imagestyle.css */
+  /* @ckeditor/ckeditor5-image/theme/imagestyle.css */
+  /* @ckeditor/ckeditor5-image/theme/imagestyle.css */
+  /* @ckeditor/ckeditor5-image/theme/imagestyle.css */
+  /* @ckeditor/ckeditor5-image/theme/imagestyle.css */
+  /* @ckeditor/ckeditor5-image/theme/imagestyle.css */
+  /* @ckeditor/ckeditor5-image/theme/imagestyle.css */
+  /* @ckeditor/ckeditor5-language/theme/language.css */
+  /* @ckeditor/ckeditor5-list/theme/todolist.css */
+  /* @ckeditor/ckeditor5-list/theme/todolist.css */
+  /* @ckeditor/ckeditor5-list/theme/todolist.css */
+  /* @ckeditor/ckeditor5-list/theme/todolist.css */
+  /* @ckeditor/ckeditor5-list/theme/todolist.css */
+  /* @ckeditor/ckeditor5-list/theme/todolist.css */
+  /* @ckeditor/ckeditor5-list/theme/todolist.css */
+  /* @ckeditor/ckeditor5-list/theme/todolist.css */
+  /* @ckeditor/ckeditor5-list/theme/todolist.css */
+  /* @ckeditor/ckeditor5-list/theme/list.css */
+  /* @ckeditor/ckeditor5-list/theme/list.css */
+  /* @ckeditor/ckeditor5-list/theme/list.css */
+  /* @ckeditor/ckeditor5-list/theme/list.css */
+  /* @ckeditor/ckeditor5-list/theme/list.css */
+  /* @ckeditor/ckeditor5-list/theme/list.css */
+  /* @ckeditor/ckeditor5-list/theme/list.css */
+  /* @ckeditor/ckeditor5-list/theme/list.css */
+  /* @ckeditor/ckeditor5-list/theme/list.css */
+  /* @ckeditor/ckeditor5-media-embed/theme/mediaembed.css */
+  /* @ckeditor/ckeditor5-page-break/theme/pagebreak.css */
+  /* @ckeditor/ckeditor5-page-break/theme/pagebreak.css */
+  /* @ckeditor/ckeditor5-page-break/theme/pagebreak.css */
+  /* @ckeditor/ckeditor5-table/theme/table.css */
+  /* @ckeditor/ckeditor5-table/theme/table.css */
+  /* @ckeditor/ckeditor5-table/theme/table.css */
+  /* @ckeditor/ckeditor5-table/theme/table.css */
+  /* @ckeditor/ckeditor5-table/theme/table.css */
+  /* @ckeditor/ckeditor5-table/theme/table.css */
+  /* @ckeditor/ckeditor5-table/theme/tablecaption.css */
+  /* @ckeditor/ckeditor5-table/theme/tablecolumnresize.css */
+  /* @ckeditor/ckeditor5-table/theme/tablecolumnresize.css */
+  /* @ckeditor/ckeditor5-table/theme/tablecolumnresize.css */
+  /* @ckeditor/ckeditor5-code-block/theme/codeblock.css */
+  /* @ckeditor/ckeditor5-code-block/theme/codeblock.css */
+  /* @ckeditor/ckeditor5-horizontal-line/theme/horizontalline.css */
+  /* @ckeditor/ckeditor5-mention/theme/mention.css */
+  padding-top: 176px;
+}
+.content-detail :root {
   --ck-color-image-caption-background: hsl(0, 0%, 97%);
   --ck-color-image-caption-text: hsl(0, 0%, 20%);
   --ck-color-mention-background: hsla(341, 100%, 30%, 0.1);
@@ -20,16 +89,12 @@
   --ck-inline-image-style-spacing: calc(var(--ck-image-style-spacing) / 2);
   --ck-todo-list-checkmark-size: 16px;
 }
-
-/* @ckeditor/ckeditor5-basic-styles/theme/code.css */
-.ck-content code {
+.content-detail .ck-content code {
   background-color: hsla(0, 0%, 78%, 0.3);
   padding: 0.15em;
   border-radius: 2px;
 }
-
-/* @ckeditor/ckeditor5-block-quote/theme/blockquote.css */
-.ck-content blockquote {
+.content-detail .ck-content blockquote {
   overflow: hidden;
   padding-right: 1.5em;
   padding-left: 1.5em;
@@ -38,84 +103,56 @@
   font-style: italic;
   border-left: solid 5px hsl(0, 0%, 80%);
 }
-
-/* @ckeditor/ckeditor5-block-quote/theme/blockquote.css */
-.ck-content[dir=rtl] blockquote {
+.content-detail .ck-content[dir=rtl] blockquote {
   border-left: 0;
   border-right: solid 5px hsl(0, 0%, 80%);
 }
-
-/* @ckeditor/ckeditor5-font/theme/fontsize.css */
-.ck-content .text-tiny {
+.content-detail .ck-content .text-tiny {
   font-size: 0.7em;
 }
-
-/* @ckeditor/ckeditor5-font/theme/fontsize.css */
-.ck-content .text-small {
+.content-detail .ck-content .text-small {
   font-size: 0.85em;
 }
-
-/* @ckeditor/ckeditor5-font/theme/fontsize.css */
-.ck-content .text-big {
+.content-detail .ck-content .text-big {
   font-size: 1.4em;
 }
-
-/* @ckeditor/ckeditor5-font/theme/fontsize.css */
-.ck-content .text-huge {
+.content-detail .ck-content .text-huge {
   font-size: 1.8em;
 }
-
-/* @ckeditor/ckeditor5-highlight/theme/highlight.css */
-.ck-content .marker-yellow {
+.content-detail .ck-content .marker-yellow {
   background-color: var(--ck-highlight-marker-yellow);
 }
-
-/* @ckeditor/ckeditor5-highlight/theme/highlight.css */
-.ck-content .marker-green {
+.content-detail .ck-content .marker-green {
   background-color: var(--ck-highlight-marker-green);
 }
-
-/* @ckeditor/ckeditor5-highlight/theme/highlight.css */
-.ck-content .marker-pink {
+.content-detail .ck-content .marker-pink {
   background-color: var(--ck-highlight-marker-pink);
 }
-
-/* @ckeditor/ckeditor5-highlight/theme/highlight.css */
-.ck-content .marker-blue {
+.content-detail .ck-content .marker-blue {
   background-color: var(--ck-highlight-marker-blue);
 }
-
-/* @ckeditor/ckeditor5-highlight/theme/highlight.css */
-.ck-content .pen-red {
+.content-detail .ck-content .pen-red {
   color: var(--ck-highlight-pen-red);
   background-color: transparent;
 }
-
-/* @ckeditor/ckeditor5-highlight/theme/highlight.css */
-.ck-content .pen-green {
+.content-detail .ck-content .pen-green {
   color: var(--ck-highlight-pen-green);
   background-color: transparent;
 }
-
-/* @ckeditor/ckeditor5-image/theme/image.css */
-.ck-content .image {
+.content-detail .ck-content .image {
   display: table;
   clear: both;
   text-align: center;
   margin: 0.9em auto;
   min-width: 50px;
 }
-
-/* @ckeditor/ckeditor5-image/theme/image.css */
-.ck-content .image img {
+.content-detail .ck-content .image img {
   display: block;
   margin: 0 auto;
   max-width: 100%;
   min-width: 100%;
 }
-
-/* @ckeditor/ckeditor5-image/theme/image.css */
-.ck-content .image-inline {
+.content-detail .ck-content .image-inline {
   /*
    * Normally, the .image-inline would have "display: inline-block" and "img { width: 100% }" (to follow the wrapper while resizing).;
    * Unfortunately, together with "srcset", it gets automatically stretched up to the width of the editing root.
@@ -125,22 +162,16 @@
   max-width: 100%;
   align-items: flex-start;
 }
-
-/* @ckeditor/ckeditor5-image/theme/image.css */
-.ck-content .image-inline picture {
+.content-detail .ck-content .image-inline picture {
   display: flex;
 }
-
-/* @ckeditor/ckeditor5-image/theme/image.css */
-.ck-content .image-inline picture,
-.ck-content .image-inline img {
+.content-detail .ck-content .image-inline picture,
+.content-detail .ck-content .image-inline img {
   flex-grow: 1;
   flex-shrink: 1;
   max-width: 100%;
 }
-
-/* @ckeditor/ckeditor5-image/theme/imagecaption.css */
-.ck-content .image > figcaption {
+.content-detail .ck-content .image > figcaption {
   display: table-caption;
   caption-side: bottom;
   word-break: break-word;
@@ -150,119 +181,79 @@
   font-size: 0.75em;
   outline-offset: -1px;
 }
-
-/* @ckeditor/ckeditor5-image/theme/imageresize.css */
-.ck-content .image.image_resized {
+.content-detail .ck-content .image.image_resized {
   max-width: 100%;
   display: block;
   box-sizing: border-box;
 }
-
-/* @ckeditor/ckeditor5-image/theme/imageresize.css */
-.ck-content .image.image_resized img {
+.content-detail .ck-content .image.image_resized img {
   width: 100%;
 }
-
-/* @ckeditor/ckeditor5-image/theme/imageresize.css */
-.ck-content .image.image_resized > figcaption {
+.content-detail .ck-content .image.image_resized > figcaption {
   display: block;
 }
-
-/* @ckeditor/ckeditor5-image/theme/imagestyle.css */
-.ck-content .image-style-block-align-left,
-.ck-content .image-style-block-align-right {
+.content-detail .ck-content .image-style-block-align-left,
+.content-detail .ck-content .image-style-block-align-right {
   max-width: calc(100% - var(--ck-image-style-spacing));
 }
-
-/* @ckeditor/ckeditor5-image/theme/imagestyle.css */
-.ck-content .image-style-align-left,
-.ck-content .image-style-align-right {
+.content-detail .ck-content .image-style-align-left,
+.content-detail .ck-content .image-style-align-right {
   clear: none;
 }
-
-/* @ckeditor/ckeditor5-image/theme/imagestyle.css */
-.ck-content .image-style-side {
+.content-detail .ck-content .image-style-side {
   float: right;
   margin-left: var(--ck-image-style-spacing);
   max-width: 50%;
 }
-
-/* @ckeditor/ckeditor5-image/theme/imagestyle.css */
-.ck-content .image-style-align-left {
+.content-detail .ck-content .image-style-align-left {
   float: left;
   margin-right: var(--ck-image-style-spacing);
 }
-
-/* @ckeditor/ckeditor5-image/theme/imagestyle.css */
-.ck-content .image-style-align-center {
+.content-detail .ck-content .image-style-align-center {
   margin-left: auto;
   margin-right: auto;
 }
-
-/* @ckeditor/ckeditor5-image/theme/imagestyle.css */
-.ck-content .image-style-align-right {
+.content-detail .ck-content .image-style-align-right {
   float: right;
   margin-left: var(--ck-image-style-spacing);
 }
-
-/* @ckeditor/ckeditor5-image/theme/imagestyle.css */
-.ck-content .image-style-block-align-right {
+.content-detail .ck-content .image-style-block-align-right {
   margin-right: 0;
   margin-left: auto;
 }
-
-/* @ckeditor/ckeditor5-image/theme/imagestyle.css */
-.ck-content .image-style-block-align-left {
+.content-detail .ck-content .image-style-block-align-left {
   margin-left: 0;
   margin-right: auto;
 }
-
-/* @ckeditor/ckeditor5-image/theme/imagestyle.css */
-.ck-content p + .image-style-align-left,
-.ck-content p + .image-style-align-right,
-.ck-content p + .image-style-side {
+.content-detail .ck-content p + .image-style-align-left,
+.content-detail .ck-content p + .image-style-align-right,
+.content-detail .ck-content p + .image-style-side {
   margin-top: 0;
 }
-
-/* @ckeditor/ckeditor5-image/theme/imagestyle.css */
-.ck-content .image-inline.image-style-align-left,
-.ck-content .image-inline.image-style-align-right {
+.content-detail .ck-content .image-inline.image-style-align-left,
+.content-detail .ck-content .image-inline.image-style-align-right {
   margin-top: var(--ck-inline-image-style-spacing);
   margin-bottom: var(--ck-inline-image-style-spacing);
 }
-
-/* @ckeditor/ckeditor5-image/theme/imagestyle.css */
-.ck-content .image-inline.image-style-align-left {
+.content-detail .ck-content .image-inline.image-style-align-left {
   margin-right: var(--ck-inline-image-style-spacing);
 }
-
-/* @ckeditor/ckeditor5-image/theme/imagestyle.css */
-.ck-content .image-inline.image-style-align-right {
+.content-detail .ck-content .image-inline.image-style-align-right {
   margin-left: var(--ck-inline-image-style-spacing);
 }
-
-/* @ckeditor/ckeditor5-language/theme/language.css */
-.ck-content span[lang] {
+.content-detail .ck-content span[lang] {
   font-style: italic;
 }
-
-/* @ckeditor/ckeditor5-list/theme/todolist.css */
-.ck-content .todo-list {
+.content-detail .ck-content .todo-list {
   list-style: none;
 }
-
-/* @ckeditor/ckeditor5-list/theme/todolist.css */
-.ck-content .todo-list li {
+.content-detail .ck-content .todo-list li {
   margin-bottom: 5px;
 }
-
-/* @ckeditor/ckeditor5-list/theme/todolist.css */
-.ck-content .todo-list li .todo-list {
+.content-detail .ck-content .todo-list li .todo-list {
   margin-top: 5px;
 }
-
-/* @ckeditor/ckeditor5-list/theme/todolist.css */
-.ck-content .todo-list .todo-list__label > input {
+.content-detail .ck-content .todo-list .todo-list__label > input {
   -webkit-appearance: none;
   display: inline-block;
   position: relative;
@@ -275,9 +266,7 @@
   right: 0;
   margin-left: 0;
 }
-
-/* @ckeditor/ckeditor5-list/theme/todolist.css */
-.ck-content .todo-list .todo-list__label > input::before {
+.content-detail .ck-content .todo-list .todo-list__label > input::before {
   display: block;
   position: absolute;
   box-sizing: border-box;
@@ -288,9 +277,7 @@
   border-radius: 2px;
   transition: 250ms ease-in-out box-shadow, 250ms ease-in-out background, 250ms ease-in-out border;
 }
-
-/* @ckeditor/ckeditor5-list/theme/todolist.css */
-.ck-content .todo-list .todo-list__label > input::after {
+.content-detail .ck-content .todo-list .todo-list__label > input::after {
   display: block;
   position: absolute;
   box-sizing: content-box;
@@ -305,78 +292,50 @@
   border-width: 0 calc(var(--ck-todo-list-checkmark-size) / 8) calc(var(--ck-todo-list-checkmark-size) / 8) 0;
   transform: rotate(45deg);
 }
-
-/* @ckeditor/ckeditor5-list/theme/todolist.css */
-.ck-content .todo-list .todo-list__label > input[checked]::before {
+.content-detail .ck-content .todo-list .todo-list__label > input[checked]::before {
   background: hsl(126, 64%, 41%);
   border-color: hsl(126, 64%, 41%);
 }
-
-/* @ckeditor/ckeditor5-list/theme/todolist.css */
-.ck-content .todo-list .todo-list__label > input[checked]::after {
+.content-detail .ck-content .todo-list .todo-list__label > input[checked]::after {
   border-color: hsl(0, 0%, 100%);
 }
-
-/* @ckeditor/ckeditor5-list/theme/todolist.css */
-.ck-content .todo-list .todo-list__label .todo-list__label__description {
+.content-detail .ck-content .todo-list .todo-list__label .todo-list__label__description {
   vertical-align: middle;
 }
-
-/* @ckeditor/ckeditor5-list/theme/list.css */
-.ck-content ol {
+.content-detail .ck-content ol {
   list-style-type: decimal;
 }
-
-/* @ckeditor/ckeditor5-list/theme/list.css */
-.ck-content ol ol {
+.content-detail .ck-content ol ol {
   list-style-type: lower-latin;
 }
-
-/* @ckeditor/ckeditor5-list/theme/list.css */
-.ck-content ol ol ol {
+.content-detail .ck-content ol ol ol {
   list-style-type: lower-roman;
 }
-
-/* @ckeditor/ckeditor5-list/theme/list.css */
-.ck-content ol ol ol ol {
+.content-detail .ck-content ol ol ol ol {
   list-style-type: upper-latin;
 }
-
-/* @ckeditor/ckeditor5-list/theme/list.css */
-.ck-content ol ol ol ol ol {
+.content-detail .ck-content ol ol ol ol ol {
   list-style-type: upper-roman;
 }
-
-/* @ckeditor/ckeditor5-list/theme/list.css */
-.ck-content ul {
+.content-detail .ck-content ul {
   list-style-type: disc;
 }
-
-/* @ckeditor/ckeditor5-list/theme/list.css */
-.ck-content ul ul {
+.content-detail .ck-content ul ul {
   list-style-type: circle;
 }
-
-/* @ckeditor/ckeditor5-list/theme/list.css */
-.ck-content ul ul ul {
+.content-detail .ck-content ul ul ul {
   list-style-type: square;
 }
-
-/* @ckeditor/ckeditor5-list/theme/list.css */
-.ck-content ul ul ul ul {
+.content-detail .ck-content ul ul ul ul {
   list-style-type: square;
 }
-
-/* @ckeditor/ckeditor5-media-embed/theme/mediaembed.css */
-.ck-content .media {
+.content-detail .ck-content .media {
   clear: both;
   margin: 0.9em 0;
   display: block;
   min-width: 15em;
 }
-
-/* @ckeditor/ckeditor5-page-break/theme/pagebreak.css */
-.ck-content .page-break {
+.content-detail .ck-content .page-break {
   position: relative;
   clear: both;
   padding: 5px 0;
@@ -384,17 +343,13 @@
   align-items: center;
   justify-content: center;
 }
-
-/* @ckeditor/ckeditor5-page-break/theme/pagebreak.css */
-.ck-content .page-break::after {
+.content-detail .ck-content .page-break::after {
   content: "";
   position: absolute;
   border-bottom: 2px dashed hsl(0, 0%, 77%);
   width: 100%;
 }
-
-/* @ckeditor/ckeditor5-page-break/theme/pagebreak.css */
-.ck-content .page-break__label {
+.content-detail .ck-content .page-break__label {
   position: relative;
   z-index: 1;
   padding: 0.3em 0.6em;
@@ -412,48 +367,34 @@
   -moz-user-select: none;
   user-select: none;
 }
-
-/* @ckeditor/ckeditor5-table/theme/table.css */
-.ck-content .table {
+.content-detail .ck-content .table {
   margin: 0.9em auto;
   display: table;
 }
-
-/* @ckeditor/ckeditor5-table/theme/table.css */
-.ck-content .table table {
+.content-detail .ck-content .table table {
   border-collapse: collapse;
   border-spacing: 0;
   width: 100%;
   height: 100%;
   border: 1px double hsl(0, 0%, 70%);
 }
-
-/* @ckeditor/ckeditor5-table/theme/table.css */
-.ck-content .table table td,
-.ck-content .table table th {
+.content-detail .ck-content .table table td,
+.content-detail .ck-content .table table th {
   min-width: 2em;
   padding: 0.4em;
   border: 1px solid hsl(0, 0%, 75%);
 }
-
-/* @ckeditor/ckeditor5-table/theme/table.css */
-.ck-content .table table th {
+.content-detail .ck-content .table table th {
   font-weight: bold;
   background: hsla(0, 0%, 0%, 0.05);
 }
-
-/* @ckeditor/ckeditor5-table/theme/table.css */
-.ck-content[dir=rtl] .table th {
+.content-detail .ck-content[dir=rtl] .table th {
   text-align: right;
 }
-
-/* @ckeditor/ckeditor5-table/theme/table.css */
-.ck-content[dir=ltr] .table th {
+.content-detail .ck-content[dir=ltr] .table th {
   text-align: left;
 }
-
-/* @ckeditor/ckeditor5-table/theme/tablecaption.css */
-.ck-content .table > figcaption {
+.content-detail .ck-content .table > figcaption {
   display: table-caption;
   caption-side: top;
   word-break: break-word;
@@ -464,25 +405,17 @@
   font-size: 0.75em;
   outline-offset: -1px;
 }
-
-/* @ckeditor/ckeditor5-table/theme/tablecolumnresize.css */
-.ck-content .table .ck-table-resized {
+.content-detail .ck-content .table .ck-table-resized {
   table-layout: fixed;
 }
-
-/* @ckeditor/ckeditor5-table/theme/tablecolumnresize.css */
-.ck-content .table table {
+.content-detail .ck-content .table table {
   overflow: hidden;
 }
-
-/* @ckeditor/ckeditor5-table/theme/tablecolumnresize.css */
-.ck-content .table td,
-.ck-content .table th {
+.content-detail .ck-content .table td,
+.content-detail .ck-content .table th {
   position: relative;
 }
-
-/* @ckeditor/ckeditor5-code-block/theme/codeblock.css */
-.ck-content pre {
+.content-detail .ck-content pre {
   padding: 1em;
   color: hsl(0, 0%, 20.8%);
   background: hsla(0, 0%, 78%, 0.3);
@@ -497,38 +430,137 @@
   font-style: normal;
   min-width: 200px;
 }
-
-/* @ckeditor/ckeditor5-code-block/theme/codeblock.css */
-.ck-content pre code {
+.content-detail .ck-content pre code {
   background: unset;
   padding: 0;
   border-radius: 0;
 }
-
-/* @ckeditor/ckeditor5-horizontal-line/theme/horizontalline.css */
-.ck-content hr {
+.content-detail .ck-content hr {
   margin: 15px 0;
   height: 4px;
   background: hsl(0, 0%, 87%);
   border: 0;
 }
-
-/* @ckeditor/ckeditor5-mention/theme/mention.css */
-.ck-content .mention {
+.content-detail .ck-content .mention {
   background: var(--ck-color-mention-background);
   color: var(--ck-color-mention-text);
 }
-
 @media print {
-  /* @ckeditor/ckeditor5-page-break/theme/pagebreak.css */
-  .ck-content .page-break {
+  .content-detail {
+    /* @ckeditor/ckeditor5-page-break/theme/pagebreak.css */
+    /* @ckeditor/ckeditor5-page-break/theme/pagebreak.css */
+  }
+  .content-detail .ck-content .page-break {
     padding: 0;
   }
-  /* @ckeditor/ckeditor5-page-break/theme/pagebreak.css */
-  .ck-content .page-break::after {
+  .content-detail .ck-content .page-break::after {
     display: none;
   }
 }
-.content-detail {
-  background: #E8FFF6;
+.content-detail .box-content-top .title-category {
+  text-transform: uppercase;
+  color: #625B5B;
+  margin-bottom: 32px;
+}
+.content-detail .box-content-top .title-article {
+  color: #0E0202;
+  font-family: GoogleSans-Bold;
+  margin-bottom: 35px;
+}
+.content-detail .box-content-top .time-article {
+  color: #625B5B;
+  font-size: 14px;
+  margin-bottom: 30px;
+}
+.content-detail .content-news-related .title-article-other {
+  display: flex;
+  color: #0E0202;
+  text-transform: uppercase;
+  font-size: 24px;
+  font-family: GoogleSans-Bold;
+  margin-bottom: 40px;
+}
+.content-detail .content-news-related .title-article-other:before {
+  content: "";
+  margin-right: 8px;
+  background: #E4A812;
+  border-radius: 0px 4px 4px 0px;
+  width: 8px;
+}
+.content-detail .content-news-related .title-article-other:after {
+  content: "";
+  margin-left: 40px;
+  background: #FCF6E7;
+  border-radius: 4px;
+  flex-grow: 1;
+}
+.content-detail .content-news-related .mg-for-article {
+  margin: 0 -24px;
+}
+.content-detail .content-news-related .mg-for-article .article-item {
+  padding: 0 24px;
+  margin-bottom: 48px;
+}
+.content-detail .content-news-related .mg-for-article .article-item .article-item-content {
+  border-radius: 8px;
+  background: #FBF1D9;
+  -webkit-backdrop-filter: blur(4px);
+          backdrop-filter: blur(4px);
+  overflow: hidden;
+}
+.content-detail .content-news-related .mg-for-article .article-item .article-item-content .box-content-article {
+  color: #000;
+  padding: 24px;
+}
+.content-detail .content-news-related .mg-for-article .article-item .article-item-content .box-content-article .calendar-new {
+  font-size: 14px;
+  margin-bottom: 0px;
+  color: #000;
+}
+.content-detail .content-news-related .mg-for-article .article-item .article-item-content .box-content-article .calendar-new .btn-detail-article {
+  background: #E91A22;
+  border-radius: 8px;
+  padding: 7px 20px;
+  color: #fff;
+}
+.content-detail .content-news-related .mg-for-article .article-item .article-item-content .box-content-article .title-article {
+  overflow: hidden;
+  color: #000;
+  text-overflow: ellipsis;
+  whitespace: nowrap;
+  font-family: GoogleSans-Bold;
+  margin-bottom: 12px;
+}
+.content-detail .content-news-related .article-list-other .article-item {
+  margin-bottom: 48px;
+}
+.content-detail .content-news-related .article-list-other .article-item .article-item-content .image-other-article {
+  display: block;
+  margin-bottom: 16px;
+}
+.content-detail .content-news-related .article-list-other .article-item .article-item-content .image-other-article img {
+  border-radius: 8px;
+  overflow: hidden;
+}
+.content-detail .content-news-related .article-list-other .article-item .article-item-content .box-content-article .title-article {
+  overflow: hidden;
+  color: #000;
+  text-overflow: ellipsis;
+  whitespace: nowrap;
+  font-family: GoogleSans-Bold;
+  margin-bottom: 16px;
+}
+.content-detail .content-news-related .article-list-other .article-item .article-item-content .box-content-article .calendar-new {
+  font-size: 14px;
+  margin-bottom: 16px;
+  color: #938D8D;
+}
+.content-detail .content-news-related .article-list-other .article-item .article-item-content .box-content-article .des-article-related {
+  overflow: hidden;
+  color: #625B5B;
+  leading-trim: both;
+  text-edge: cap;
+  text-overflow: ellipsis;
+  whitespace: nowrap;
+  font-size: 14px;
 }

@@ -113,6 +113,7 @@ return [
         'slug' => 'Link',
         'image' => 'Hình ảnh',
         'active' => 'Trạng thái',
+        'type' => 'Loại tin',
         'create' => 'Tạo danh mục tin tức',
         'update' => 'Sửa danh mục tin tức',
     ],

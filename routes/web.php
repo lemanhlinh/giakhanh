@@ -32,6 +32,7 @@ Route::group(['namespace' => 'Web', 'middleware' => 'language'], function (){
     Route::get('/thuc-don/{slug}', 'ProductController@cat')->name('productCat');
     Route::get('/thuc-don/{slugCat}/{slug}', 'ProductController@detail')->name('productDetail');
     Route::post('/order', 'ProductController@order')->name('order');
+    Route::get('/dat-hang-thanh-cong/{id}', 'ProductController@success')->name('orderProductSuccess');
     Route::post('/language/switch', function(Request $request) {
         $locale = $request->input('locale');
         if (in_array($locale, ['en', 'vi'])) {
