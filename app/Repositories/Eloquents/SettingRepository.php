@@ -14,13 +14,4 @@ class SettingRepository extends BaseRepository implements SettingInterface
     {
         return 'App\Models\Setting';
     }
-
-    public function saveFileUpload($file, $type)
-    {
-        $extension = $file->getClientOriginalExtension();
-        $fileName = time() . '-' . rand(1, 999) . '.' . $extension;
-        $file->storeAs('public/setting/' . $type . '/', $fileName);
-
-        return '/storage/setting/' . $type . '/' . $fileName;
-    }
 }

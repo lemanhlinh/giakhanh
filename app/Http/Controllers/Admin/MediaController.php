@@ -16,16 +16,19 @@ use Illuminate\Support\Facades\Session;
 use App\Repositories\Contracts\MediaImageInterface;
 use App\Repositories\Contracts\MediaVideoInterface;
 use App\Models\MediaImage;
+use Illuminate\Support\Facades\Storage;
 
 class MediaController extends Controller
 {
 
     protected $mediaImageRepository,$mediaVideoRepository;
+    protected $resizeImage;
 
     public function __construct(MediaImageInterface $mediaImageRepository,MediaVideoInterface $mediaVideoRepository)
     {
         $this->mediaImageRepository = $mediaImageRepository;
         $this->mediaVideoRepository = $mediaVideoRepository;
+        $this->resizeImage = $this->mediaImageRepository->resizeImage();
     }
 
     /**
@@ -68,6 +71,7 @@ class MediaController extends Controller
         DB::beginTransaction();
         try {
             $data = $req->validated();
+            $image_root = '';
             if (!empty($data['image'])){
                 $image_root = $data['image'];
                 $data['image'] = urldecode($image_root);
@@ -82,6 +86,9 @@ class MediaController extends Controller
                         'record_id' => $model->id,
                     ]);
                 }
+            }
+            if (!empty($data['image'])){
+                $this->mediaImageRepository->saveFileUpload($image_root,$this->resizeImage,$model->id,'media');
             }
             DB::commit();
             Session::flash('success', trans('message.create_media_image_success'));
@@ -103,12 +110,16 @@ class MediaController extends Controller
         DB::beginTransaction();
         try {
             $data = $req->validated();
+            $image_root = '';
             if (!empty($data['image'])){
                 $image_root = $data['image'];
                 $data['image'] = urldecode($image_root);
             }
             $data['type'] = 1;
             $model = $this->mediaVideoRepository->create($data);
+            if (!empty($data['image'])){
+                $this->mediaVideoRepository->saveFileUpload($image_root,$this->resizeImage,$model->id,'media');
+            }
             DB::commit();
             Session::flash('success', trans('message.create_media_video_success'));
             return redirect()->back();
@@ -167,7 +178,8 @@ class MediaController extends Controller
             $data = $req->validated();
             $media = $this->mediaImageRepository->getOneById($id);
             if (!empty($data['image']) && $data_root->image != $data['image']){
-                $data['image'] = rawurldecode($data['image']);
+                $this->mediaImageRepository->removeImageResize($data_root->image,$this->resizeImage, $id,'media');
+                $data['image'] = $this->mediaImageRepository->saveFileUpload($data['image'],$this->resizeImage, $id,'media');
             }
             $media->update($data);
             $sortedIds = explode(',', $data['sortedIds']);
@@ -202,7 +214,8 @@ class MediaController extends Controller
             $data = $req->validated();
             $page = $this->mediaVideoRepository->getOneById($id);
             if (!empty($data['image']) && $data_root->image != $data['image']){
-                $data['image'] = rawurldecode($data['image']);
+                $this->mediaVideoRepository->removeImageResize($data_root->image,$this->resizeImage, $id,'media');
+                $data['image'] = $this->mediaVideoRepository->saveFileUpload($data['image'],$this->resizeImage, $id,'media');
             }
             $page->update($data);
             DB::commit();
@@ -227,6 +240,17 @@ class MediaController extends Controller
      */
     public function destroy($id)
     {
+        $data = $this->mediaImageRepository->getOneById($id);
+
+        // Đường dẫn tới tệp tin
+        $resize = $this->resizeImage;
+        $img_path = pathinfo($data->image, PATHINFO_DIRNAME);
+        foreach ($resize as $item){
+            $array_resize_ = str_replace($img_path.'/','/public/media/'.$item[0].'x'.$item[1].'/'.$data->id.'-',$data->image);
+            $array_resize_ = str_replace(['.jpg', '.png','.bmp','.gif','.jpeg'],'.webp',$array_resize_);
+            Storage::delete($array_resize_);
+        }
+
         $this->mediaImageRepository->delete($id);
 
         return [
@@ -236,6 +260,18 @@ class MediaController extends Controller
     }
     public function destroyVideo($id)
     {
+
+        $data = $this->mediaVideoRepository->getOneById($id);
+
+        // Đường dẫn tới tệp tin
+        $resize = $this->resizeImage;
+        $img_path = pathinfo($data->image, PATHINFO_DIRNAME);
+        foreach ($resize as $item){
+            $array_resize_ = str_replace($img_path.'/','/public/media/'.$item[0].'x'.$item[1].'/'.$data->id.'-',$data->image);
+            $array_resize_ = str_replace(['.jpg', '.png','.bmp','.gif','.jpeg'],'.webp',$array_resize_);
+            Storage::delete($array_resize_);
+        }
+
         $this->mediaVideoRepository->delete($id);
 
         return [

@@ -33,18 +33,4 @@ class MenuCategoryRepository extends BaseRepository implements MenuCategoryInter
         ]);
     }
 
-    /**
-     * @param $file
-     * @param $type
-     * @return string
-     */
-    public function saveFileUpload($file, $type)
-    {
-        $extension = $file->getClientOriginalExtension();
-        $fileName = time() . '-' . rand(1, 999) . '.' . $extension;
-        $file->storeAs('public/article/category/' . $type . '/', $fileName);
-
-        return '/storage/article/category/' . $type . '/' . $fileName;
-    }
-
 }

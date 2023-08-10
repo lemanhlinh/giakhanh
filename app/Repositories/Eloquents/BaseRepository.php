@@ -4,6 +4,8 @@ namespace App\Repositories\Eloquents;
 
 use App\Repositories\Contracts\BaseInterface;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 abstract class BaseRepository implements BaseInterface
 {
@@ -131,6 +133,62 @@ abstract class BaseRepository implements BaseInterface
             $query->limit($limit);
         }
 
+        if ($limit == 1){
+            return $query->with($relationships)->first();
+        }
+
         return $query->with($relationships)->get();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function resizeImage()
+    {
+        return $this->model->resizeImage;
+    }
+
+    /**
+     * @param string $file
+     * @param array $resizeImage
+     * @param int $id
+     * @param string $nameModule
+     * @return string
+     */
+    public function removeImageResize(string $file,array $resizeImage = null,int $id = null, string $nameModule)
+    {
+        $img_path = pathinfo($file, PATHINFO_DIRNAME);
+        if (!empty($resizeImage) && !empty($id)){
+            foreach ($resizeImage as $item){
+                $array_resize_ = str_replace($img_path.'/','/public/'.$nameModule.'/'.$item[0].'x'.$item[1].'/'.$id.'-',$file);
+                $array_resize_ = str_replace(['.jpg', '.png','.bmp','.gif','.jpeg'],'.webp',$array_resize_);
+                Storage::delete($array_resize_);
+            }
+        }
+        return true;
+    }
+
+    /**
+     * @param string $file
+     * @param array $resizeImage
+     * @param int $id
+     * @param string $nameModule
+     * @return string
+     */
+    public function saveFileUpload(string $file,array $resizeImage = null,int $id = null, string $nameModule)
+    {
+        $fileNameWithoutExtension = urldecode(pathinfo($file, PATHINFO_FILENAME));
+        $fileName = $fileNameWithoutExtension. '.webp';
+
+        if (!empty($resizeImage) && !empty($id)){
+            foreach ($resizeImage as $item){
+                $thumbnail = Image::make(asset($file))->fit($item[0], $item[1])->encode('webp', 75);
+                $thumbnailPath = 'storage/'.$nameModule.'/'.$item[0].'x'.$item[1].'/' .$id.'-'. $fileName;
+                Storage::makeDirectory('public/'.$nameModule.'/'.$item[0].'x'.$item[1].'/');
+                $thumbnail->save($thumbnailPath);
+            }
+        }
+
+        return urldecode($file);
     }
 }

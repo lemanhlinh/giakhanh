@@ -4,7 +4,7 @@
     <div class="top-content">
         <div class="slide-home">
             @forelse($slider as $item)
-                @include('web.components.image', ['src' => $item->image, 'title' => $item->title])
+                @include('web.components.image', ['src' => $item->image_resize['lager'], 'title' => $item->title])
             @empty
             @endforelse
         </div>
@@ -15,7 +15,7 @@
                     <div class="slider-nav-slide-home">
                         @foreach($slider as $item)
                             <div class="img-slide-item">
-                                @include('web.components.image',['src' => $item->image,'title' => $item->name ])
+                                @include('web.components.image',['src' => $item->image_resize['resize'],'title' => $item->name ])
                             </div>
                         @endforeach
                     </div>
@@ -31,7 +31,7 @@
                     <div class="col-md-10">
                         <div class="img-about">
                             @if($page)
-                                @include('web.components.image', ['src' => $page->image, 'title' => $page->title])
+                                @include('web.components.image', ['src' => $page->image_resize['lager'], 'title' => $page->title])
                             @endif
                         </div>
                     </div>
@@ -44,7 +44,7 @@
                             <div class="about-description">
                                 {{ $page->description }}
                             </div>
-                            <a href="{{ route('page',$page->slug) }}}" class="btn btn-see-about">Tìm hiểu thêm <i class="fas fa-angle-right"></i></a>
+                            <a href="{{ $page?route('page',$page->slug):'#' }}" class="btn btn-see-about">Tìm hiểu thêm <i class="fas fa-angle-right"></i></a>
                         @endif
                     </div>
                 </div>
@@ -74,8 +74,12 @@
                                         @if(!empty($category->products))
                                             @forelse($category->products as $item)
                                                 <div class="d-flex align-items-center justify-content-between item-product">
-                                                    @include('web.components.image', ['src' => $item->image, 'title' => $item->title])
-                                                    <p class="title-product-box">{{ $item->title }}</p>
+                                                    <a href="{{ route('productDetail',['slugCat'=>$item->category->slug,'slug'=>$item->slug]) }}" title="{{ $item->title }}">
+                                                        @include('web.components.image', ['src' => $item->image_resize['small'], 'title' => $item->title])
+                                                    </a>
+                                                    <a href="{{ route('productDetail',['slugCat'=>$item->category->slug,'slug'=>$item->slug]) }}" title="{{ $item->title }}">
+                                                        <p class="title-product-box">{{ $item->title }}</p>
+                                                    </a>
                                                     <p class="price-product-box">{{ $item->price }}</p>
                                                 </div>
                                             @empty
@@ -141,7 +145,7 @@
                             <p>Hãy để sản phẩm của Lẩu Nấm Gia Khánh đem đến sức khỏe, niềm vui và sự nhiệt tình trong từng bữa ăn cho thực khách.
                                 Chúng tôi cam kết luôn đồng hành cùng thực khách trong từng món ăn về giá trị dinh dưỡng, chất lượng và phong cách phục vụ. Với không gian kiến trúc mở, lấy thiên nhiên làm nền tảng, luôn thay đổi tạo cảm giác lạ và mới mẻ cho thực khách.</p>
                         </div>
-                        <a href="{{ route('page',$page->slug) }}}" class="btn btn-see-about">Xem tất cả <i class="fas fa-angle-right"></i></a>
+                        <a href="{{ route('album') }}" class="btn btn-see-about">Xem tất cả <i class="fas fa-angle-right"></i></a>
                     </div>
 
                 </div>
@@ -151,7 +155,7 @@
                             @forelse($videos as $item)
                                 <div class="col-md-6">
                                     <div class="content-media-home for-image">
-                                        @include('web.components.image', ['src' => $item->image, 'title' => $item->title])
+                                        @include('web.components.image', ['src' => $item->image_resize['medium'], 'title' => $item->title])
                                         <p class="title-media-item">{{ $item->title }}</p>
                                     </div>
                                 </div>
@@ -160,8 +164,10 @@
                             @forelse($images as $item)
                                 <div class="col-md-6">
                                     <div class="content-media-home for-video">
-                                        @include('web.components.image', ['src' => $item->image, 'title' => $item->title])
-                                        <img src="{{ asset('images/Youtube.png') }}" alt="" class="play-youtube-video">
+                                        <div class="position-relative">
+                                            @include('web.components.image', ['src' => $item->image_resize['medium'], 'title' => $item->title])
+                                            <img src="{{ asset('images/Youtube.png') }}" alt="" class="play-youtube-video position-absolute top-50 start-50 translate-middle">
+                                        </div>
                                         <p class="title-media-item">{{ $item->title }}</p>
                                     </div>
                                 </div>
@@ -181,7 +187,7 @@
                     <div class="article-item">
                         <div class="article-item-content">
                             <a href="{{ route('detailArticle',['slug' => $item->slug,'id' => $item->id]) }}">
-                                @include('web.components.image', ['src' => $item->image, 'title' => $item->title])
+                                @include('web.components.image', ['src' => $item->image_resize['resize'], 'title' => $item->title])
                             </a>
                             <div class="box-content-article">
                                 <p class="calendar-new"><i class="fas fa-calendar-alt"></i> {{ $item->created_at }}</p>

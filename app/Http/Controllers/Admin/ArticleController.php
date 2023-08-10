@@ -12,17 +12,20 @@ use App\Http\Requests\Article\CreateArticle;
 use App\Http\Requests\Article\UpdateArticle;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
 {
     protected $articleCategoryRepository;
     protected $articleRepository;
+    protected $resizeImage;
 
     public function __construct(ArticleCategoryInterface $articleCategoryRepository, ArticleInterface $articleRepository)
     {
         $this->middleware('auth');
         $this->articleCategoryRepository = $articleCategoryRepository;
         $this->articleRepository = $articleRepository;
+        $this->resizeImage = $this->articleRepository->resizeImage();
     }
 
     /**
@@ -64,6 +67,7 @@ class ArticleController extends Controller
         DB::beginTransaction();
         try {
             $data = $req->validated();
+            $image_root = '';
             $data['slug'] = $req->input('slug')?\Str::slug($req->input('slug'), '-'):\Str::slug($data['title'], '-');
             if (!empty($data['image'])){
                 $image_root = $data['image'];
@@ -71,7 +75,10 @@ class ArticleController extends Controller
             }
             $category = $this->articleCategoryRepository->getOneById($data['category_id']);
             $data['type'] = $category->type;
-            $this->articleRepository->create($data);
+            $model = $this->articleRepository->create($data);
+            if (!empty($data['image'])){
+                $this->articleRepository->saveFileUpload($image_root,$this->resizeImage,$model->id,'article');
+            }
             DB::commit();
             Session::flash('success', trans('message.create_article_success'));
             return redirect()->back();
@@ -120,12 +127,14 @@ class ArticleController extends Controller
      */
     public function update($id, UpdateArticle $req)
     {
+        $data_root = $this->articleRepository->getOneById($id);
         DB::beginTransaction();
         try {
             $data = $req->validated();
             $article = $this->articleRepository->getOneById($id);
-            if (!empty($data['image'])){
-                $data['image'] = rawurldecode($data['image']);
+            if (!empty($data['image']) && $data_root->image != $data['image']){
+                $this->articleRepository->removeImageResize($data_root->image,$this->resizeImage, $id,'article');
+                $data['image'] = $this->articleRepository->saveFileUpload($data['image'],$this->resizeImage, $id,'article');
             }
             if (!empty($data['slug'])){
                 $data['slug'] = $req->input('slug')?\Str::slug($req->input('slug'), '-'):\Str::slug($data['title'], '-');
@@ -155,6 +164,17 @@ class ArticleController extends Controller
      */
     public function destroy($id)
     {
+        $data = $this->articleRepository->getOneById($id);
+
+        // Đường dẫn tới tệp tin
+        $resize = $this->resizeImage;
+        $img_path = pathinfo($data->image, PATHINFO_DIRNAME);
+        foreach ($resize as $item){
+            $array_resize_ = str_replace($img_path.'/','/public/article/'.$item[0].'x'.$item[1].'/'.$data->id.'-',$data->image);
+            $array_resize_ = str_replace(['.jpg', '.png','.bmp','.gif','.jpeg'],'.webp',$array_resize_);
+            Storage::delete($array_resize_);
+        }
+
         $this->articleRepository->delete($id);
 
         return [

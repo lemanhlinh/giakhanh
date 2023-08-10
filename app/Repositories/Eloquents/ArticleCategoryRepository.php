@@ -14,18 +14,4 @@ class ArticleCategoryRepository extends BaseRepository implements ArticleCategor
     {
         return 'App\Models\ArticlesCategories';
     }
-
-    /**
-     * @param $file
-     * @param $type
-     * @return string
-     */
-    public function saveFileUpload($file, $type)
-    {
-        $extension = $file->getClientOriginalExtension();
-        $fileName = time() . '-' . rand(1, 999) . '.' . $extension;
-        $file->storeAs('public/article/' . $type . '/', $fileName);
-
-        return '/storage/article/' . $type . '/' . $fileName;
-    }
 }

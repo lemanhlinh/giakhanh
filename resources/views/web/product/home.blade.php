@@ -26,7 +26,7 @@
                     @forelse($products as $k => $item)
                         <div class="col-md-4 item-product">
                             <a href="{{ route('productDetail',['slugCat'=>$item->category->slug,'slug'=>$item->slug]) }}" title="{{ $item->title }}">
-                                @include('web.components.image', ['src' => $item->image, 'title' => $item->title])
+                                @include('web.components.image', ['src' => $item->image_resize['resize'], 'title' => $item->title])
                                 <h4 class="title-product">{{ $item->title }}</h4>
                             </a>
                             <p class="price-product">{{ $item->price }}</p>

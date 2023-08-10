@@ -14,18 +14,4 @@ class ProductCategoryRepository extends BaseRepository implements ProductCategor
     {
         return 'App\Models\ProductsCategories';
     }
-
-    /**
-     * @param $file
-     * @param $type
-     * @return string
-     */
-    public function saveFileUpload($file, $type)
-    {
-        $extension = $file->getClientOriginalExtension();
-        $fileName = time() . '-' . rand(1, 999) . '.' . $extension;
-        $file->storeAs('public/product/' . $type . '/', $fileName);
-
-        return '/storage/product/' . $type . '/' . $fileName;
-    }
 }

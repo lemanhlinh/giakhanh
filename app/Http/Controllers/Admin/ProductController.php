@@ -13,16 +13,20 @@ use App\Http\Requests\Product\CreateProduct;
 use App\Http\Requests\Product\UpdateProduct;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
 
     protected $productResponstory, $productCategoryResponstory;
+    protected $resizeImage;
+
     function __construct(ProductCategoryInterface $productCategoryResponstory,ProductInterface $productResponstory)
     {
         $this->middleware('auth');
         $this->productCategoryResponstory = $productCategoryResponstory;
         $this->productResponstory = $productResponstory;
+        $this->resizeImage = $this->productResponstory->resizeImage();
     }
 
     /**
@@ -63,12 +67,16 @@ class ProductController extends Controller
         DB::beginTransaction();
         try {
             $data = $req->validated();
+            $image_root = '';
             $data['slug'] = $req->input('slug')?\Str::slug($req->input('slug'), '-'):\Str::slug($data['title'], '-');
             if (!empty($data['image'])){
                 $image_root = $data['image'];
                 $data['image'] = urldecode($image_root);
             }
-            $this->productResponstory->create($data);
+            $model = $this->productResponstory->create($data);
+            if (!empty($data['image'])){
+                $this->productResponstory->saveFileUpload($image_root,$this->resizeImage,$model->id,'product');
+            }
             DB::commit();
             Session::flash('success', trans('message.create_product_success'));
             return redirect()->back();
@@ -123,7 +131,8 @@ class ProductController extends Controller
             $data = $req->validated();
             $page = $this->productResponstory->getOneById($id);
             if (!empty($data['image']) && $data_root->image != $data['image']){
-                $data['image'] = rawurldecode($data['image']);
+                $this->productResponstory->removeImageResize($data_root->image,$this->resizeImage, $id,'product');
+                $data['image'] = $this->productResponstory->saveFileUpload($data['image'],$this->resizeImage, $id,'product');
             }
             if (empty($data['slug'])){
                 $data['slug'] = $req->input('slug')?\Str::slug($req->input('slug'), '-'):\Str::slug($data['title'], '-');
@@ -151,6 +160,18 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
+
+        $data = $this->productResponstory->getOneById($id);
+
+        // Đường dẫn tới tệp tin
+        $resize = $this->resizeImage;
+        $img_path = pathinfo($data->image, PATHINFO_DIRNAME);
+        foreach ($resize as $item){
+            $array_resize_ = str_replace($img_path.'/','/public/product/'.$item[0].'x'.$item[1].'/'.$data->id.'-',$data->image);
+            $array_resize_ = str_replace(['.jpg', '.png','.bmp','.gif','.jpeg'],'.webp',$array_resize_);
+            Storage::delete($array_resize_);
+        }
+
         $this->productResponstory->delete($id);
 
         return [

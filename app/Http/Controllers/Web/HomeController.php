@@ -43,11 +43,6 @@ class HomeController extends Controller
         $images = $this->mediaImageRepository->getList(['active' => 1,'is_home' => 1],['id','title','image'], 2,['mediaImages']);
         $videos = $this->mediaVideoRepository->getList(['active' => 1,'is_home' => 1],['id','title','image'], 2);
         $page = $this->pageRepository->getList(['active' => 1,'is_home' => 1],['id','title','slug','description','image'], 1);
-        if (!empty($page)){
-            $page = $page[0];
-        }else{
-            $page = null;
-        }
         $categories_product = ProductsCategories::where('active',1)->with(['products' => function ($query) {
             $query->limit(3);
         }])->get();

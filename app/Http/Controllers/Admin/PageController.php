@@ -11,15 +11,18 @@ use Illuminate\Support\Facades\Session;
 use App\Repositories\Contracts\PageInterface;
 use App\Http\Requests\Page\CreatePage;
 use App\Http\Requests\Page\UpdatePage;
+use Illuminate\Support\Facades\Storage;
 
 class PageController extends Controller
 {
 
     protected $pageRepository;
+    protected $resizeImage;
 
     public function __construct(PageInterface $pageRepository)
     {
         $this->pageRepository = $pageRepository;
+        $this->resizeImage = $this->pageRepository->resizeImage();
     }
 
     /**
@@ -53,6 +56,7 @@ class PageController extends Controller
         DB::beginTransaction();
         try {
             $data = $req->validated();
+            $image_root = '';
             $data['slug'] = $req->input('slug')?\Str::slug($req->input('slug'), '-'):\Str::slug($data['title'], '-');
             if (!empty($data['image'])){
                 $image_root = $data['image'];
@@ -63,6 +67,9 @@ class PageController extends Controller
                 $data['image_title'] = urldecode($image_title);
             }
             $model = $this->pageRepository->create($data);
+            if (!empty($data['image'])){
+                $this->pageRepository->saveFileUpload($image_root,$this->resizeImage,$model->id,'page');
+            }
             DB::commit();
             Session::flash('success', trans('message.create_page_success'));
             return redirect()->back();
@@ -116,7 +123,8 @@ class PageController extends Controller
             $data = $req->validated();
             $page = $this->pageRepository->getOneById($id);
             if (!empty($data['image']) && $data_root->image != $data['image']){
-                $data['image'] = rawurldecode($data['image']);
+                $this->pageRepository->removeImageResize($data_root->image,$this->resizeImage, $id,'page');
+                $data['image'] = $this->pageRepository->saveFileUpload($data['image'],$this->resizeImage, $id,'page');
             }
             if (!empty($data['image_title']) && $data_root->image_title != $data['image_title']){
                 $data['image_title'] = rawurldecode($data['image_title']);
@@ -147,6 +155,16 @@ class PageController extends Controller
      */
     public function destroy($id)
     {
+        $data = $this->pageRepository->getOneById($id);
+
+        // Đường dẫn tới tệp tin
+        $resize = $this->resizeImage;
+        $img_path = pathinfo($data->image, PATHINFO_DIRNAME);
+        foreach ($resize as $item){
+            $array_resize_ = str_replace($img_path.'/','/public/page/'.$item[0].'x'.$item[1].'/'.$data->id.'-',$data->image);
+            $array_resize_ = str_replace(['.jpg', '.png','.bmp','.gif','.jpeg'],'.webp',$array_resize_);
+            Storage::delete($array_resize_);
+        }
         $this->pageRepository->delete($id);
 
         return [

@@ -22,7 +22,7 @@
                         <div class="article-item">
                             <div class="article-item-content">
                                 <a href="#" class="image-video">
-                                    @include('web.components.image', ['src' => $item->image, 'title' => $item->title])
+                                    @include('web.components.image', ['src' => $item->image_resize['resize'], 'title' => $item->title])
                                     <img src="{{ asset('images/Youtube.png') }}" alt="" class="play-youtube-video  top-50 start-50 translate-middle">
                                 </a>
                                 <div class="box-content-article">
