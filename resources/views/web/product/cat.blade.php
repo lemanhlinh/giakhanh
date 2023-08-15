@@ -29,7 +29,7 @@
                                 @include('web.components.image', ['src' => $item->image_resize['resize'], 'title' => $item->title])
                                 <h4 class="title-product">{{ $item->title }}</h4>
                             </a>
-                            <p class="price-product">{{ $item->price }}</p>
+                            <p class="price-product">{{ number_format($item->price, 0, ',', '.') }}đ</p>
                         </div>
                     @empty
                     @endforelse

@@ -215,6 +215,11 @@ a:hover {
 #app .main-footer .top-footer .btn-order i {
   margin-left: 5px;
 }
+@media (max-width: 768px) {
+  #app .main-footer .top-footer .btn-order {
+    margin-bottom: 30px;
+  }
+}
 #app .main-footer .top-footer .menu-bottom-ft .title-menu-bt {
   color: var(--primary-primary-50, #FDE8E9);
   text-align: center;
@@ -241,4 +246,8 @@ a:hover {
 }
 #app .main-footer .top-footer .link-to-restaurant .btn-store i {
   margin-right: 10px;
+}
+
+.menu-mobile:not(.mm-menu) {
+  display: none;
 }

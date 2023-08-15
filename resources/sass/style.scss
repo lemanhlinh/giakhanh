@@ -195,6 +195,9 @@ a{
                 i{
                     margin-left: 5px;
                 }
+                @media (max-width: 768px) {
+                    margin-bottom: 30px;
+                }
             }
             .menu-bottom-ft{
                 .title-menu-bt{
@@ -233,3 +236,8 @@ a{
     }
 }
 
+.menu-mobile{
+    &:not(.mm-menu) {
+        display: none;
+    }
+}

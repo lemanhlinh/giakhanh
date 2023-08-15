@@ -77,10 +77,12 @@
                                                     <a href="{{ route('productDetail',['slugCat'=>$item->category->slug,'slug'=>$item->slug]) }}" title="{{ $item->title }}">
                                                         @include('web.components.image', ['src' => $item->image_resize['small'], 'title' => $item->title])
                                                     </a>
-                                                    <a href="{{ route('productDetail',['slugCat'=>$item->category->slug,'slug'=>$item->slug]) }}" title="{{ $item->title }}">
-                                                        <p class="title-product-box">{{ $item->title }}</p>
-                                                    </a>
-                                                    <p class="price-product-box">{{ $item->price }}</p>
+                                                    <div class="info-title-product align-items-center justify-content-between">
+                                                        <a href="{{ route('productDetail',['slugCat'=>$item->category->slug,'slug'=>$item->slug]) }}" title="{{ $item->title }}">
+                                                            <p class="title-product-box">{{ $item->title }}</p>
+                                                        </a>
+                                                        <p class="price-product-box">{{ number_format($item->price, 0, ',', '.') }}đ</p>
+                                                    </div>
                                                 </div>
                                             @empty
                                             @endforelse
@@ -155,8 +157,11 @@
                             @forelse($videos as $item)
                                 <div class="col-md-6">
                                     <div class="content-media-home for-image">
-                                        @include('web.components.image', ['src' => $item->image_resize['medium'], 'title' => $item->title])
-                                        <p class="title-media-item">{{ $item->title }}</p>
+                                        <span>
+                                            @include('web.components.image', ['src' => $item->image_resize['medium'], 'title' => $item->title])
+                                        </span>
+                                        <p class="title-media-item"><span>{{ $item->title }}</span></p>
+                                        <span class="for-hover"></span>
                                     </div>
                                 </div>
                             @empty
@@ -165,10 +170,13 @@
                                 <div class="col-md-6">
                                     <div class="content-media-home for-video">
                                         <div class="position-relative">
-                                            @include('web.components.image', ['src' => $item->image_resize['medium'], 'title' => $item->title])
+                                            <span>
+                                                @include('web.components.image', ['src' => $item->image_resize['medium'], 'title' => $item->title])
+                                            </span>
                                             <img src="{{ asset('images/Youtube.png') }}" alt="" class="play-youtube-video position-absolute top-50 start-50 translate-middle">
                                         </div>
-                                        <p class="title-media-item">{{ $item->title }}</p>
+                                        <p class="title-media-item"><span>{{ $item->title }}</span></p>
+                                        <span class="for-hover"></span>
                                     </div>
                                 </div>
                             @empty

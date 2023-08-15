@@ -10,6 +10,15 @@
         <!-- Main Footer -->
         @include('web.partials._footer')
         @include('web.partials._offcanvas')
+        <nav class="menu-mobile d-block d-md-none" id="menu-mobile">
+            <ul>
+                @if(!empty($menus))
+                    @foreach ($menus as $shop)
+                        @include('web.components.menu.mobile', ['item'=>$shop])
+                    @endforeach
+                @endif
+            </ul>
+        </nav>
     </div>
 @endsection
 
@@ -18,6 +27,7 @@
     <link rel="stylesheet" href="{{ asset('/css/all.min.css') }}">
     <!-- IonIcons -->
     <link rel="stylesheet" href="{{ asset('/css/fontawesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/css/mmenu.css') }}">
     <link rel="stylesheet" href="{{ asset('/css/web/style.css') }}">
 @endsection
 
@@ -25,5 +35,6 @@
     <!-- Bootstrap -->
     <script src="{{ asset('/js/web/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('js/fontawesome.min.js') }}"></script>
+    <script src="{{ asset('js/mmenu.js') }}"></script>
     <script src="{{ asset('js/web/main.js') }}" defer></script>
 @endsection

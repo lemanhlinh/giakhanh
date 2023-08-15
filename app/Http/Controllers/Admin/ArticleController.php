@@ -136,7 +136,7 @@ class ArticleController extends Controller
                 $this->articleRepository->removeImageResize($data_root->image,$this->resizeImage, $id,'article');
                 $data['image'] = $this->articleRepository->saveFileUpload($data['image'],$this->resizeImage, $id,'article');
             }
-            if (!empty($data['slug'])){
+            if (empty($data['slug'])){
                 $data['slug'] = $req->input('slug')?\Str::slug($req->input('slug'), '-'):\Str::slug($data['title'], '-');
             }
             $category = $this->articleCategoryRepository->getOneById($data['category_id']);

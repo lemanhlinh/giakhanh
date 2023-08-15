@@ -30,4 +30,6 @@ $(document).ready(function() {
             });
         }
     });
+
+    new Mmenu(document.querySelector("#menu-mobile"));
 });
