@@ -19,7 +19,7 @@ class CreateProductsTable extends Migration
             $table->string('slug')->default('');
             $table->string('image')->nullable();
             $table->text('content_include')->nullable();
-            $table->float('price')->nullable();
+            $table->integer('price')->nullable();
             $table->tinyInteger('is_home')->default(0)->nullable();
             $table->tinyInteger('active')->default(0)->comment('0: Không hoạt động; 1: Hoạt động');
             $table->integer('category_id')->unsigned()->nullable();

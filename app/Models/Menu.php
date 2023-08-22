@@ -12,28 +12,7 @@ class Menu extends Model
     use NodeTrait;
     public $table = "menu";
     protected $fillable = ['name', 'link', 'parent_id','category_id'];
-    protected $guarded = ['id', 'lft', 'rgt'];
-
-    public function getLftName()
-    {
-        return 'lft';
-    }
-
-    public function getRgtName()
-    {
-        return 'rgt';
-    }
-
-    public function getParentIdName()
-    {
-        return 'parent_id';
-    }
-
-// Specify parent id attribute mutator
-    public function setParentAttribute($value)
-    {
-        $this->setParentIdAttribute($value);
-    }
+    protected $guarded = ['id', '_lft', '_rgt'];
 
     public function category()
     {

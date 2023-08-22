@@ -26,8 +26,12 @@ class UpdateArticleCategory extends FormRequest
         return [
             'title' => 'required',
             'slug' => 'nullable',
-            'image' => 'required_if:type,file|image|mimes:jpg,jpeg,png',
-            'active' => 'required|numeric|integer|min:0'
+            'image' => 'nullable',
+            'type' => 'required',
+            'active' => 'required|numeric|integer|min:0',
+            'seo_title' => 'nullable',
+            'seo_keyword' => 'nullable',
+            'seo_description' => 'nullable',
         ];
     }
 }

@@ -2,17 +2,17 @@
 
 namespace App\Repositories\Eloquents;
 
-use App\Models\Article;
-use App\Repositories\Contracts\ArticleInterface;
+use App\Models\Product;
+use App\Repositories\Contracts\ProductInterface;
 
-class ProductRepository extends BaseRepository implements ArticleInterface
+class ProductRepository extends BaseRepository implements ProductInterface
 {
     /**
      * @return string
      */
     public function getModelClass(): string
     {
-        return 'App\Models\Article';
+        return 'App\Models\Product';
     }
 
     /**
@@ -26,19 +26,5 @@ class ProductRepository extends BaseRepository implements ArticleInterface
         }
 
         return $this->create($data);
-    }
-
-    /**
-     * @param $file
-     * @param $type
-     * @return string
-     */
-    public function saveFileUpload($file, $type)
-    {
-        $extension = $file->getClientOriginalExtension();
-        $fileName = time() . '-' . rand(1, 999) . '.' . $extension;
-        $file->storeAs('public/article/' . $type . '/', $fileName);
-
-        return '/storage/article/' . $type . '/' . $fileName;
     }
 }

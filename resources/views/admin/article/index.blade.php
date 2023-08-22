@@ -7,9 +7,9 @@
         <div class="col-sm-9">
             <form action="{{ route('admin.article.index') }}" method="GET" class="form-inline">
                 <select name="category" class="form-control">
-                    <option value="" hidden>@lang('form.article.category')</option>
+                    <option value="">@lang('form.article.category')</option>
                     @forelse($categories as $key => $category)
-                        <option value="{{ $key }}" @if (isset($data['category']) && $data['category'] == $key) selected @endif>{{ $category }}</option>
+                        <option value="{{ $category['id'] }}" @if (isset($data['category']) && $data['category'] ==  $category['id']) selected @endif>{{ $category['title'] }}</option>
                     @empty
                     @endforelse
                 </select>

@@ -1,0 +1,57 @@
+.top-content-products{
+    padding-top: 80px;
+    .title-page{
+        font-family: SVN-SVN-A-Love-Of-Thunder;
+        color: #E91A22;
+        font-size: 48px;
+        text-transform: uppercase;
+        margin-bottom: 45px;
+        text-align: center;
+    }
+    .list-menu-page{
+        text-align: center;
+        margin-bottom: 45px;
+        li{
+            display: inline-block;
+            margin-right: 16px;
+            a{
+                border-radius: 8px;
+                background: #F9ECCB;
+                display: block;
+                color: #620B0E;
+                padding: 8px 16px;
+                min-width: 100px;
+            }
+            .active{
+                color: #fff;
+                background: #E91A22;
+            }
+        }
+    }
+}
+.list-products-home{
+    .mg-for-product{
+        margin: 0 -24px;
+    }
+    .item-product{
+        margin-bottom: 48px;
+        padding: 0 24px;
+        a{
+            img{
+                margin-bottom: 24px;
+            }
+            .title-product{
+                text-transform: uppercase;
+                font-family: GoogleSans-Bold;
+                margin-bottom: 16px;
+                color: #000;
+            }
+        }
+        .price-product{
+            color: #E91A22;
+            margin-bottom: 0;
+            font-size: 20px;
+            font-family: GoogleSans-Bold;
+        }
+    }
+}

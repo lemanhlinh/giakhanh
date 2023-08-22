@@ -2,43 +2,17 @@
 
 namespace App\Repositories\Eloquents;
 
-use App\Models\Article;
-use App\Repositories\Contracts\ArticleInterface;
+use App\Models\Store;
+use App\Repositories\Contracts\StoreInterface;
 
-class StoreRepository extends BaseRepository implements ArticleInterface
+class StoreRepository extends BaseRepository implements StoreInterface
 {
     /**
      * @return string
      */
     public function getModelClass(): string
     {
-        return 'App\Models\Article';
+        return 'App\Models\Store';
     }
 
-    /**
-     * @param array $data
-     * @return mixed
-     */
-    public function store(array $data)
-    {
-        if (\request()->hasFile('image')) {
-            $data['image'] = $this->saveFileUpload($data['image'], 'images');
-        }
-
-        return $this->create($data);
-    }
-
-    /**
-     * @param $file
-     * @param $type
-     * @return string
-     */
-    public function saveFileUpload($file, $type)
-    {
-        $extension = $file->getClientOriginalExtension();
-        $fileName = time() . '-' . rand(1, 999) . '.' . $extension;
-        $file->storeAs('public/article/' . $type . '/', $fileName);
-
-        return '/storage/article/' . $type . '/' . $fileName;
-    }
 }

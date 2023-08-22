@@ -25,9 +25,13 @@ class CreateArticleCategory extends FormRequest
     {
         return [
             'title' => 'required',
-            'image' => 'required_if:type,file|image|mimes:jpg,jpeg,png',
+            'image' => 'nullable',
             'slug' => 'nullable',
-            'active' => 'required|numeric|integer|min:0'
+            'type' => 'required',
+            'active' => 'required|numeric|integer|min:0',
+            'seo_title' => 'nullable',
+            'seo_keyword' => 'nullable',
+            'seo_description' => 'nullable',
         ];
     }
 }

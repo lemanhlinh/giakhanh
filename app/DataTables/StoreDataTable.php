@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\Store;
+use Carbon\Carbon;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
@@ -21,16 +22,27 @@ class StoreDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->addColumn('action', 'storedatatable.action');
+            ->editColumn('created_at', function ($q) {
+                return Carbon::parse($q->created_at)->format('H:i:s Y/m/d');
+            })
+            ->editColumn('updated_at', function ($q) {
+                return Carbon::parse($q->updated_at)->format('H:i:s Y/m/d');
+            })
+            ->addColumn('action', function ($q) {
+                $urlEdit = route('admin.store.edit', $q->id);
+                $urlDelete = route('admin.store.destroy', $q->id);
+                $lowerModelName = strtolower(class_basename(new Store()));
+                return view('admin.components.buttons.edit', compact('urlEdit'))->render() . view('admin.components.buttons.delete', compact('urlDelete', 'lowerModelName'))->render();
+            });
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\StoreDataTable $model
+     * @param \App\Models\Store $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(StoreDataTable $model)
+    public function query(Store $model)
     {
         return $model->newQuery();
     }
@@ -43,7 +55,7 @@ class StoreDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('storedatatable-table')
+                    ->setTableId('store-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('Bfrtip')
@@ -65,15 +77,15 @@ class StoreDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
             Column::make('id'),
-            Column::make('add your columns'),
+            Column::make('title'),
             Column::make('created_at'),
             Column::make('updated_at'),
+            Column::computed('action')
+                ->exportable(false)
+                ->printable(false)
+                ->width(60)
+                ->addClass('text-center'),
         ];
     }
 

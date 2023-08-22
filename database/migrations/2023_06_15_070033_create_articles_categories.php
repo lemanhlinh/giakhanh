@@ -22,6 +22,7 @@ class CreateArticlesCategories extends Migration
             $table->string('seo_keyword')->nullable();
             $table->text('seo_description')->nullable();
             $table->tinyInteger('active')->default(0)->comment('0: Không hoạt động; 1: Hoạt động');
+            $table->tinyInteger('type')->default(1)->comment('0: Danh sach tin tức; 1: Danh sách ưu đãi');
             $table->timestamps();
         });
     }

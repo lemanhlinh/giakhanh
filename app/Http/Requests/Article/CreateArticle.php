@@ -25,15 +25,17 @@ class CreateArticle extends FormRequest
     {
         return [
             'title' => 'required',
+            'slug' => 'nullable',
             'category_id' => 'required',
-            'content' => 'required',
-            'date' => 'required',
-            'status' => 'required',
+            'content' => 'nullable',
+            'active' => 'required',
+            'is_home' => 'required',
             'description' => 'required',
-            'image' => 'required|mimes:jpg,jpeg,png',
-            'seo_title' => 'required',
-            'seo_keyword' => 'required',
-            'seo_description' => 'required',
+            'ordering' => 'nullable',
+            'image' => 'nullable',
+            'seo_title' => 'nullable',
+            'seo_keyword' => 'nullable',
+            'seo_description' => 'nullable',
         ];
     }
 }

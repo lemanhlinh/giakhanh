@@ -47,8 +47,8 @@ function renderLabelStatus(data) {
 
 function renderLabelShowHomeOrder(data) {
     var mapStatus = {
-        1: {text: 'Ẩn', class: 'danger'},
-        0: {text: 'Hiện', class: 'success'},
+        0: {text: 'Ẩn', class: 'danger'},
+        1: {text: 'Hiện', class: 'success'},
     };
     return '<span class="badge badge-' + mapStatus[data]['class'] + '">'
         + mapStatus[data]['text'] +

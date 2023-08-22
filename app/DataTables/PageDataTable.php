@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\Page;
+use Carbon\Carbon;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
@@ -21,16 +22,27 @@ class PageDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->addColumn('action', 'pagedatatable.action');
+            ->editColumn('created_at', function ($q) {
+                return Carbon::parse($q->created_at)->format('H:i:s Y/m/d');
+            })
+            ->editColumn('updated_at', function ($q) {
+                return Carbon::parse($q->updated_at)->format('H:i:s Y/m/d');
+            })
+            ->addColumn('action', function ($q) {
+                $urlEdit = route('admin.page.edit', $q->id);
+                $urlDelete = route('admin.page.destroy', $q->id);
+                $lowerModelName = strtolower(class_basename(new Page()));
+                return view('admin.components.buttons.edit', compact('urlEdit'))->render() . view('admin.components.buttons.delete', compact('urlDelete', 'lowerModelName'))->render();
+            });
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\PageDataTable $model
+     * @param \App\Models\Page $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(PageDataTable $model)
+    public function query(Page $model)
     {
         return $model->newQuery();
     }
@@ -43,7 +55,7 @@ class PageDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('pagedatatable-table')
+                    ->setTableId('page-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('Bfrtip')
@@ -65,15 +77,16 @@ class PageDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
+
             Column::make('id'),
-            Column::make('add your columns'),
+            Column::make('title'),
             Column::make('created_at'),
             Column::make('updated_at'),
+            Column::computed('action')
+                ->exportable(false)
+                ->printable(false)
+                ->width(60)
+                ->addClass('text-center'),
         ];
     }
 

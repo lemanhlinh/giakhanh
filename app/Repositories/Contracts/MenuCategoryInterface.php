@@ -10,6 +10,4 @@ interface MenuCategoryInterface extends BaseInterface
      */
     public function store(array $data);
 
-    public function saveFileUpload($file, $type);
-
 }

@@ -15,8 +15,4 @@
 
 @section('script')
     @parent
-    <script>
-        let role = new Role();
-        role.checkFullPermission()
-    </script>
 @endsection

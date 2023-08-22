@@ -50,6 +50,15 @@ function Application() {
                                 table.ajax.reload(null, false);
                                 toastr["success"](result.message);
                             }
+
+                            if (result.status === false) {
+                                if (tableId == undefined) {
+                                    buttonDelete.closest('.col-sm-3').remove();
+                                }
+                                var table = $(tableId).DataTable();
+                                table.ajax.reload(null, false);
+                                toastr["error"](result.message);
+                            }
                         }
                     });
                 }

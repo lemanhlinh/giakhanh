@@ -2,17 +2,17 @@
 
 namespace App\Repositories\Eloquents;
 
-use App\Models\Article;
-use App\Repositories\Contracts\ArticleInterface;
+use App\Models\Sliders;
+use App\Repositories\Contracts\SlideInterface;
 
-class SlideRepository extends BaseRepository implements ArticleInterface
+class SlideRepository extends BaseRepository implements SlideInterface
 {
     /**
      * @return string
      */
     public function getModelClass(): string
     {
-        return 'App\Models\Article';
+        return 'App\Models\Sliders';
     }
 
     /**
@@ -26,19 +26,5 @@ class SlideRepository extends BaseRepository implements ArticleInterface
         }
 
         return $this->create($data);
-    }
-
-    /**
-     * @param $file
-     * @param $type
-     * @return string
-     */
-    public function saveFileUpload($file, $type)
-    {
-        $extension = $file->getClientOriginalExtension();
-        $fileName = time() . '-' . rand(1, 999) . '.' . $extension;
-        $file->storeAs('public/article/' . $type . '/', $fileName);
-
-        return '/storage/article/' . $type . '/' . $fileName;
     }
 }

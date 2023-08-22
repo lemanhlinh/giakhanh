@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\ProductsCategories;
+use Carbon\Carbon;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
@@ -21,16 +22,27 @@ class ProductCategoryDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->addColumn('action', 'productcategorydatatable.action');
+            ->editColumn('created_at', function ($q) {
+                return Carbon::parse($q->created_at)->format('H:i:s Y/m/d');
+            })
+            ->editColumn('updated_at', function ($q) {
+                return Carbon::parse($q->updated_at)->format('H:i:s Y/m/d');
+            })
+            ->addColumn('action', function ($q) {
+                $urlEdit = route('admin.product-category.edit', $q->id);
+                $urlDelete = route('admin.product-category.destroy', $q->id);
+                $lowerModelName = strtolower(class_basename(new ProductsCategories()));
+                return view('admin.components.buttons.edit', compact('urlEdit'))->render() . view('admin.components.buttons.delete', compact('urlDelete', 'lowerModelName'))->render();
+            });
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\ProductCategoryDataTable $model
+     * @param \App\Models\ProductsCategories $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(ProductCategoryDataTable $model)
+    public function query(ProductsCategories $model)
     {
         return $model->newQuery();
     }
@@ -43,7 +55,7 @@ class ProductCategoryDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('productcategorydatatable-table')
+                    ->setTableId('product-category-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('Bfrtip')
@@ -65,15 +77,16 @@ class ProductCategoryDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
             Column::make('id'),
-            Column::make('add your columns'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
+            Column::make('title')->title(trans('form.product_category.title')),
+            Column::make('active')->title(trans('form.product_category.active')),
+            Column::make('created_at')->title(trans('form.created_at')),
+            Column::make('updated_at')->title(trans('form.updated_at')),
+            Column::computed('action')
+                ->exportable(false)
+                ->printable(false)
+                ->width(60)
+                ->addClass('text-center'),
         ];
     }
 

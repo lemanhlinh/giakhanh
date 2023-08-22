@@ -7,5 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class BookTable extends Model
 {
-    use HasFactory;
+//    use HasFactory;
+    protected $table = 'books_table';
 }

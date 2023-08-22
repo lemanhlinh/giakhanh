@@ -27,10 +27,10 @@ class BooksTableDataTable extends DataTable
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\BooksTableDataTable $model
+     * @param \App\Models\BookTable $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(BooksTableDataTable $model)
+    public function query(BookTable $model)
     {
         return $model->newQuery();
     }
@@ -43,7 +43,7 @@ class BooksTableDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('bookstabledatatable-table')
+                    ->setTableId('books-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('Bfrtip')
@@ -65,15 +65,23 @@ class BooksTableDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
             Column::make('id'),
-            Column::make('add your columns'),
+            Column::make('title'),
+            Column::make('full_name'),
+            Column::make('email'),
+            Column::make('phone'),
+            Column::make('store_id'),
+            Column::make('book_time'),
+            Column::make('book_hour'),
+            Column::make('number_customers'),
+            Column::make('note'),
             Column::make('created_at'),
             Column::make('updated_at'),
+            Column::computed('action')
+                ->exportable(false)
+                ->printable(false)
+                ->width(60)
+                ->addClass('text-center'),
         ];
     }
 

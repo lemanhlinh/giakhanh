@@ -13,7 +13,7 @@ class CreateMediaImage extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,12 @@ class CreateMediaImage extends FormRequest
     public function rules()
     {
         return [
-            //
+            'title' => 'required',
+            'image' => 'nullable',
+            'is_home' => 'nullable',
+            'active' => 'nullable',
+            'ordering' => 'nullable',
+            'sortedIds' => 'nullable',
         ];
     }
 }

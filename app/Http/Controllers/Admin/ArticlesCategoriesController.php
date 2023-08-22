@@ -6,6 +6,7 @@ use App\DataTables\ArticleCategoryDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\ArticlesCategories;
 use App\Repositories\Contracts\ArticleCategoryInterface;
+use App\Repositories\Contracts\ArticleInterface;
 use App\Http\Requests\Article\CreateArticleCategory;
 use App\Http\Requests\Article\UpdateArticleCategory;
 use Illuminate\Support\Facades\DB;
@@ -14,12 +15,13 @@ use Illuminate\Support\Facades\Session;
 class ArticlesCategoriesController extends Controller
 {
 
-    protected $articleCategoryRepository;
+    protected $articleCategoryRepository, $articleRepository;
 
-    public function __construct(ArticleCategoryInterface $articleCategoryRepository)
+    public function __construct(ArticleCategoryInterface $articleCategoryRepository, ArticleInterface $articleRepository)
     {
         $this->middleware('auth');
         $this->articleCategoryRepository = $articleCategoryRepository;
+        $this->articleRepository = $articleRepository;
     }
     /**
      * Display a listing of the resource.
@@ -48,12 +50,15 @@ class ArticlesCategoriesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UpdateArticleCategory $req)
+    public function store(CreateArticleCategory $req)
     {
         DB::beginTransaction();
         try {
             $data = $req->validated();
             $data['slug'] = $req->input('slug')?\Str::slug($req->input('slug'), '-'):\Str::slug($data['title'], '-');
+            if (\request()->hasFile('image')) {
+                $data['image'] = $this->articleCategoryRepository->saveFileUpload($data['image'],'images');
+            }
             $this->articleCategoryRepository->create($data);
             DB::commit();
             Session::flash('success', trans('message.create_article_category_success'));
@@ -107,9 +112,8 @@ class ArticlesCategoriesController extends Controller
             $data = $req->validated();
             $article_category = $this->articleCategoryRepository->getOneById($id);
 
-            $image = null;
-            if (\request()->hasFile('value')) {
-                $image = $this->articleCategoryRepository->saveFileUpload($data['value'],'images');
+            if (\request()->hasFile('image')) {
+                $data['image'] = $this->articleCategoryRepository->saveFileUpload($data['image'],'images');
             }
 
             $article_category->update($data);
@@ -133,8 +137,21 @@ class ArticlesCategoriesController extends Controller
      * @param  \App\Models\ArticlesCategories  $articlesCategories
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ArticlesCategories $articlesCategories)
+    public function destroy($id)
     {
-        //
+        $cat = $this->articleCategoryRepository->getOneById($id,['articles']); // check article exist in cat
+        if (!empty($cat->articles)){
+            return [
+                'status' => false,
+                'message' => trans('message.delete_article_category_error')
+            ];
+        }else{
+            $this->articleCategoryRepository->delete($id);
+            return [
+                'status' => true,
+                'message' => trans('message.delete_article_category_success')
+            ];
+        }
+
     }
 }
