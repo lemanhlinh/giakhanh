@@ -34,10 +34,14 @@ a{
                     position: relative;
                     line-height: 50px;
                     a{
-                        color: #fff;
+                        color: #000;
                         text-decoration: none;
                         padding: 0 32px 0 0;
                         font-family: GoogleSans-Bold;
+                        @media (max-width: 1440px) {
+                            padding: 0 20px 0 0;
+                            font-size: 16px;
+                        }
                         &:hover{
                             color: var(--primary-primary-500, #E91A22);
                         }
@@ -144,11 +148,11 @@ a{
             }
         }
         .form-select-lang{
-            color: #fff;
+            color: #000;
             select{
                 border:none;
                 background: none;
-                color: #fff;
+                color: #000;
                 &:focus{
                     border:none;
                 }
@@ -160,6 +164,11 @@ a{
             padding: 10px 24px;
             border-radius: 8px;
         }
+    }
+    .active-menu {
+        position: fixed;
+        width: 100%;
+        background: #fff;
     }
     .main-footer{
         background: linear-gradient(180deg, #800E13 0%, #620B0E 100%);
@@ -179,6 +188,9 @@ a{
                     color: #E9B941;
                     font-size: 20px;
                     font-family: GoogleSans-Bold;
+                }
+                .open-store{
+                    color: #fff;
                 }
             }
             .btn-order{
@@ -219,7 +231,7 @@ a{
                 }
             }
             .link-to-restaurant{
-                margin-top: 13px;
+                margin-top: 20px;
                 .btn-store{
                     border-radius: 8px;
                     background: rgba(26, 3, 4, 0.28);

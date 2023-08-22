@@ -11,7 +11,7 @@
 }
 
 .top-content-promotion {
-  padding-top: 176px;
+  padding-top: 80px;
 }
 .top-content-promotion .title-page {
   font-family: SVN-SVN-A-Love-Of-Thunder;
@@ -55,10 +55,32 @@
   whitespace: nowrap;
   font-family: GoogleSans-Bold;
   margin-bottom: 12px;
+  max-height: 39px;
+  font-size: 16px;
 }
 
+@media (min-width: 768px) {
+  .list-article-home .big-article {
+    width: 55%;
+  }
+  .list-article-home .big-article .article-item .article-item-content .image-other-article {
+    margin-bottom: 36px;
+  }
+  .list-article-home .small-article {
+    width: 45%;
+  }
+  .list-article-home .small-article .article-item {
+    margin-bottom: 20px;
+  }
+  .list-article-home .small-article .article-item .article-item-content .box-content-article .title-article {
+    height: 17px;
+  }
+  .list-article-home .small-article .article-item .article-item-content .box-content-article .calendar-new {
+    margin-bottom: 10px;
+  }
+}
 .list-article-home .article-item {
-  margin-bottom: 24px;
+  margin-bottom: 17px;
 }
 .list-article-home .article-item .article-item-content .image-other-article {
   display: block;
@@ -67,6 +89,7 @@
 .list-article-home .article-item .article-item-content .image-other-article img {
   border-radius: 8px;
   overflow: hidden;
+  width: 100%;
 }
 .list-article-home .article-item .article-item-content .box-content-article .title-article {
   overflow: hidden;
@@ -74,7 +97,9 @@
   text-overflow: ellipsis;
   whitespace: nowrap;
   font-family: GoogleSans-Bold;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
+  max-height: 39px;
+  font-size: 16px;
 }
 .list-article-home .article-item .article-item-content .box-content-article .title-article-main {
   font-size: 32px;
@@ -84,7 +109,7 @@
 }
 .list-article-home .article-item .article-item-content .box-content-article .calendar-new {
   font-size: 14px;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
   color: #938D8D;
 }
 .list-article-home .article-item .article-item-content .box-content-article .des-article-related {
@@ -95,7 +120,12 @@
   text-overflow: ellipsis;
   whitespace: nowrap;
   font-size: 14px;
+  height: 62px;
+  line-height: 148%;
 }
 .list-article-home .article-item .article-item-content .box-content-article .des-article-related-nomal, .list-article-home .article-item .article-item-content .box-content-article .calendar-new-normal {
   font-size: 16px;
+}
+.list-article-home .article-item .article-item-content .box-content-article .des-article-related-nomal {
+  height: 73px;
 }

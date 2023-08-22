@@ -1,3 +1,48 @@
+#app {
+    .navbar-finalstyle {
+        position: fixed;
+        width: 100%;
+        #main-menu {
+            ul {
+                li {
+                    a {
+                        color: #fff;
+                    }
+                }
+            }
+        }
+        .form-select-lang {
+            color: #fff;
+            select {
+                color: #fff;
+                option{
+                    color: #fff;
+                }
+            }
+        }
+    }
+    .active-menu {
+        background: #fff;
+        #main-menu {
+            ul {
+                li {
+                    a {
+                        color: #000;
+                    }
+                }
+            }
+        }
+        .form-select-lang {
+            color: #625B5B;
+            select {
+                color: #625B5B;
+                option{
+                    color: #625B5B;
+                }
+            }
+        }
+    }
+}
 .top-content{
     margin-bottom: 88px;
     .slide-home{
@@ -85,6 +130,32 @@
         #myTabProduct{
             border: none;
             margin-bottom: 36px;
+            flex-wrap: nowrap;
+            white-space: nowrap;
+            overflow-y: hidden;
+            padding-bottom: 5px;
+            /* width */
+            &::-webkit-scrollbar {
+                width: 5px;
+                height: 7px;
+            }
+
+            /* Track */
+            &::-webkit-scrollbar-track {
+                background: #fff;
+                border-radius: 10px;
+            }
+
+            /* Handle */
+            &::-webkit-scrollbar-thumb {
+                background: #c1bdbd;
+                border-radius: 10px;
+            }
+
+            /* Handle on hover */
+            &::-webkit-scrollbar-thumb:hover {
+                background: #555;
+            }
             li{
                 margin-right: 8px;
                 .nav-link{
@@ -107,30 +178,46 @@
                 background: rgba(0, 0, 0, 0.28);
                 margin-bottom: 16px;
                 padding: 16px;
-                img{
-                    max-width: 120px;
-                    border-radius: 4px;
+                >a{
+                    @media (min-width: 768px) {
+                        width: 120px;
+                        height: 90px;
+                        overflow: hidden;
+                    }
+                    img{
+                        max-width: 120px;
+                        border-radius: 4px;
+                        transition: transform 0.3s ease-in-out;
+                    }
                 }
                 .info-title-product{
                     width: 70%;
-                    display: flex;
-                    p{
-                        margin-bottom: 0;
-                        max-height: 26px;
-                        overflow: hidden;
+                    .left-hover-product{
+                        transition: transform 0.3s ease-in-out;
+                        display: flex;
+                        p{
+                            margin-bottom: 0;
+                            max-height: 26px;
+                            overflow: hidden;
+                        }
+                        .title-product-box{
+                            color: #FDE8E9;
+                            font-family: GoogleSans-Bold;
+                            text-transform: uppercase;
+                        }
+                        .price-product-box{
+                            color: #E9B941;
+                            text-align: right;
+                            font-size: 18px;
+                            font-family: GoogleSans-Bold;
+                            transition: text-align 0.3s ease-in-out;
+                        }
                     }
-                    .title-product-box{
-                        color: #FDE8E9;
-                        font-family: GoogleSans-Bold;
-                        text-transform: uppercase;
+                    .right-hover-product{
+                        transition: display 0.3s ease-in-out;
+                        display: none;
                     }
-                    .price-product-box{
-                        color: #E9B941;
-                        text-align: right;
-                        font-size: 18px;
-                        font-family: GoogleSans-Bold;
 
-                    }
                 }
 
                 @media (max-width: 768px) {
@@ -138,13 +225,46 @@
                         width: 100%;
                         display: block;
                         margin-left: 20px;
-                        p{
+                        .left-hover-product{
+                            p{
 
+                            }
+                            .title-product-box{
+                            }
+                            .price-product-box{
+                                text-align: left;
+                            }
                         }
-                        .title-product-box{
+                    }
+                }
+                &:hover{
+                    background: rgba(55, 6, 8, 0.80);
+                    img{
+                        transform: scale(1.2);
+                    }
+                    .info-title-product{
+                        display: flex;
+                        justify-content: space-between;
+                        .left-hover-product{
+                            display: flex;
+                            flex-wrap: wrap;
+                            p{
+
+                            }
+                            .title-product-box{
+
+                            }
+                            .price-product-box{
+                                text-align: left;
+                            }
                         }
-                        .price-product-box{
-                            text-align: left;
+                        .right-hover-product{
+                            display: block;
+                            text-align: right;
+                            a:first-child{
+                                margin-bottom: 12px;
+                                width: 120px;
+                            }
                         }
                     }
                 }
@@ -244,11 +364,16 @@
             background: linear-gradient(180deg, #620B0E 0%, #800E13 100%);
             margin-bottom: 40px;
             position: relative;
+            img{
+                &:first-child{
+                    width: 100%;
+                    transition: transform 0.3s ease-in-out;
+                }
+            }
             @media (max-width: 768px) {
                 img{
                     &:first-child{
                         width: 100%;
-                        transition: transform 2s;
                     }
                 }
             }
@@ -329,7 +454,9 @@
                 border-radius: 8px;
                 overflow: hidden;
                 background: rgba(0, 0, 0, 0.28);
-                transition: transform .3s;
+                img{
+                    transition: transform 0.3s ease-in-out;
+                }
                 a:first-child{
                     display: block;
                     max-height: 236px;

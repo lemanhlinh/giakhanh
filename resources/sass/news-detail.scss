@@ -453,7 +453,7 @@
             display: none;
         }
     }
-    padding-top: 176px;
+    padding-top: 80px;
     .box-content-top{
         .title-category{
             text-transform: uppercase;
@@ -525,6 +525,8 @@
                             whitespace: nowrap;
                             font-family: GoogleSans-Bold;
                             margin-bottom: 12px;
+                            max-height: 39px;
+                            font-size: 16px;
                         }
                     }
                 }
@@ -550,6 +552,7 @@
                             whitespace: nowrap;
                             font-family: GoogleSans-Bold;
                             margin-bottom: 16px;
+                            height: 26px;
                         }
                         .calendar-new{
                             font-size: 14px;
@@ -564,6 +567,8 @@
                             text-overflow: ellipsis;
                             whitespace: nowrap;
                             font-size: 14px;
+                            line-height: 148%;
+                            height: 62px;
                         }
                     }
                 }

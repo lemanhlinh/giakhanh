@@ -88,10 +88,16 @@ a:hover {
   line-height: 50px;
 }
 #app .navbar-finalstyle #main-menu ul li a {
-  color: #fff;
+  color: #000;
   text-decoration: none;
   padding: 0 32px 0 0;
   font-family: GoogleSans-Bold;
+}
+@media (max-width: 1440px) {
+  #app .navbar-finalstyle #main-menu ul li a {
+    padding: 0 20px 0 0;
+    font-size: 16px;
+  }
 }
 #app .navbar-finalstyle #main-menu ul li a:hover {
   color: var(--primary-primary-500, #E91A22);
@@ -164,12 +170,12 @@ a:hover {
   border: 1px solid #fbf8f8;
 }
 #app .navbar-finalstyle .form-select-lang {
-  color: #fff;
+  color: #000;
 }
 #app .navbar-finalstyle .form-select-lang select {
   border: none;
   background: none;
-  color: #fff;
+  color: #000;
 }
 #app .navbar-finalstyle .form-select-lang select:focus {
   border: none;
@@ -179,6 +185,11 @@ a:hover {
   color: #fff;
   padding: 10px 24px;
   border-radius: 8px;
+}
+#app .active-menu {
+  position: fixed;
+  width: 100%;
+  background: #fff;
 }
 #app .main-footer {
   background: linear-gradient(180deg, #800E13 0%, #620B0E 100%);
@@ -199,6 +210,9 @@ a:hover {
   color: #E9B941;
   font-size: 20px;
   font-family: GoogleSans-Bold;
+}
+#app .main-footer .top-footer .info-ft-phone .open-store {
+  color: #fff;
 }
 #app .main-footer .top-footer .btn-order {
   border-radius: 8px;
@@ -234,7 +248,7 @@ a:hover {
   display: block;
 }
 #app .main-footer .top-footer .link-to-restaurant {
-  margin-top: 13px;
+  margin-top: 20px;
 }
 #app .main-footer .top-footer .link-to-restaurant .btn-store {
   border-radius: 8px;

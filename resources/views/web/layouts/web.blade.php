@@ -10,16 +10,16 @@
         <!-- Main Footer -->
         @include('web.partials._footer')
         @include('web.partials._offcanvas')
-        <nav class="menu-mobile d-block d-md-none" id="menu-mobile">
-            <ul>
-                @if(!empty($menus))
-                    @foreach ($menus as $shop)
-                        @include('web.components.menu.mobile', ['item'=>$shop])
-                    @endforeach
-                @endif
-            </ul>
-        </nav>
     </div>
+    <nav class="menu-mobile d-block d-md-none" id="menu-mobile">
+        <ul>
+            @if(!empty($menus))
+                @foreach ($menus as $shop)
+                    @include('web.components.menu.mobile', ['item'=>$shop])
+                @endforeach
+            @endif
+        </ul>
+    </nav>
 @endsection
 
 @section('link')
@@ -37,4 +37,6 @@
     <script src="{{ asset('js/fontawesome.min.js') }}"></script>
     <script src="{{ asset('js/mmenu.js') }}"></script>
     <script src="{{ asset('js/web/main.js') }}" defer></script>
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v17.0" nonce="yQawsNWn"></script>
 @endsection

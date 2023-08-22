@@ -43,7 +43,7 @@ class AppServiceProvider extends ServiceProvider
 //            });
         }
         View::share('setting', $setting);
-        View::composer(['web.partials._header', 'web.partials._footer'], function ($view) use ($menu) {
+        View::composer(['web.partials._header', 'web.partials._footer','web.layouts.web'], function ($view) use ($menu) {
             $view->with('menus', $menu);
         });
 

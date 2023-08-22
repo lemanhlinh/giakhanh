@@ -1,4 +1,4 @@
-<nav class="navbar-finalstyle position-fixed w-100">
+<div class="navbar-finalstyle">
     <div class="container-top">
         <div class="row align-items-center">
             <div class="col-md-3 col-2">
@@ -33,5 +33,5 @@
             </div>
         </div>
     </div>
-</nav>
+</div>
 

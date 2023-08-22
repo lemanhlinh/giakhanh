@@ -70,7 +70,7 @@
   /* @ckeditor/ckeditor5-code-block/theme/codeblock.css */
   /* @ckeditor/ckeditor5-horizontal-line/theme/horizontalline.css */
   /* @ckeditor/ckeditor5-mention/theme/mention.css */
-  padding-top: 176px;
+  padding-top: 80px;
 }
 .content-detail :root {
   --ck-color-image-caption-background: hsl(0, 0%, 97%);
@@ -530,6 +530,8 @@
   whitespace: nowrap;
   font-family: GoogleSans-Bold;
   margin-bottom: 12px;
+  max-height: 39px;
+  font-size: 16px;
 }
 .content-detail .content-news-related .article-list-other .article-item {
   margin-bottom: 48px;
@@ -549,6 +551,7 @@
   whitespace: nowrap;
   font-family: GoogleSans-Bold;
   margin-bottom: 16px;
+  height: 26px;
 }
 .content-detail .content-news-related .article-list-other .article-item .article-item-content .box-content-article .calendar-new {
   font-size: 14px;
@@ -563,4 +566,6 @@
   text-overflow: ellipsis;
   whitespace: nowrap;
   font-size: 14px;
+  line-height: 148%;
+  height: 62px;
 }

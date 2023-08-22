@@ -8,7 +8,7 @@
     color: #625B5B;
 }
 .top-content-promotion{
-    padding-top: 176px;
+    padding-top: 80px;
     .title-page{
         font-family: SVN-SVN-A-Love-Of-Thunder;
         color: #E91A22;
@@ -48,14 +48,45 @@
                     whitespace: nowrap;
                     font-family: GoogleSans-Bold;
                     margin-bottom: 12px;
+                    max-height: 39px;
+                    font-size: 16px;
                 }
             }
         }
     }
 }
 .list-article-home{
+    @media (min-width: 768px) {
+        .big-article{
+            width: 55%;
+            .article-item{
+                .article-item-content{
+                    .image-other-article{
+                        margin-bottom: 36px;
+                    }
+                }
+            }
+        }
+        .small-article{
+            width: 45%;
+            .article-item{
+                margin-bottom: 20px;
+                .article-item-content{
+                    .box-content-article{
+                        .title-article{
+                            height: 17px;
+                        }
+                        .calendar-new{
+                            margin-bottom: 10px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     .article-item{
-        margin-bottom: 24px;
+        margin-bottom: 17px;
         .article-item-content{
             .image-other-article{
                 display: block;
@@ -63,6 +94,7 @@
                 img{
                     border-radius: 8px;
                     overflow: hidden;
+                    width: 100%;
                 }
             }
             .box-content-article{
@@ -72,7 +104,9 @@
                     text-overflow: ellipsis;
                     whitespace: nowrap;
                     font-family: GoogleSans-Bold;
-                    margin-bottom: 16px;
+                    margin-bottom: 14px;
+                    max-height: 39px;
+                    font-size: 16px;
                 }
                 .title-article-main{
                     font-size: 32px;
@@ -82,7 +116,7 @@
                 }
                 .calendar-new{
                     font-size: 14px;
-                    margin-bottom: 16px;
+                    margin-bottom: 14px;
                     color: #938D8D;
                 }
                 .des-article-related{
@@ -93,9 +127,14 @@
                     text-overflow: ellipsis;
                     whitespace: nowrap;
                     font-size: 14px;
+                    height: 62px;
+                    line-height: 148%;
                 }
                 .des-article-related-nomal, .calendar-new-normal{
                     font-size: 16px;
+                }
+                .des-article-related-nomal{
+                    height: 73px;
                 }
             }
         }

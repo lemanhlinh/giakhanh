@@ -77,11 +77,18 @@
                                                     <a href="{{ route('productDetail',['slugCat'=>$item->category->slug,'slug'=>$item->slug]) }}" title="{{ $item->title }}">
                                                         @include('web.components.image', ['src' => $item->image_resize['small'], 'title' => $item->title])
                                                     </a>
-                                                    <div class="info-title-product align-items-center justify-content-between">
-                                                        <a href="{{ route('productDetail',['slugCat'=>$item->category->slug,'slug'=>$item->slug]) }}" title="{{ $item->title }}">
-                                                            <p class="title-product-box">{{ $item->title }}</p>
-                                                        </a>
-                                                        <p class="price-product-box">{{ number_format($item->price, 0, ',', '.') }}đ</p>
+                                                    <div class="info-title-product">
+                                                        <div class="left-hover-product align-items-center justify-content-between">
+                                                            <a href="{{ route('productDetail',['slugCat'=>$item->category->slug,'slug'=>$item->slug]) }}" title="{{ $item->title }}">
+                                                                <p class="title-product-box">{{ $item->title }}</p>
+                                                            </a>
+                                                            <p class="price-product-box">{{ number_format($item->price, 0, ',', '.') }}đ</p>
+                                                        </div>
+                                                        <div class="right-hover-product">
+                                                            <a href="{{ route('productDetail',['slugCat'=>$item->category->slug,'slug'=>$item->slug]) }}" class="btn btn-danger">Xem chi tiết</a>
+                                                            <a href="" class="btn btn-warning">Thêm giỏ hàng</a>
+                                                        </div>
+
                                                     </div>
                                                 </div>
                                             @empty
@@ -272,6 +279,7 @@
             infinite: true,
             slidesToShow: 3,
             slidesToScroll: 1,
+            arrows: false,
             responsive: [
                 {
                     breakpoint: 768,

@@ -12,7 +12,7 @@
                 @php
                     $articleFirst = isset($articles)?$articles[0]:[];
                 @endphp
-                <div class="col-md-6 position-relative">
+                <div class="col-md-6 position-relative big-article">
                     <div class="article-item">
                         <div class="article-item-content">
                             <a href="{{ route('detailArticle',['slug' => $articleFirst->slug,'id' => $articleFirst->id]) }}" class="image-other-article">
@@ -30,7 +30,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 small-article">
                     <div class="row article-list-other">
                         @foreach($articles as $k => $item)
                             @if($k > 0 && $k < 5)
