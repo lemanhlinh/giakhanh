@@ -182,7 +182,8 @@
                     options: {
                         resourceType: 'Images'
                     }
-                }
+                },
+                mediaEmbed: {previewsInData: true}
             } )
             .catch( error => {
                 console.error( error );
