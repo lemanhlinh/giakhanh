@@ -11,6 +11,10 @@ a{
         color: #BC2330;
     }
 }
+.fzandcolor-iconmb{
+    color: #a59898;
+    font-size: 22px;
+}
 #app{
     position: relative;
     overflow-x: hidden;
@@ -33,6 +37,9 @@ a{
                     float: none;
                     position: relative;
                     line-height: 50px;
+                    @media(max-width:1280px){
+                        line-height: 30px;
+                    }
                     a{
                         color: #000;
                         text-decoration: none;
@@ -41,6 +48,11 @@ a{
                         @media (max-width: 1440px) {
                             padding: 0 20px 0 0;
                             font-size: 16px;
+                        }
+                        @media screen and (min-width: 980px) and (max-width: 1300px) {
+                            font-size: 14px;
+                            white-space: nowrap;
+                            padding: 0 20px 0 0;
                         }
                         &:hover{
                             color: var(--primary-primary-500, #E91A22);
@@ -52,26 +64,27 @@ a{
                         padding: 0;
                         //padding-left: 12px;
                         display: none;
-                        &:before{
-                            content: "";
-                            width: 50px;
-                            height: 2px;
-                            background: #fff;
-                            display: block;
-                        }
+                        // &:before{
+                        //     content: "";
+                        //     width: 50px;
+                        //     height: 2px;
+                        //     background: #fff;
+                        //     display: block;
+                        // }
                         li{
                             a{
                                 padding: 11px 26px 9px 6px;
                                 text-transform: unset;
                                 display: block;
-                                width: max-content;
+                                width: 200px;
                                 font-style: normal;
                                 font-weight: 500;
                                 font-size: 15px;
                                 line-height: 18px;
                                 color: #fff;
                                 &:hover{
-                                    color: var(--primary-primary-500, #E91A22);
+                                    background-color: var(--primary-primary-500, #E91A22);
+                                    border-radius: 8px;
                                 }
                             }
                         }
@@ -87,8 +100,7 @@ a{
                     >ul{
                         >li{
                             //padding: 11px 15px;
-                            border-bottom: 1px solid #EEEEEE;
-                            background: #00000054;
+                            // border-bottom: 1px solid #EEEEEE;
                         }
                         .level1-menu-item{
                             i{
@@ -102,12 +114,19 @@ a{
                     &:hover{
                         .sub-menu{
                             display: block;
+                            background: rgba(26, 3, 4, 0.60);
+                            box-shadow: 0px 4px 12px 0px rgba(56, 65, 39, 0.06);
+                            backdrop-filter: blur(8px);
+                            padding: 8px;
+                            border-radius: 8px;
+                            border-top: 2px solid #E4A812;
                             &:before{
-                                content: "";
-                                width: 50px;
-                                height: 2px;
-                                background: #e40375;
-                                display: block;
+                                // content: "";
+                                // width: 100%;
+                                // height: 2px;
+                                // background: #E4A812;
+                                // border-radius: 50%;
+                                // display: block;
                             }
                         }
                     }
@@ -163,6 +182,11 @@ a{
             color: #fff;
             padding: 10px 24px;
             border-radius: 8px;
+            @media(min-width: 980px) and (max-width:1280px){
+                padding: 10px 20px;
+                white-space: nowrap;
+                margin-left: 5px;
+            }
         }
     }
     .active-menu {
