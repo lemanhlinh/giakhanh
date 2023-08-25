@@ -18,8 +18,15 @@
 @section('link')
     @parent
     <link rel="stylesheet" href="{{ asset('/css/web/page-home.css') }}">
+    <link rel="stylesheet" href="{{ asset('/css/content-ckeditor.css') }}">
 @endsection
 
 @section('script')
     @parent
+    <script async src="//cdn.iframe.ly/embed.js"></script>
+    <script>
+        document.querySelectorAll( 'oembed[url]' ).forEach( element => {
+            iframely.load( element, element.attributes.url.value );
+        } );
+    </script>
 @endsection

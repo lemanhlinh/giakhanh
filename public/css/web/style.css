@@ -278,3 +278,77 @@ a:hover {
 .menu-mobile:not(.mm-menu) {
   display: none;
 }
+
+.order-now-right #offcanvasRight {
+  background: url(/images/book_right.png?aeb6da533d766f6cbc7c74c827198dbc) no-repeat bottom right;
+  background-size: cover;
+  border-radius: 64px 0 0 64px;
+  justify-content: center;
+}
+.order-now-right .offcanvas.offcanvas-end {
+  top: 10%;
+  width: 46%;
+}
+.order-now-right .offcanvas.offcanvas-end .offcanvas-header {
+  padding: unset;
+}
+.order-now-right .offcanvas.offcanvas-end .offcanvas-header .btn-close {
+  background-color: #800E13;
+  border-radius: 50%;
+  opacity: 1;
+}
+.order-now-right .offcanvas.offcanvas-end .offcanvas-header #offcanvasRightLabel {
+  color: #E9B941;
+  font-size: 48px;
+  font-family: SVN-SVN-A-Love-Of-Thunder;
+  text-transform: uppercase;
+  margin-bottom: 30px;
+}
+.order-now-right .offcanvas.offcanvas-end .offcanvas-body {
+  padding: unset;
+  overflow-y: unset;
+}
+.order-now-right .offcanvas.offcanvas-end .offcanvas-body .des-for-form {
+  color: #fff;
+  margin-bottom: 40px;
+}
+.order-now-right form input, .order-now-right form select, .order-now-right form textarea {
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.16);
+  border: none;
+  padding: 12px 20px;
+  margin-bottom: 15px;
+  color: rgba(255, 255, 255, 0.32);
+}
+.order-now-right form input::-webkit-input-placeholder, .order-now-right form select::-webkit-input-placeholder, .order-now-right form textarea::-webkit-input-placeholder {
+  color: rgba(255, 255, 255, 0.32);
+}
+.order-now-right form select {
+  color: rgba(255, 255, 255, 0.32);
+}
+.order-now-right form option[value=""][disabled] {
+  display: none;
+}
+.order-now-right form option {
+  color: #fff;
+}
+.order-now-right form .btn-order-now {
+  width: 100%;
+  text-align: center;
+  border-radius: 8px;
+  background: var(--secondary-secondary-500, #E4A812);
+  box-shadow: 24px 24px 64px 0px rgba(228, 168, 18, 0.32);
+  color: #620B0E;
+  text-transform: uppercase;
+  padding: 15px;
+  font-family: GoogleSans-Bold;
+}
+.order-now-right form .btn-order-now:hover {
+  background: #A51218;
+  color: #fff;
+}
+@media (max-width: 768px) {
+  .order-now-right form select {
+    width: 100%;
+  }
+}
