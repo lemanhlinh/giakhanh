@@ -13,6 +13,9 @@
         }
         .form-select-lang {
             color: #fff;
+            @media(min-width:768px){
+                white-space: nowrap;
+            }
             select {
                 color: #fff;
                 option{

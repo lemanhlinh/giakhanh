@@ -8,6 +8,11 @@
 #app .navbar-finalstyle .form-select-lang {
   color: #fff;
 }
+@media (min-width: 768px) {
+  #app .navbar-finalstyle .form-select-lang {
+    white-space: nowrap;
+  }
+}
 #app .navbar-finalstyle .form-select-lang select {
   color: #fff;
 }

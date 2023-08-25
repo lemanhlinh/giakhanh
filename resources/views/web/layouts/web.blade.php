@@ -11,7 +11,7 @@
         @include('web.partials._footer')
         @include('web.partials._offcanvas')
     </div>
-    <nav class="menu-mobile d-block d-md-none" id="menu-mobile">
+    <nav class="menu-mobile d-block d-lg-none" id="menu-mobile">
         <ul>
             @if(!empty($menus))
                 @foreach ($menus as $shop)
