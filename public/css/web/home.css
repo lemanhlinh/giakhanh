@@ -38,6 +38,28 @@
 .top-content {
   margin-bottom: 88px;
 }
+.top-content .slide-home .slick-next {
+  z-index: 1;
+  right: 65px;
+}
+.top-content .slide-home .slick-next svg rect:hover {
+  fill: #E91A22;
+  fill-opacity: 100%;
+}
+.top-content .slide-home .slick-next::before {
+  content: "";
+}
+.top-content .slide-home .slick-prev {
+  left: 35px;
+  z-index: 1;
+}
+.top-content .slide-home .slick-prev svg rect:hover {
+  fill: #E91A22;
+  fill-opacity: 100%;
+}
+.top-content .slide-home .slick-prev:before {
+  content: "";
+}
 .top-content .slider-nav-slide-home {
   margin-top: -80px;
 }
@@ -244,8 +266,19 @@
   display: inline-block;
 }
 .box-order .des-order {
-  color: #fff;
+  color: #F59699;
   margin-bottom: 40px;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 168%;
+}
+.box-order .des-order b {
+  color: #fff;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 168%;
 }
 .box-order form input, .box-order form select, .box-order form textarea {
   border-radius: 4px;
@@ -253,19 +286,31 @@
   border: none;
   padding: 12px 20px;
   margin-bottom: 15px;
-  color: rgba(255, 255, 255, 0.32);
+  color: #FDE8E9;
 }
 .box-order form input::-webkit-input-placeholder, .box-order form select::-webkit-input-placeholder, .box-order form textarea::-webkit-input-placeholder {
-  color: rgba(255, 255, 255, 0.32);
+  color: rgba(255, 255, 255, 0.3215686275);
+}
+.box-order form input:focus, .box-order form select:focus, .box-order form textarea:focus {
+  background-color: unset;
+  color: #FDE8E9;
+}
+.box-order form input:focus-visible, .box-order form select:focus-visible, .box-order form textarea:focus-visible {
+  background-color: unset;
+  color: #FDE8E9;
+}
+.box-order form input[type=date] {
+  color: #FDE8E9;
 }
 .box-order form select {
-  color: rgba(255, 255, 255, 0.32);
+  color: #FDE8E9;
 }
 .box-order form option[value=""][disabled] {
   display: none;
+  color: #fff;
 }
 .box-order form option {
-  color: #fff;
+  color: #222222;
 }
 .box-order form .btn-order-now {
   width: 100%;
@@ -317,6 +362,30 @@
 }
 .box-media .content-home-page .btn-see-about:hover {
   background: #A51218;
+}
+.box-media .list-media .row .col-md-6:nth-child(2) {
+  margin-top: 80px;
+}
+@media (min-width: 512px) and (max-width: 1023px) {
+  .box-media .list-media .row .col-md-6:nth-child(2) {
+    margin-top: 0;
+  }
+}
+.box-media .list-media .row .col-md-6:nth-child(3) {
+  margin-top: -80px;
+}
+@media (min-width: 512px) and (max-width: 1023px) {
+  .box-media .list-media .row .col-md-6:nth-child(3) {
+    margin-top: 0;
+  }
+}
+.box-media .list-media .row .col-md-6:nth-child(4) .content-media-home {
+  margin-bottom: 0;
+}
+@media (min-width: 512px) and (max-width: 1023px) {
+  .box-media .list-media .row .col-md-6:nth-child(4) .content-media-home {
+    margin-bottom: 40px;
+  }
 }
 .box-media .list-media .content-media-home {
   border-radius: 8px;

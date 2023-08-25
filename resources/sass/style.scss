@@ -266,6 +266,10 @@ a{
                     i{
                         margin-right: 10px;
                     }
+                    &:hover{
+                        background-color: #A51218;
+                        cursor: pointer;
+                    }
                 }
             }
         }
@@ -355,3 +359,68 @@ a{
         }
     }
 }
+// hotline
+@keyframes pulse-animation {
+    0% {
+      box-shadow: 0 0 0 0px rgba(180, 92, 92, 0.478);
+    }
+    100% {
+      box-shadow: 0 0 0 20px rgba(90, 63, 63, 0.147);
+      opacity: .9;
+    }
+  }
+.hotline-all{
+    position: fixed;
+    z-index: 9;
+    bottom: 15%;
+    left: 5px;
+    @media(max-width:768px){
+        bottom: 40%;
+    }
+    .hotline-icon{
+        position: relative;
+        .pulse {
+            position: absolute;
+            width: 48px;
+            height: 48px;
+            background: #BC2330;
+            border-radius: 100%;
+            border: 1px solid #BC2330;
+            svg{
+                position: absolute;
+                top: 33%;
+                left: 25%;
+            }
+            &:before,
+            ::after{
+                content: "";
+                position: absolute;
+                width: 48px;
+                height: 48px;
+                border-radius: 100%;
+            }
+        
+            &:before {
+                animation: pulse-animation 2s infinite;
+            }
+        
+            &:after {
+                animation: pulse-animation 4s infinite;
+            }
+        }
+        .text-hotline{
+            position: absolute;
+            color: #fff;
+            background: linear-gradient(270deg, #A51218 0%, #620B0E 100%);
+            border-radius: 100px;
+            padding: 5px 30px;
+            width: 140px;
+            left: 25px;
+            top: 7px;
+            @media(max-width: 768px){
+                display: none;
+            }
+        }
+    }
+}
+

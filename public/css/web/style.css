@@ -274,6 +274,10 @@ a:hover {
 #app .main-footer .top-footer .link-to-restaurant .btn-store i {
   margin-right: 10px;
 }
+#app .main-footer .top-footer .link-to-restaurant .btn-store:hover {
+  background-color: #A51218;
+  cursor: pointer;
+}
 
 .menu-mobile:not(.mm-menu) {
   display: none;
@@ -350,5 +354,71 @@ a:hover {
 @media (max-width: 768px) {
   .order-now-right form select {
     width: 100%;
+  }
+}
+
+@keyframes pulse-animation {
+  0% {
+    box-shadow: 0 0 0 0px rgba(180, 92, 92, 0.478);
+  }
+  100% {
+    box-shadow: 0 0 0 20px rgba(90, 63, 63, 0.147);
+    opacity: 0.9;
+  }
+}
+.hotline-all {
+  position: fixed;
+  z-index: 9;
+  bottom: 15%;
+  left: 5px;
+}
+@media (max-width: 768px) {
+  .hotline-all {
+    bottom: 40%;
+  }
+}
+.hotline-all .hotline-icon {
+  position: relative;
+}
+.hotline-all .hotline-icon .pulse {
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  background: #BC2330;
+  border-radius: 100%;
+  border: 1px solid #BC2330;
+}
+.hotline-all .hotline-icon .pulse svg {
+  position: absolute;
+  top: 33%;
+  left: 25%;
+}
+.hotline-all .hotline-icon .pulse:before,
+.hotline-all .hotline-icon .pulse ::after {
+  content: "";
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  border-radius: 100%;
+}
+.hotline-all .hotline-icon .pulse:before {
+  animation: pulse-animation 2s infinite;
+}
+.hotline-all .hotline-icon .pulse:after {
+  animation: pulse-animation 4s infinite;
+}
+.hotline-all .hotline-icon .text-hotline {
+  position: absolute;
+  color: #fff;
+  background: linear-gradient(270deg, #A51218 0%, #620B0E 100%);
+  border-radius: 100px;
+  padding: 5px 30px;
+  width: 140px;
+  left: 25px;
+  top: 7px;
+}
+@media (max-width: 768px) {
+  .hotline-all .hotline-icon .text-hotline {
+    display: none;
   }
 }
