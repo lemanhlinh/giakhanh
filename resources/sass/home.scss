@@ -48,6 +48,9 @@
 }
 .top-content{
     margin-bottom: 88px;
+    img{
+        margin: 0 auto;
+    }
     .slide-home{
         .slick-next{
             z-index: 1;
@@ -77,6 +80,20 @@
             }
             &:before{
                 content: "";
+            }
+        }
+        .btn-slider{
+            top: 60%;
+            bottom: 50%;
+            left: 19%;
+            li{
+                text-align: center;
+                a{
+                    font-family: GoogleSans-Bold;
+                    text-transform: uppercase;
+                    display: block;
+                    padding: 10px 24px;
+                }
             }
         }
     }
@@ -130,6 +147,7 @@
         .about-description{
             color: #625B5B;
             margin-bottom: 50px;
+            white-space: pre-wrap;
         }
         .btn-see-about{
             background: #E91A22;
@@ -402,6 +420,7 @@
         .about-description{
             color: #625B5B;
             margin-bottom: 50px;
+            white-space: pre-wrap;
         }
         .btn-see-about{
             background: #E91A22;

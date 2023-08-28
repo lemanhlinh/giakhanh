@@ -4,7 +4,13 @@
     <div class="top-content">
         <div class="slide-home">
             @forelse($slider as $item)
-                @include('web.components.image', ['src' => $item->image_resize['lager'], 'title' => $item->title])
+                <div class="position-relative">
+                    @include('web.components.image', ['src' => $item->image_resize['lager'], 'title' => $item->title])
+                    <ul class="list-unstyled position-absolute mb-0 btn-slider">
+                        <li class="d-inline-block"><a href="tel:{{ $setting['hotline'] }}" class="btn btn-warning"><i class="fas fa-phone"></i> {{ $setting['hotline'] }}</a></li>
+                        <li class="d-inline-block ms-3"><a href="{{ route('productHome') }}" class="btn btn-danger">Đặt bàn ngay <i class="fas fa-angle-right"></i></a></li>
+                    </ul>
+                </div>
             @empty
             @endforelse
         </div>
