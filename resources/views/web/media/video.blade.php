@@ -35,7 +35,7 @@
                     </div>
                 @endforeach
             </div>
-            {{--            {{ $images->links('web.components.pagination') }}--}}
+            {{ $videos->links('web.components.pagination') }}
         </div>
     </div>
 @endsection
