@@ -10,6 +10,10 @@
   font-family: SVN-SVN-A-Love-Of-Thunder;
   src: url(/fonts/SVN-SVN-A-Love-Of-Thunder.ttf?b6aff5c206bb6e771bbfa25bf5ce3941);
 }
+@font-face {
+  font-family: SVN-Bear;
+  src: url(/fonts/SVN-Bear.ttf?f0bbac2951868f94dd6bba8792dc8687);
+}
 h1, h2, h3, h4 {
   font-family: "GoogleSans-Bold", sans-serif;
 }
