@@ -54,7 +54,7 @@
     <div class="box-order">
         <div class="container">
             <div class="row">
-                <div class="col-md-6 pe-5">
+                <div class="col-md-6 pe-2 pe-md-5">
                     <p class="title-order">Thực đơn</p>
                     <div class="product-home">
                         <ul class="nav nav-tabs" id="myTabProduct" role="tablist">
@@ -240,6 +240,8 @@
             fade: true,
             autoplay: true,
             autoplaySpeed: 2000,
+            prevArrow: '<div class="slick-prev"><svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="56" height="56" rx="28" fill="black" fill-opacity="0.12"/><path d="M33 38L23 28L33 18" stroke="white" stroke-linecap="round" stroke-linejoin="round"/></svg></div>',
+            nextArrow: '<div class="slick-next"><svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="56" y="56" width="56" height="56" rx="28" transform="rotate(-180 56 56)" fill="black" fill-opacity="0.12"/><path d="M23 18L33 28L23 38" stroke="white" stroke-linecap="round" stroke-linejoin="round"/></svg></div>',
             asNavFor: '.slider-nav-slide-home',
             responsive: [
                 {
