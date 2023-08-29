@@ -319,8 +319,16 @@
 .box-order form input[type=date] {
   color: #FDE8E9;
 }
+.box-order form input[type=date]:focus {
+  background-color: #fff;
+  color: #000;
+}
 .box-order form select {
   color: #FDE8E9;
+}
+.box-order form select:focus {
+  background-color: #fff;
+  color: #000;
 }
 .box-order form option[value=""][disabled] {
   display: none;

@@ -331,14 +331,8 @@ a:hover {
 .order-now-right form input::-webkit-input-placeholder, .order-now-right form select::-webkit-input-placeholder, .order-now-right form textarea::-webkit-input-placeholder {
   color: rgba(255, 255, 255, 0.32);
 }
-.order-now-right form select {
-  color: rgba(255, 255, 255, 0.32);
-}
 .order-now-right form option[value=""][disabled] {
   display: none;
-}
-.order-now-right form option {
-  color: #fff;
 }
 .order-now-right form .btn-order-now {
   width: 100%;

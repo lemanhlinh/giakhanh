@@ -329,13 +329,13 @@ a{
             }
         }
         select {
-            color: rgba(255, 255, 255, 0.32);
+            //color: rgba(255, 255, 255, 0.32);
         }
         option[value=""][disabled] {
             display: none;
         }
         option {
-            color: #fff;
+            //color: #fff;
         }
         .btn-order-now{
             width: 100%;
@@ -399,11 +399,11 @@ a{
                 height: 48px;
                 border-radius: 100%;
             }
-        
+
             &:before {
                 animation: pulse-animation 2s infinite;
             }
-        
+
             &:after {
                 animation: pulse-animation 4s infinite;
             }

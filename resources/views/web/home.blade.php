@@ -132,9 +132,30 @@
                             <div class="col-md-6">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <select name="" id="">
-                                            <option value="">Giờ đặt</option>
+                                        <select name="" id="" class="form-control" required>
+                                            <option value="Giờ đặt(*):">Giờ đặt(*):</option>
+                                            <option value="9h">9h</option>
+                                            <option value="9h30">9h30</option>
+                                            <option value="10h">10h</option>
+                                            <option value="10h30">10h30</option>
+                                            <option value="11h">11h</option>
+                                            <option value="11h30">11h30</option>
+                                            <option value="12h">12h</option>
+                                            <option value="12h30">12h30</option>
+                                            <option value="13h">13h</option>
+                                            <option value="13h30">13h30</option>
+                                            <option value="14h">14h</option>
+                                            <option value="17h">17h</option>
+                                            <option value="17h30">17h30</option>
+                                            <option value="18h">18h</option>
+                                            <option value="18h30">18h30</option>
+                                            <option value="19h">19h</option>
+                                            <option value="19h30">19h30</option>
+                                            <option value="20h">20h</option>
+                                            <option value="20h30">20h30</option>
+                                            <option value="21h">21h</option>
                                         </select>
+
                                     </div>
                                     <div class="col-md-6">
                                         <input type="number" class="form-control" min="1" placeholder="Số khách" name="number_customer">

@@ -11,4 +11,9 @@ class Store extends Model
     const STATUS_INACTIVE = 0;
 
     protected $guarded = ['id'];
+
+    public function city()
+    {
+        return $this->belongsTo(City::class, 'city_id', 'id');
+    }
 }

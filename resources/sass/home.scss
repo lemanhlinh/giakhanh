@@ -365,10 +365,18 @@
         }
         input[type="date"]{
             color: #FDE8E9;
+            &:focus{
+                background-color: #fff;
+                color: #000;
+            }
         }
         select {
             // color: rgba(255, 255, 255, 0.32);
             color: #FDE8E9;
+            &:focus{
+                background-color: #fff;
+                color: #000;
+            }
 
         }
         option[value=""][disabled] {
