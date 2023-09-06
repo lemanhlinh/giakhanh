@@ -48,11 +48,15 @@
                     whitespace: nowrap;
                     font-family: GoogleSans-Bold;
                     margin-bottom: 12px;
-                    max-height: 39px;
+                    max-height: 48px;
                     font-size: 16px;
+                    line-height: revert;
                 }
             }
         }
+    }
+    .pagination{
+        justify-content: center;
     }
 }
 .list-article-home{

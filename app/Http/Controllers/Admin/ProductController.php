@@ -131,7 +131,9 @@ class ProductController extends Controller
             $data = $req->validated();
             $page = $this->productResponstory->getOneById($id);
             if (!empty($data['image']) && $data_root->image != $data['image']){
-                $this->productResponstory->removeImageResize($data_root->image,$this->resizeImage, $id,'product');
+                if ($data_root->image){
+                    $this->productResponstory->removeImageResize($data_root->image,$this->resizeImage, $id,'product');
+                }
                 $data['image'] = $this->productResponstory->saveFileUpload($data['image'],$this->resizeImage, $id,'product');
             }
             if (empty($data['slug'])){

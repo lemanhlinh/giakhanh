@@ -43,9 +43,10 @@ class HomeController extends Controller
         $images = $this->mediaImageRepository->getList(['active' => 1,'is_home' => 1],['id','title','image'], 2,['mediaImages']);
         $videos = $this->mediaVideoRepository->getList(['active' => 1,'is_home' => 1],['id','title','image'], 2);
         $page = $this->pageRepository->getList(['active' => 1,'is_home' => 1],['id','title','slug','description','image'], 1);
-        $categories_product = ProductsCategories::where('active',1)->with(['products' => function ($query) {
-            $query->limit(3);
-        }])->get();
+        $categories_product = ProductsCategories::where('active',1)->with(['products'])->get();
+        $categories_product->each(function ($category) {
+            $category->products->splice(3); // Giữ lại chỉ 3 sản phẩm đầu tiên
+        });
         return view('web.home',compact('articles','slider','page','images','videos','categories_product'));
     }
 

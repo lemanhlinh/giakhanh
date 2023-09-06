@@ -48,6 +48,9 @@
 }
 .top-content{
     margin-bottom: 88px;
+    img{
+        margin: 0 auto;
+    }
     .slide-home{
         .slick-next{
             z-index: 1;
@@ -77,6 +80,20 @@
             }
             &:before{
                 content: "";
+            }
+        }
+        .btn-slider{
+            top: 60%;
+            bottom: 50%;
+            left: 19%;
+            li{
+                text-align: center;
+                a{
+                    font-family: GoogleSans-Bold;
+                    text-transform: uppercase;
+                    display: block;
+                    padding: 10px 24px;
+                }
             }
         }
     }
@@ -348,10 +365,18 @@
         }
         input[type="date"]{
             color: #FDE8E9;
+            &:focus{
+                background-color: #fff;
+                color: #000;
+            }
         }
         select {
             // color: rgba(255, 255, 255, 0.32);
             color: #FDE8E9;
+            &:focus{
+                background-color: #fff;
+                color: #000;
+            }
 
         }
         option[value=""][disabled] {

@@ -122,7 +122,7 @@ abstract class BaseRepository implements BaseInterface
         if($where){
             foreach($where as $key => $value){
                 if (gettype($value) === 'array'){
-                    $query->where($key, $value[0], $value[1]);
+                    $query->where($key, $value[1], $value[0]);
                 }else{
                     $query->where($key, $value);
                 }

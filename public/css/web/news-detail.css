@@ -479,6 +479,7 @@
   font-size: 24px;
   font-family: GoogleSans-Bold;
   margin-bottom: 40px;
+  line-height: initial;
 }
 .content-detail .content-news-related .title-article-other:before {
   content: "";

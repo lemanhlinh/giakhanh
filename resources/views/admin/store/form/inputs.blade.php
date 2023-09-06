@@ -16,6 +16,23 @@
             <div class="col-sm-6">
                 <!-- text input -->
                 <div class="form-group">
+                    <label>@lang('form.store.city_id')</label>
+                    <select name="city_id" id="city_id" class="form-control">
+                        @forelse($cities as $city)
+                            <option value="{{ $city->id }}" {{ isset($store) ? $store->city_id == $city->id ? 'selected': '' : old('city_id') }}>{{ $city->name }}</option>
+                        @empty
+                        @endforelse
+                    </select>
+                    @if ($errors->has('city_id'))
+                        <span class="help-block text-danger">
+                            <strong>{{ $errors->first('city_id') }}</strong>
+                        </span>
+                    @endif
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <!-- text input -->
+                <div class="form-group">
                     <label>@lang('form.store.phone')</label>
                     <input type="text" class="form-control" name="phone" value="{{ isset($store) ? $store->phone : old('phone') }}">
                     @if ($errors->has('phone'))
@@ -85,6 +102,7 @@
         </div>
     </div>
     <div class="col-sm-5">
+{{--        @include('admin.store.form.ping')--}}
     </div>
 </div>
 @section('script')
