@@ -18,19 +18,20 @@
         <div class="container">
             <div class="row g-0 mg-for-article">
                 @foreach($videos as $k => $item)
-                    <div class="col-md-4 position-relative">
-                        <div class="article-item">
-                            <div class="article-item-content">
-                                <a href="#" class="image-video">
-                                    @include('web.components.image', ['src' => $item->image_resize['resize'], 'title' => $item->title])
-                                    <img src="{{ asset('images/Youtube.png') }}" alt="" class="play-youtube-video  top-50 start-50 translate-middle">
-                                </a>
-                                <div class="box-content-article">
-                                    <a href="#">
+                    <div class="col-md-4 position-relative" id="video-gallery-{{ $item->id }}">
+                        <div class="article-item video" data-poster="{{ asset($item->image) }}" data-src="{{ $item->link_video }}"
+                             data-sub-html="{{$item->title}}" >
+                            <a href="">
+                                <div class="article-item-content">
+                                    <div class="image-video">
+                                        @include('web.components.image', ['src' => $item->image_resize['resize'], 'title' => $item->title])
+                                        <img src="{{ asset('images/Youtube.png') }}" alt="" class="play-youtube-video  top-50 start-50 translate-middle">
+                                    </div>
+                                    <div class="box-content-article">
                                         <h4 class="title-article">{{ $item->title }}</h4>
-                                    </a>
+                                    </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                     </div>
                 @endforeach
@@ -42,9 +43,24 @@
 
 @section('link')
     @parent
+    <link rel="stylesheet" href="{{ asset('/css/lightgallery/lightgallery.css') }}">
     <link rel="stylesheet" href="{{ asset('/css/web/album-home.css') }}">
 @endsection
 
 @section('script')
     @parent
+    <script src="{{ asset('js/web/lightgallery/lightgallery.js') }}"></script>
+    <script src="{{ asset('js/web/lightgallery/lg-thumbnail.js') }}"></script>
+    <script src="{{ asset('js/web/lightgallery/lg-fullscreen.js') }}"></script>
+    <script src="{{ asset('js/web/lightgallery/lg-autoplay.js') }}"></script>
+    <script src="{{ asset('js/web/lightgallery/lg-video.js') }}"></script>
+    <script>
+        // $('#category-list .article-item-content').click(function() {
+        //     var category = $(this).data('category');
+        //     $('#image-gallery-'+category+' a:first-child').click();
+        // });
+        @foreach($videos as $k => $item)
+            $('#video-gallery-{{ $item->id }}').lightGallery();
+        @endforeach
+    </script>
 @endsection
