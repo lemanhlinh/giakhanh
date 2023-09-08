@@ -115,7 +115,7 @@ abstract class BaseRepository implements BaseInterface
      * @param int $limit
      * @return mixed
      */
-    public function getList(array $where, array $columns = ['*'], int $limit, array $relationships = [])
+    public function getList(array $where, array $columns = ['*'], int $limit = null, array $relationships = [])
     {
         $query = $this->model->select($columns);
 

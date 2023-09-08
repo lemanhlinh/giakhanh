@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Models\BookTable;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Repositories\Contracts\ProductCategoryInterface;
 use App\Repositories\Contracts\ProductInterface;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use App\Http\Requests\Order\CreateOrder;
+use App\Http\Requests\BookTable\CreateBookTable;
 
 class ProductController extends Controller
 {
@@ -40,7 +43,29 @@ class ProductController extends Controller
         return view('web.product.detail',compact('cat','product','products'));
     }
 
-    public function order (CreateContact $req){
+    public function bookTable (CreateBookTable $req){
+        DB::beginTransaction();
+        try {
+            $data = $req->validated();
+            BookTable::create($data);
+            DB::commit();
+            Session::flash('success', trans('message.create_book_table_success'));
+            return redirect()->back();
+        } catch (\Exception $ex) {
+            DB::rollBack();
+            \Log::info([
+                'message' => $ex->getMessage(),
+                'line' => __LINE__,
+                'method' => __METHOD__
+            ]);
+
+            Session::flash('danger', trans('message.create_book_table_error'));
+            return redirect()->back();
+        }
+        return redirect()->back();
+    }
+
+    public function order (CreateOrder $req){
         DB::beginTransaction();
         try {
             $data = $req->validated();
@@ -69,6 +94,8 @@ class ProductController extends Controller
         }
         return redirect()->back();
     }
+
+
 
     public function success ($id){
         $cat = $this->productCategoryRepository->getOneById($id);

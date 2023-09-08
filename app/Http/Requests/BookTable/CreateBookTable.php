@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Contact;
+namespace App\Http\Requests\BookTable;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateContact extends FormRequest
+class CreateBookTable extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,10 +25,13 @@ class CreateContact extends FormRequest
     {
         return [
             'full_name' => 'required',
+            'email' => 'required',
             'phone' => 'required',
-            'title' => 'required',
-            'content' => 'required',
-            'email' => 'required'
+            'store_id' => 'required',
+            'book_time' => 'required',
+            'book_hour' => 'required',
+            'number_customers' => 'required',
+            'note' => 'nullable',
         ];
     }
 }

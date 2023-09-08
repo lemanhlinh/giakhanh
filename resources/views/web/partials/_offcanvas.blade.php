@@ -9,7 +9,8 @@
                 </div>
                 <div class="offcanvas-body">
                     <p class="des-for-form">Quý khách vui lòng đặt bàn trước 1 giờ để được phục vụ tốt nhất, mọi chi tiết liên hệ: <b>1900 0056 – 0909 911 112</b></p>
-                    <form action="{{ route('order') }}" method="post">
+                    <form action="{{ route('bookTable') }}" method="post">
+                        @csrf
                         <input type="text" class="form-control" placeholder="Họ và tên" name="full_name">
                         <div class="row">
                             <div class="col-md-6">
@@ -19,17 +20,23 @@
                                 <input type="text" class="form-control" placeholder="Địa chỉ Email" name="email">
                             </div>
                         </div>
-                        <select name="" id="" class="form-control">
+                        <select name="store_id" class="form-control">
                             <option value="" selected disabled>Vui lòng chọn cơ sở</option>
+                            @if($stores)
+                                @forelse($stores as $store)
+                                    <option value="{{ $store->id }}">{{ $store->title }}</option>
+                                @empty
+                                @endforelse
+                            @endif
                         </select>
                         <div class="row">
                             <div class="col-md-6">
-                                <input type="date" class="form-control" name="date">
+                                <input type="date" class="form-control" name="book_time">
                             </div>
                             <div class="col-md-6">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <select name="" id="" required class="form-control">
+                                        <select name="book_hour" id="" required class="form-control">
                                             <option value="Giờ đặt(*):">Giờ đặt(*):</option>
                                             <option value="9h">9h</option>
                                             <option value="9h30">9h30</option>
@@ -54,13 +61,13 @@
                                         </select>
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="number" class="form-control" min="1" placeholder="Số khách" name="number_customer">
+                                        <input type="number" class="form-control" min="1" placeholder="Số khách" name="number_customers">
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <textarea name="" id="" cols="30" rows="4" class="form-control" placeholder="Ghi chú khi đặt bàn"></textarea>
-                        <button class="btn btn-order-now" type="button" >Đặt bàn ngay <i class="fas fa-chevron-right"></i></button>
+                        <textarea name="note" id="" cols="30" rows="4" class="form-control" placeholder="Ghi chú khi đặt bàn"></textarea>
+                        <button class="btn btn-order-now" type="submit" >Đặt bàn ngay <i class="fas fa-chevron-right"></i></button>
                     </form>
                 </div>
             </div>

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Contact;
+namespace App\Http\Requests\Order;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateContact extends FormRequest
+class UpdateOrder extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class CreateContact extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return false;
     }
 
     /**
@@ -24,11 +24,7 @@ class CreateContact extends FormRequest
     public function rules()
     {
         return [
-            'full_name' => 'required',
-            'phone' => 'required',
-            'title' => 'required',
-            'content' => 'required',
-            'email' => 'required'
+            //
         ];
     }
 }

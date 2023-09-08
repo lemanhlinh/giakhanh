@@ -35,8 +35,29 @@
     <!-- Bootstrap -->
     <script src="{{ asset('/js/web/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('js/fontawesome.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('js/mmenu.js') }}"></script>
     <script src="{{ asset('js/web/main.js') }}" defer></script>
     <div id="fb-root"></div>
     <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v17.0" nonce="yQawsNWn"></script>
+    <script>
+        let toastrSuccsee = '{{ Session::get('success') }}';
+        let toastrDanger = '{{ Session::get('danger') }}';
+        if (toastrDanger.length > 0 || toastrSuccsee.length > 0) {
+            if (toastrDanger.length > 0){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: toastrDanger,
+                })
+                toastr["error"](toastrDanger)
+            } else {
+                Swal.fire(
+                    'Thành công!',
+                    toastrSuccsee,
+                    'success'
+                )
+            }
+        }
+    </script>
 @endsection
