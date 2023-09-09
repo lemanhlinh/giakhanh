@@ -65,6 +65,111 @@ class ProductController extends Controller
         return redirect()->back();
     }
 
+    public function addToCart (Request $req){
+        $productId = $req['id'];
+        $quantity = $req['quantity'];
+        $product = $this->productRepository->getOneById($productId);
+
+        if (!$product) {
+            abort(404);
+        }
+
+        $cart = Session::get('cart', []);
+
+        if (array_key_exists($product->id, $cart)) {
+            // Sản phẩm đã tồn tại trong giỏ hàng, tăng số lượng
+            $cart[$product->id]['quantity'] = $cart[$product->id]['quantity']+$quantity;
+        } else {
+            // Sản phẩm chưa tồn tại trong giỏ hàng, thêm mới
+            $cart[$product->id] = [
+                'name' => $product->title,
+                'price' => $product->price,
+                'quantity' => $quantity,
+            ];
+        }
+
+        Session::put('cart', $cart);
+
+        $totalQuantity = 0;
+        foreach ($cart as $item) {
+            $totalQuantity += $item['quantity'];
+        }
+
+        return response()->json(array(
+            'success' => true,
+            'total'   => $totalQuantity
+        ));
+    }
+
+    public function showCart()
+    {
+        $cart = Session::get('cart', []);
+        // Duyệt qua các sản phẩm trong giỏ hàng để lấy thông tin sản phẩm
+        $cartItems = [];
+        if (!$cart){
+            Session::flash('danger', 'Chưa có sản phẩm nào trong giỏ hàng');
+            return redirect()->route('home');
+        }
+        foreach ($cart as $productId => $item) {
+            $product = $this->productRepository->getOneById($productId);
+            $quantity = $item['quantity']; // Số lượng
+
+            // Thêm thông tin sản phẩm vào danh sách
+            $cartItems[] = [
+                'product' => $product,
+                'quantity' => $quantity,
+                'subtotal' => $product->price * $quantity, // Tính tổng tiền cho mỗi sản phẩm
+            ];
+        }
+
+        return view('web.product.cart', compact('cart','cartItems'));
+    }
+
+    public function updateCart(Request $request)
+    {
+        $productId = $request->input('product_id');
+        $quantity = $request->input('quantity');
+
+        // Lấy giỏ hàng hiện tại từ Session
+        $cart = Session::get('cart', []);
+
+        // Kiểm tra xem sản phẩm có tồn tại trong giỏ hàng không
+        if (array_key_exists($productId, $cart)) {
+            // Cập nhật số lượng sản phẩm
+            $cart[$productId]['quantity'] = $quantity;
+
+            // Lưu giỏ hàng vào Session
+            Session::put('cart', $cart);
+
+            // Trả về thông báo cập nhật thành công hoặc redirect đến trang giỏ hàng
+        } else {
+            // Sản phẩm không tồn tại trong giỏ hàng, xử lý lỗi
+        }
+    }
+
+    public function removeItem(Request $request, $productId)
+    {
+        // Lấy giỏ hàng hiện tại từ Session
+        $cart = Session::get('cart', []);
+
+        // Kiểm tra xem sản phẩm có tồn tại trong giỏ hàng không
+        if (array_key_exists($productId, $cart)) {
+            // Xóa sản phẩm khỏi giỏ hàng
+            unset($cart[$productId]);
+
+            // Lưu giỏ hàng vào Session
+            Session::put('cart', $cart);
+
+            // Trả về thông báo xóa thành công hoặc redirect đến trang giỏ hàng
+            Session::flash('success', 'Xóa sản phẩm trong giỏ hàng thành công');
+            return redirect()->back();
+        } else {
+            // Sản phẩm không tồn tại trong giỏ hàng, xử lý lỗi
+            Session::flash('danger', 'Chưa xóa được sản phẩm trong giỏ hàng');
+            return redirect()->back();
+        }
+    }
+
     public function order (CreateOrder $req){
         DB::beginTransaction();
         try {

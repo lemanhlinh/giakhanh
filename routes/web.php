@@ -32,6 +32,9 @@ Route::group(['namespace' => 'Web', 'middleware' => 'language'], function (){
     Route::get('/thuc-don/{slug}', 'ProductController@cat')->name('productCat');
     Route::get('/thuc-don/{slugCat}/{slug}', 'ProductController@detail')->name('productDetail');
     Route::post('/dat-ban', 'ProductController@bookTable')->name('bookTable');
+    Route::post('/them-vao-gio-hang', 'ProductController@addToCart')->name('addToCart');
+    Route::get('/gio-hang', 'ProductController@showCart')->name('showCart');
+    Route::get('/xoa-san-pham/{id}', 'ProductController@removeItem')->name('removeItem');
     Route::post('/order', 'ProductController@order')->name('order');
     Route::get('/dat-hang-thanh-cong/{id}', 'ProductController@success')->name('orderProductSuccess');
     Route::post('/language/switch', function(Request $request) {

@@ -10,6 +10,7 @@
         <!-- Main Footer -->
         @include('web.partials._footer')
         @include('web.partials._offcanvas')
+        @include('web.partials._icon')
     </div>
     <nav class="menu-mobile d-block d-lg-none" id="menu-mobile">
         <ul>
@@ -59,5 +60,12 @@
                 )
             }
         }
+    </script>
+
+    <script>
+        $("#cartToastBtn").on('click', function () {
+            var bsAlert = new bootstrap.Toast($('#cartToast'));
+            bsAlert.show();
+        })
     </script>
 @endsection

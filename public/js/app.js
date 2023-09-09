@@ -1094,6 +1094,17 @@ eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extr
 
 /***/ }),
 
+/***/ "./resources/sass/product-cart.scss":
+/*!******************************************!*\
+  !*** ./resources/sass/product-cart.scss ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extract-plugin\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9yZXNvdXJjZXMvc2Fzcy9wcm9kdWN0LWNhcnQuc2Nzcy5qcyIsIm1hcHBpbmdzIjoiO0FBQUEiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9yZXNvdXJjZXMvc2Fzcy9wcm9kdWN0LWNhcnQuc2Nzcz8yMWE3Il0sInNvdXJjZXNDb250ZW50IjpbIi8vIGV4dHJhY3RlZCBieSBtaW5pLWNzcy1leHRyYWN0LXBsdWdpblxuZXhwb3J0IHt9OyJdLCJuYW1lcyI6W10sInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///./resources/sass/product-cart.scss\n");
+
+/***/ }),
+
 /***/ "./resources/sass/app.scss":
 /*!*********************************!*\
   !*** ./resources/sass/app.scss ***!
@@ -1298,6 +1309,7 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 			"css/web/contact": 0,
 /******/ 			"css/web/home": 0,
 /******/ 			"css/web/style": 0,
+/******/ 			"css/web/product-cart": 0,
 /******/ 			"css/web/product-detail": 0,
 /******/ 			"css/web/products-home": 0,
 /******/ 			"css/web/store-home": 0,
@@ -1354,19 +1366,20 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	__webpack_require__.O(undefined, ["css/app","css/web/page-home","css/web/contact","css/web/home","css/web/style","css/web/product-detail","css/web/products-home","css/web/store-home","css/web/album-home","css/web/contact-detail","css/web/news-detail","css/web/news-home"], () => (__webpack_require__("./resources/js/app.js")))
-/******/ 	__webpack_require__.O(undefined, ["css/app","css/web/page-home","css/web/contact","css/web/home","css/web/style","css/web/product-detail","css/web/products-home","css/web/store-home","css/web/album-home","css/web/contact-detail","css/web/news-detail","css/web/news-home"], () => (__webpack_require__("./resources/sass/app.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/app","css/web/page-home","css/web/contact","css/web/home","css/web/style","css/web/product-detail","css/web/products-home","css/web/store-home","css/web/album-home","css/web/contact-detail","css/web/news-detail","css/web/news-home"], () => (__webpack_require__("./resources/sass/style.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/app","css/web/page-home","css/web/contact","css/web/home","css/web/style","css/web/product-detail","css/web/products-home","css/web/store-home","css/web/album-home","css/web/contact-detail","css/web/news-detail","css/web/news-home"], () => (__webpack_require__("./resources/sass/home.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/app","css/web/page-home","css/web/contact","css/web/home","css/web/style","css/web/product-detail","css/web/products-home","css/web/store-home","css/web/album-home","css/web/contact-detail","css/web/news-detail","css/web/news-home"], () => (__webpack_require__("./resources/sass/contact.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/app","css/web/page-home","css/web/contact","css/web/home","css/web/style","css/web/product-detail","css/web/products-home","css/web/store-home","css/web/album-home","css/web/contact-detail","css/web/news-detail","css/web/news-home"], () => (__webpack_require__("./resources/sass/page-home.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/app","css/web/page-home","css/web/contact","css/web/home","css/web/style","css/web/product-detail","css/web/products-home","css/web/store-home","css/web/album-home","css/web/contact-detail","css/web/news-detail","css/web/news-home"], () => (__webpack_require__("./resources/sass/news-home.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/app","css/web/page-home","css/web/contact","css/web/home","css/web/style","css/web/product-detail","css/web/products-home","css/web/store-home","css/web/album-home","css/web/contact-detail","css/web/news-detail","css/web/news-home"], () => (__webpack_require__("./resources/sass/news-detail.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/app","css/web/page-home","css/web/contact","css/web/home","css/web/style","css/web/product-detail","css/web/products-home","css/web/store-home","css/web/album-home","css/web/contact-detail","css/web/news-detail","css/web/news-home"], () => (__webpack_require__("./resources/sass/contact-detail.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/app","css/web/page-home","css/web/contact","css/web/home","css/web/style","css/web/product-detail","css/web/products-home","css/web/store-home","css/web/album-home","css/web/contact-detail","css/web/news-detail","css/web/news-home"], () => (__webpack_require__("./resources/sass/album-home.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/app","css/web/page-home","css/web/contact","css/web/home","css/web/style","css/web/product-detail","css/web/products-home","css/web/store-home","css/web/album-home","css/web/contact-detail","css/web/news-detail","css/web/news-home"], () => (__webpack_require__("./resources/sass/store-home.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/app","css/web/page-home","css/web/contact","css/web/home","css/web/style","css/web/product-detail","css/web/products-home","css/web/store-home","css/web/album-home","css/web/contact-detail","css/web/news-detail","css/web/news-home"], () => (__webpack_require__("./resources/sass/products-home.scss")))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/app","css/web/page-home","css/web/contact","css/web/home","css/web/style","css/web/product-detail","css/web/products-home","css/web/store-home","css/web/album-home","css/web/contact-detail","css/web/news-detail","css/web/news-home"], () => (__webpack_require__("./resources/sass/product-detail.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/app","css/web/page-home","css/web/contact","css/web/home","css/web/style","css/web/product-cart","css/web/product-detail","css/web/products-home","css/web/store-home","css/web/album-home","css/web/contact-detail","css/web/news-detail","css/web/news-home"], () => (__webpack_require__("./resources/js/app.js")))
+/******/ 	__webpack_require__.O(undefined, ["css/app","css/web/page-home","css/web/contact","css/web/home","css/web/style","css/web/product-cart","css/web/product-detail","css/web/products-home","css/web/store-home","css/web/album-home","css/web/contact-detail","css/web/news-detail","css/web/news-home"], () => (__webpack_require__("./resources/sass/app.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/app","css/web/page-home","css/web/contact","css/web/home","css/web/style","css/web/product-cart","css/web/product-detail","css/web/products-home","css/web/store-home","css/web/album-home","css/web/contact-detail","css/web/news-detail","css/web/news-home"], () => (__webpack_require__("./resources/sass/style.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/app","css/web/page-home","css/web/contact","css/web/home","css/web/style","css/web/product-cart","css/web/product-detail","css/web/products-home","css/web/store-home","css/web/album-home","css/web/contact-detail","css/web/news-detail","css/web/news-home"], () => (__webpack_require__("./resources/sass/home.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/app","css/web/page-home","css/web/contact","css/web/home","css/web/style","css/web/product-cart","css/web/product-detail","css/web/products-home","css/web/store-home","css/web/album-home","css/web/contact-detail","css/web/news-detail","css/web/news-home"], () => (__webpack_require__("./resources/sass/contact.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/app","css/web/page-home","css/web/contact","css/web/home","css/web/style","css/web/product-cart","css/web/product-detail","css/web/products-home","css/web/store-home","css/web/album-home","css/web/contact-detail","css/web/news-detail","css/web/news-home"], () => (__webpack_require__("./resources/sass/page-home.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/app","css/web/page-home","css/web/contact","css/web/home","css/web/style","css/web/product-cart","css/web/product-detail","css/web/products-home","css/web/store-home","css/web/album-home","css/web/contact-detail","css/web/news-detail","css/web/news-home"], () => (__webpack_require__("./resources/sass/news-home.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/app","css/web/page-home","css/web/contact","css/web/home","css/web/style","css/web/product-cart","css/web/product-detail","css/web/products-home","css/web/store-home","css/web/album-home","css/web/contact-detail","css/web/news-detail","css/web/news-home"], () => (__webpack_require__("./resources/sass/news-detail.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/app","css/web/page-home","css/web/contact","css/web/home","css/web/style","css/web/product-cart","css/web/product-detail","css/web/products-home","css/web/store-home","css/web/album-home","css/web/contact-detail","css/web/news-detail","css/web/news-home"], () => (__webpack_require__("./resources/sass/contact-detail.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/app","css/web/page-home","css/web/contact","css/web/home","css/web/style","css/web/product-cart","css/web/product-detail","css/web/products-home","css/web/store-home","css/web/album-home","css/web/contact-detail","css/web/news-detail","css/web/news-home"], () => (__webpack_require__("./resources/sass/album-home.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/app","css/web/page-home","css/web/contact","css/web/home","css/web/style","css/web/product-cart","css/web/product-detail","css/web/products-home","css/web/store-home","css/web/album-home","css/web/contact-detail","css/web/news-detail","css/web/news-home"], () => (__webpack_require__("./resources/sass/store-home.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/app","css/web/page-home","css/web/contact","css/web/home","css/web/style","css/web/product-cart","css/web/product-detail","css/web/products-home","css/web/store-home","css/web/album-home","css/web/contact-detail","css/web/news-detail","css/web/news-home"], () => (__webpack_require__("./resources/sass/products-home.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/app","css/web/page-home","css/web/contact","css/web/home","css/web/style","css/web/product-cart","css/web/product-detail","css/web/products-home","css/web/store-home","css/web/album-home","css/web/contact-detail","css/web/news-detail","css/web/news-home"], () => (__webpack_require__("./resources/sass/product-detail.scss")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/app","css/web/page-home","css/web/contact","css/web/home","css/web/style","css/web/product-cart","css/web/product-detail","css/web/products-home","css/web/store-home","css/web/album-home","css/web/contact-detail","css/web/news-detail","css/web/news-home"], () => (__webpack_require__("./resources/sass/product-cart.scss")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()
