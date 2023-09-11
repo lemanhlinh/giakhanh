@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use App\Models\BookTable;
 use App\Models\Order;
+use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use App\Repositories\Contracts\ProductCategoryInterface;
 use App\Repositories\Contracts\ProductInterface;
@@ -106,6 +107,7 @@ class ProductController extends Controller
         $cart = Session::get('cart', []);
         // Duyệt qua các sản phẩm trong giỏ hàng để lấy thông tin sản phẩm
         $cartItems = [];
+        $total_price = 0;
         if (!$cart){
             Session::flash('danger', 'Chưa có sản phẩm nào trong giỏ hàng');
             return redirect()->route('home');
@@ -120,9 +122,10 @@ class ProductController extends Controller
                 'quantity' => $quantity,
                 'subtotal' => $product->price * $quantity, // Tính tổng tiền cho mỗi sản phẩm
             ];
+            $total_price = $total_price + $product->price * $quantity;
         }
 
-        return view('web.product.cart', compact('cart','cartItems'));
+        return view('web.cart.cart', compact('cart','cartItems','total_price'));
     }
 
     public function updateCart(Request $request)
@@ -174,18 +177,28 @@ class ProductController extends Controller
         DB::beginTransaction();
         try {
             $data = $req->validated();
-            Order::create(
-                [
-                    'name' => $data['name'],
-                    'content' => $data['content'],
-                    'phone' => $data['phone'],
-                    'email' => $data['email'],
-                    'address' =>  $data['address'],
-                ]
-            );
+            $order = Order::create($data);
+
+            $cart = Session::get('cart', []);
+            foreach ($cart as $productId => $item) {
+                $product = $this->productRepository->getOneById($productId);
+                if (empty($product)){
+                    unset($cart[$productId]);
+                    Session::flash('danger', 'Có sản phẩm không còn tồn tại');
+                    return redirect()->back();
+                }
+                $quantity = $item['quantity']; // Số lượng
+                OrderItem::create([
+                    'order_id' => $order->id,
+                    'product_id' => $productId,
+                    'product_title' => $product->title,
+                    'product_number' => $quantity,
+                    'product_price' => $product->price,
+                ]);
+            }
             DB::commit();
-            Session::flash('success', trans('message.create_contact_success'));
-            return redirect()->back();
+            Session::flash('success', trans('message.create_order_success'));
+            return redirect()->route('orderProductSuccess',['id'=>$order->id]);
         } catch (\Exception $ex) {
             DB::rollBack();
             \Log::info([
@@ -194,7 +207,7 @@ class ProductController extends Controller
                 'method' => __METHOD__
             ]);
 
-            Session::flash('danger', trans('message.create_contact_error'));
+            Session::flash('danger', trans('message.create_order_error'));
             return redirect()->back();
         }
         return redirect()->back();
@@ -203,7 +216,8 @@ class ProductController extends Controller
 
 
     public function success ($id){
-        $cat = $this->productCategoryRepository->getOneById($id);
-        return view('web.cart.register_success');
+        Session::forget('cart');
+        $order = Order::findOrFail($id);
+        return view('web.cart.register_success',compact('order'));
     }
 }

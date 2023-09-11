@@ -9,7 +9,7 @@
                     <img src="{{ asset('images/register_success.png') }}" alt="" class="img-fluid mb-4">
                     <h1 class="title-register">Đặt hàng thành công</h1>
                     <div class="mb-4">
-                        Cảm ơn a đã mua hàng trên Lẩu Nấm Gia Khánh!
+                        <p>Cảm ơn {{ $order->gender == 1 ? 'Chị': 'Anh' }} <b>{{ $order->full_name }}</b> đã mua hàng trên Lẩu Nấm Gia Khánh!</p>
                         Lẩu Nấm Gia Khánh sẽ gọi điện thông qua số điện thoại Đặt hàng của quý khách để xác nhận đơn hàng trong thời gian sớm nhất.
                         Nếu Quý khách có nhu cầu xem lại thông tin Đặt hàng, Quý khách vui lòng kiểm tra xác nhận đơn hàng đã được gửi qua email.
                         Mọi thắc mắc xin vui lòng liên hệ với Lẩu Nấm Gia Khánh qua Hotline {{ $setting['hotline'] }}
@@ -33,7 +33,7 @@
     @parent
     <style>
         .content-register{
-            padding: 176px 0 80px;
+            padding: 80px 0;
             text-align: center;
         }
         .content-register img{

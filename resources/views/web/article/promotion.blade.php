@@ -13,7 +13,7 @@
                     <div class="col-md-4 position-relative">
                         <div class="article-item">
                             <div class="article-item-content">
-                                <a href="{{ route('detailArticle',['slug' => $item->slug,'id' => $item->id]) }}">
+                                <a class="d-block overflow-hidden" href="{{ route('detailArticle',['slug' => $item->slug,'id' => $item->id]) }}">
                                     @include('web.components.image', ['src' => $item->image_resize['resize'], 'title' => $item->title])
                                 </a>
                                 <div class="box-content-article">

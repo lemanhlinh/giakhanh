@@ -1,40 +1,76 @@
-.cart-content-products .list-product-in-cart .number-input {
+.cart-content-products {
+  padding: 80px 0;
+}
+.cart-content-products .title-box-cart {
+  margin-bottom: 40px;
+  color: var(--neutral-neutral-13, #0E0202);
+  leading-trim: both;
+  text-edge: cap;
+  font-family: GoogleSans-Bold;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 100%; /* 32px */
+  text-transform: uppercase;
+}
+.cart-content-products .list-product-in-cart .item-product-in-cart {
+  border-bottom: 1px solid #F1F0F0;
+  margin-bottom: 24px;
+  padding-bottom: 24px;
+}
+.cart-content-products .list-product-in-cart .item-product-in-cart img {
+  border-radius: 8px;
+  overflow: hidden;
+}
+.cart-content-products .list-product-in-cart .item-product-in-cart .title-product {
+  font-family: GoogleSans-Bold;
+  font-size: 18px;
+  text-transform: uppercase;
+  margin-bottom: 0;
+  color: #000;
+}
+.cart-content-products .list-product-in-cart .item-product-in-cart .remove-product-in-cart {
+  margin-bottom: 0;
+}
+.cart-content-products .list-product-in-cart .item-product-in-cart .price-product-root {
+  color: #E91A22;
+  font-family: GoogleSans-Bold;
+  margin: 7px 0;
+}
+.cart-content-products .list-product-in-cart .item-product-in-cart .number-input {
   border: 1px solid #d5d5d5;
-  border-radius: 5px;
+  border-radius: 8px;
   display: inline-flex;
   box-sizing: border-box;
 }
-.cart-content-products .list-product-in-cart .number-input * {
+.cart-content-products .list-product-in-cart .item-product-in-cart .number-input * {
   box-sizing: border-box;
 }
-.cart-content-products .list-product-in-cart .number-input .quantity {
+.cart-content-products .list-product-in-cart .item-product-in-cart .number-input .quantity {
   border: none;
   padding: 5px 0;
-  border-left: 1px solid #d5d5d5;
-  border-right: 1px solid #d5d5d5;
-  width: 90px;
+  width: 40px;
   text-align: center;
   -webkit-appearance: textfield;
   -moz-appearance: textfield;
   appearance: textfield;
-  background: #F3F3F3;
 }
-.cart-content-products .list-product-in-cart .number-input .quantity::-webkit-inner-spin-button, .cart-content-products .list-product-in-cart .number-input .quantity::-webkit-outer-spin-button {
+.cart-content-products .list-product-in-cart .item-product-in-cart .number-input .quantity::-webkit-inner-spin-button, .cart-content-products .list-product-in-cart .item-product-in-cart .number-input .quantity::-webkit-outer-spin-button {
   -webkit-appearance: none;
 }
-.cart-content-products .list-product-in-cart .number-input button {
+.cart-content-products .list-product-in-cart .item-product-in-cart .number-input button {
   outline: none;
   -webkit-appearance: none;
   background-color: transparent;
   border: none;
   align-items: center;
   justify-content: center;
-  width: 3rem;
+  width: 2rem;
   cursor: pointer;
   margin: 0;
   position: relative;
 }
-.cart-content-products .list-product-in-cart .number-input button:before, .cart-content-products .list-product-in-cart .number-input button:after {
+.cart-content-products .list-product-in-cart .item-product-in-cart .number-input button:before, .cart-content-products .list-product-in-cart .item-product-in-cart .number-input button:after {
   display: inline-block;
   position: absolute;
   content: "";
@@ -43,8 +79,29 @@
   background-color: #212121;
   transform: translate(-50%, -50%);
 }
-.cart-content-products .list-product-in-cart .number-input button.plus:after {
+.cart-content-products .list-product-in-cart .item-product-in-cart .number-input button.plus:after {
   transform: translate(-50%, -50%) rotate(90deg);
+}
+.cart-content-products .list-product-in-cart .item-product-in-cart .subtotal-product {
+  font-family: GoogleSans-Bold;
+}
+.cart-content-products .list-product-in-cart .item-product-in-cart:hover .title-product {
+  color: #E91A22;
+}
+.cart-content-products .box-price-before {
+  border-bottom: 1px solid #F1F0F0;
+  margin-bottom: 24px;
+  padding-bottom: 15px;
+}
+.cart-content-products .box-price-before .text-end {
+  font-family: GoogleSans-Bold;
+}
+.cart-content-products .box-price-before tr td {
+  padding: 10px 0;
+}
+.cart-content-products .box-price-after .price-total {
+  font-family: GoogleSans-Bold;
+  font-size: 20px;
 }
 
 .form-in-detail-cart .top-form input, .form-in-detail-cart .top-form textarea {

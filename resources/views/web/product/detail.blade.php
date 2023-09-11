@@ -18,7 +18,7 @@
                             <input type="number" min="1" name="quantity" id="quantity" class="quantity" value="1">
                             <button onclick="this.parentNode.querySelector('input.quantity').stepUp()" class="plus"></button>
                         </div>
-                        <button type="button" class="w-100 btn btn-danger btn-add-to-cart" id="cartToastBtn" onclick="order({{ $product->id }})">Thêm vào giỏ hàng <i class="fas fa-angle-right"></i></button>
+                        <button type="button" class="w-100 btn btn-danger btn-add-to-cart cartToastBtn" id="cartToastBtn" onclick="order({{ $product->id }})">Thêm vào giỏ hàng <i class="fas fa-angle-right"></i></button>
                     </div>
                 </div>
             </div>
@@ -71,23 +71,4 @@
 
 @section('script')
     @parent
-    <script>
-        function order(id_prd) {
-            var quantity = $("#quantity").val();
-            $.ajax({
-                type: 'POST',
-                dataType: 'json',
-                url: '{{ route('addToCart') }}',
-                data: {
-                    quantity: quantity,
-                    id: id_prd,
-                    _token: $('meta[name="csrf-token"]').attr("content")
-                },
-                success: function (data) {
-                    console.log(data);
-                    $("#number-added-cart").html(data.total);
-                }
-            });
-        }
-    </script>
 @endsection

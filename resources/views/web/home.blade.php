@@ -92,7 +92,7 @@
                                                         </div>
                                                         <div class="right-hover-product">
                                                             <a href="{{ route('productDetail',['slugCat'=>$item->category->slug,'slug'=>$item->slug]) }}" class="btn btn-danger">Xem chi tiết</a>
-                                                            <a href="" class="btn btn-warning">Thêm giỏ hàng</a>
+                                                            <button type="button" onclick="order({{ $item->id }})" class="btn btn-warning cartToastBtn">Thêm giỏ hàng</button>
                                                         </div>
 
                                                     </div>
