@@ -26,7 +26,7 @@
                                         </div>
                                         <p class="price-product-root">{{ format_money($item['product']->price) }}</p>
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <div class="number-input me-3">
+                                            <div class="number-input me-3" data-id="{{ $item["product"]->id }}">
                                                 <button onclick="this.parentNode.querySelector('input.quantity-{{ $item["product"]->id }}').stepDown()"></button>
                                                 <input type="number" min="1" name="quantity[{{ $item["product"]->id }}]" id="quantity-{{ $item["product"]->id }}" class="quantity quantity-{{ $item["product"]->id }}" value="{{ $item['quantity'] }}">
                                                 <button onclick="this.parentNode.querySelector('input.quantity-{{ $item["product"]->id }}').stepUp()" class="plus"></button>
@@ -131,5 +131,24 @@
                 }
             });
         }
+        $(document).ready(function(){
+            $(".number-input").focusout(function(){
+                var id_prd = $(this).data('id');
+                var quantity = $('#quantity-'+id_prd).val();
+                $.ajax({
+                    type: 'POST',
+                    dataType: 'json',
+                    url: '{{ route('updateCart') }}',
+                    data: {
+                        quantity: quantity?quantity:1,
+                        id: id_prd,
+                        _token: $('meta[name="csrf-token"]').attr("content")
+                    },
+                    success: function (data) {
+                        $("#number-added-cart").html(data.total);
+                    }
+                });
+            });
+        });
     </script>
 @endsection

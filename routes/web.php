@@ -18,33 +18,26 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::group(['namespace' => 'Web', 'middleware' => 'language'], function (){
+Route::group(['namespace' => 'Web', 'middleware' => 'language', 'prefix' => LaravelLocalization::setLocale()], function (){
     Route::get('/', 'HomeController@index')->name('home');
-    Route::get('/trang/{slug}', 'PageController@index')->name('page');
-    Route::get('/danh-muc-tin/{slug}', 'ArticleController@cat')->name('catArticle');
-    Route::get('/chi-tiet-tin/{slug}/{id}', 'ArticleController@detail')->name('detailArticle');
-    Route::get('/lien-he', 'ContactController@index')->name('detailContact');
+    Route::get(LaravelLocalization::transRoute('routes.page'), 'PageController@index')->name('page');
+    Route::get(LaravelLocalization::transRoute('routes.article.cat'), 'ArticleController@cat')->name('catArticle');
+    Route::get(LaravelLocalization::transRoute('routes.article.detail'), 'ArticleController@detail')->name('detailArticle');
+    Route::get(LaravelLocalization::transRoute('routes.contact'), 'ContactController@index')->name('detailContact');
     Route::post('/lien-he', 'ContactController@store')->name('detailContactStore');
-    Route::get('/hinh-anh', 'MediaController@album')->name('album');
-    Route::get('/video', 'MediaController@video')->name('video');
-    Route::get('/he-thong-cua-hang', 'StoreController@index')->name('store');
-    Route::get('/thuc-don', 'ProductController@index')->name('productHome');
-    Route::get('/thuc-don/{slug}', 'ProductController@cat')->name('productCat');
-    Route::get('/thuc-don/{slugCat}/{slug}', 'ProductController@detail')->name('productDetail');
+    Route::get(LaravelLocalization::transRoute('routes.album'), 'MediaController@album')->name('album');
+    Route::get(LaravelLocalization::transRoute('routes.video'), 'MediaController@video')->name('video');
+    Route::get(LaravelLocalization::transRoute('routes.store'), 'StoreController@index')->name('store');
+    Route::get(LaravelLocalization::transRoute('routes.product.home'), 'ProductController@index')->name('productHome');
+    Route::get(LaravelLocalization::transRoute('routes.product.cat'), 'ProductController@cat')->name('productCat');
+    Route::get(LaravelLocalization::transRoute('routes.product.detail'), 'ProductController@detail')->name('productDetail');
     Route::post('/dat-ban', 'ProductController@bookTable')->name('bookTable');
     Route::post('/them-vao-gio-hang', 'ProductController@addToCart')->name('addToCart');
-    Route::get('/gio-hang', 'ProductController@showCart')->name('showCart');
-    Route::get('/xoa-san-pham/{id}', 'ProductController@removeItem')->name('removeItem');
+    Route::post('/update-gio-hang', 'ProductController@updateCart')->name('updateCart');
+    Route::get(LaravelLocalization::transRoute('routes.cart.home'), 'ProductController@showCart')->name('showCart');
+    Route::get(LaravelLocalization::transRoute('routes.cart.delete'), 'ProductController@removeItem')->name('removeItem');
     Route::post('/order', 'ProductController@order')->name('order');
-    Route::get('/dat-hang-thanh-cong/{id}', 'ProductController@success')->name('orderProductSuccess');
-    Route::post('/language/switch', function(Request $request) {
-        $locale = $request->input('locale');
-        if (in_array($locale, ['en', 'vi'])) {
-            session(['locale' => $locale]);
-            config(['app.locale' => session('locale')]);
-        }
-        return redirect()->back();
-    })->name('language.switch');
+    Route::get(LaravelLocalization::transRoute('routes.cart.success'), 'ProductController@success')->name('orderProductSuccess');
 });
 
 //Route::any('/ckfinder/connector', '\CKSource\CKFinderBridge\Controller\CKFinderController@requestAction')
@@ -99,8 +92,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
         Route::get('', 'MenuCategoryController@index')->name('index');
         Route::get('/create', 'MenuCategoryController@create')->name('create')->middleware('permission:create_menu_categories');
         Route::post('/store', 'MenuCategoryController@store')->name('store')->middleware('permission:create_menu_categories');
-        Route::get('/edit/{id}', 'MenuCategoryController@edit')->name('edit')->middleware('permission:edit_menu_categories');
-        Route::post('/update/{id}', 'MenuCategoryController@update')->name('update')->middleware('permission:edit_menu_categories');
+        Route::get('/edit/{id}', 'MenuCategoryController@edit')->name('edit')->middleware('permission:edit_menu_categories');        Route::post('/update/{id}', 'MenuCategoryController@update')->name('update')->middleware('permission:edit_menu_categories');
         Route::post('/destroy/{id}', 'MenuCategoryController@destroy')->name('destroy')->middleware('permission:delete_menu_categories');
         Route::post('/update-tree', 'MenuCategoryController@updateTree')->name('updateTree')->middleware('permission:edit_menu_categories');
     });
@@ -108,9 +100,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
 
     Route::group(['prefix' => 'menu', 'as' => 'menu.', 'middleware' => ['permission:view_menu']], function () {
         Route::get('', 'MenuController@index')->name('index');
-        Route::get('/create', 'MenuController@create')->name('create')->middleware('permission:create_menu');
+//        Route::get('/create', 'MenuController@create')->name('create')->middleware('permission:create_menu');
         Route::post('/store', 'MenuController@store')->name('store')->middleware('permission:create_menu');
-        Route::get('/edit/{id}', 'MenuController@edit')->name('edit')->middleware('permission:edit_menu');
+//        Route::get('/edit/{id}', 'MenuController@edit')->name('edit')->middleware('permission:edit_menu');
         Route::post('/update/{id}', 'MenuController@update')->name('update')->middleware('permission:edit_menu');
         Route::post('/destroy/{id}', 'MenuController@destroy')->name('destroy')->middleware('permission:delete_menu');
         Route::post('/update-tree', 'MenuController@updateTree')->name('updateTree')->middleware('permission:edit_menu');

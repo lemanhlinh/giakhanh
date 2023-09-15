@@ -9,12 +9,12 @@
                     <span>
                         <i class="fas fa-map-marker-alt"></i>
                     </span>
-                    <p class="title-item-contact">Trụ sở chính</p>
+                    <p class="title-item-contact">{{ trans('web.main_local') }}</p>
                     <p class="content-contact">{{ $setting['main_local'] }}</p>
                 </div>
                 <div class="col-md-3">
                     <span><i class="fas fa-phone-alt"></i></span>
-                    <p class="title-item-contact">Điện thoại</p>
+                    <p class="title-item-contact">{{ trans('web.phone') }}</p>
                     <p class="content-contact">{{ $setting['hotline'] }}</p>
                 </div>
                 <div class="col-md-3">

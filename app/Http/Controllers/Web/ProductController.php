@@ -130,7 +130,7 @@ class ProductController extends Controller
 
     public function updateCart(Request $request)
     {
-        $productId = $request->input('product_id');
+        $productId = $request->input('id');
         $quantity = $request->input('quantity');
 
         // Lấy giỏ hàng hiện tại từ Session
@@ -145,6 +145,28 @@ class ProductController extends Controller
             Session::put('cart', $cart);
 
             // Trả về thông báo cập nhật thành công hoặc redirect đến trang giỏ hàng
+            $totalQuantity = 0;
+
+            $total_price = 0;
+            foreach ($cart as $id => $item) {
+                $totalQuantity += $item['quantity'];
+
+                $product = $this->productRepository->getOneById($id);
+                $quantity = $item['quantity']; // Số lượng
+
+                // Thêm thông tin sản phẩm vào danh sách
+//                $cartItems[] = [
+//                    'product' => $product,
+//                    'quantity' => $quantity,
+//                    'subtotal' => $product->price * $quantity, // Tính tổng tiền cho mỗi sản phẩm
+//                ];
+                $total_price = $total_price + $product->price * $quantity;
+            }
+
+            return response()->json(array(
+                'success' => true,
+                'total'   => $totalQuantity
+            ));
         } else {
             // Sản phẩm không tồn tại trong giỏ hàng, xử lý lỗi
         }

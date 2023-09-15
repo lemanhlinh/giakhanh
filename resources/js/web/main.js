@@ -11,4 +11,8 @@ $(document).ready(function() {
     });
 
     new Mmenu(document.querySelector("#menu-mobile"));
+
+    $('#change_locale').on('change', function () {
+        window.location =  $(this).val();
+    })
 });

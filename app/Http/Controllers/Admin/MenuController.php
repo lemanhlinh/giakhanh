@@ -42,10 +42,14 @@ class MenuController extends Controller
      */
     public function index()
     {
+        $local = request()->query('local','vi');
         $category_id = request()->query('category_id');
         $article_categories = $this->articleCategoryRepository->getAll();
         $product_categories = $this->productRepository->getAll();
-        $menu_categories = $this->menuCategoryRepository->getAll();
+        $menu_categories = $this->menuCategoryRepository->getList(null,['*'],null,['translations' => function($query){
+            $local = request()->query('local','vi');
+            $query->where(['lang'=> $local ])->select('id','name','menu_category_id');
+        }]);
         $pages = $this->pageRepository->getAll();
         if ($menu_categories->count() === 0){
             Session::flash('danger', 'Chưa có nhóm menu nào');
@@ -55,17 +59,11 @@ class MenuController extends Controller
             $category_id = $menu_categories->first()->id;
         }
         $menu = $this->menuRepository->getMenusByCategoryId($category_id)->toTree();
-        return view('admin.menu.index', compact('article_categories','menu_categories','menu','category_id','pages','product_categories'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $translations = $this->menuRepository->getList(null,['*'],null, ['translations' => function($query){
+            $local = request()->query('local','vi');
+            $query->where(['lang'=> $local ])->first()->withDepth()->defaultOrder()->get()->toTree();
+        }]);
+        return view('admin.menu.index', compact('article_categories','menu_categories','menu','category_id','pages','product_categories','local','translations'));
     }
 
     /**
@@ -97,40 +95,6 @@ class MenuController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
@@ -155,8 +119,12 @@ class MenuController extends Controller
      */
     public function updateTree(Request $request)
     {
+        $local = request()->query('local','vi');
         $data = $request->data;
         $this->menuRepository->updateTreeRebuild('id', $data);
+        $translations = $this->menuRepository->with(['translations']);
+        $data['lang'] = $local;
+        $translations->updateTreeRebuild('id', $data);
         return response()->json($data);
     }
 }

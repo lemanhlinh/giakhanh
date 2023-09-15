@@ -21,6 +21,9 @@ class MenuCategoryDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
+            ->addColumn('name', function ($q) {
+                return optional($q->translations->first())->name;
+            })
             ->addColumn('action', function ($q){
                 $urlEdit = route('admin.menu-category.edit', $q->id);
                 $urlDelete = route('admin.menu-category.destroy', $q->id);
@@ -37,7 +40,9 @@ class MenuCategoryDataTable extends DataTable
      */
     public function query(MenuCategory $model)
     {
-        return $model->newQuery();
+        return $model->newQuery()->with(['translations' => function($query){
+            $query->where(['lang'=>'vi'])->select('id','name','menu_category_id');
+        }]);
     }
 
     /**
@@ -71,7 +76,7 @@ class MenuCategoryDataTable extends DataTable
     {
         return [
             Column::make('id'),
-            Column::make('name'),
+            Column::computed('name'),
             Column::make('created_at'),
             Column::make('updated_at'),
             Column::computed('action')

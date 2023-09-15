@@ -77,11 +77,20 @@
             <button id="add-btn" class="btn btn-primary" data-url="{{ route('admin.menu.store') }}">Thêm vào menu</button>
         </div>
         <div class="col-sm-6">
-            <select name="category_id" id="category_id">
-                @foreach($menu_categories as $menu_category)
-                    <option value="{{ $menu_category->id }}" {{ (isset($category_id) && $category_id == $menu_category->id) ?'selected':'' }}>{{ $menu_category->name }}</option>
-                @endforeach
-            </select>
+            <div class="d-flex">
+                <div class="col-md-6">
+                    @include('admin.components.buttons.change_lang',['url'=> route('admin.menu.index')])
+                </div>
+                <div class="col-md-6">
+                    <label>Nhóm danh mục</label>
+                    <select name="category_id" id="category_id" class="form-control">
+                        @foreach($menu_categories as $menu_category)
+                            <option value="{{ $menu_category->translations->first()->id }}" {{ (isset($category_id) && $category_id == $menu_category->translations->first()->id) ?'selected':'' }}>{{ $menu_category->translations->first()->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+
             <div class="dd" id="nestable" data-url="{{ route('admin.menu.updateTree') }}">
                 <ol class="dd-list">
                     @foreach ($menu as $shop)
@@ -249,10 +258,10 @@
             }
         }
 
-        const selectElement = document.getElementById('category_id');
-        let initialSelectedValue = selectElement.value;
+        const selectCat = document.getElementById('category_id');
+        let initialSelectedValue = selectCat.value;
 
-        selectElement.addEventListener('change', (event) => {
+        selectCat.addEventListener('change', (event) => {
             Swal.fire({
                 title: 'Bạn có chắc chắn không?',
                 text: "Thông tin chưa lưu sẽ mất",
@@ -267,7 +276,7 @@
                     window.location.href = `{{ route('admin.menu.index') }}?category_id=${selectedRoute}`;
                 }else {
                     // Gán giá trị ban đầu lại cho select option nếu nhấn "Cancel"
-                    selectElement.value = initialSelectedValue;
+                    selectCat.value = initialSelectedValue;
                 }
             })
 

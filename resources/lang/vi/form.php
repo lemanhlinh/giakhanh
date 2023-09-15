@@ -7,6 +7,7 @@ return [
     'logout' => "Đăng xuất",
     'remember_me' => "Nhớ mật khẩu",
     'auto_slug' => "Có thể tự động tạo",
+    'change_lang' => "Thay đổi ngôn ngữ",
     'user' => [
         '' => 'Quản trị user',
         'title' => 'Quản trị user',
