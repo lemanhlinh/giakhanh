@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\MenuTranslation;
 use Illuminate\Http\Request;
 use App\Repositories\Contracts\ArticleCategoryInterface;
 use App\Repositories\Contracts\ArticleInterface;
@@ -58,12 +59,12 @@ class MenuController extends Controller
         if (empty($category_id)){
             $category_id = $menu_categories->first()->id;
         }
-        $menu = $this->menuRepository->getMenusByCategoryId($category_id)->toTree();
-        $translations = $this->menuRepository->getList(null,['*'],null, ['translations' => function($query){
+//        $menu = $this->menuRepository->getMenusByCategoryId($category_id)->toTree();
+        $menu = $this->menuRepository->getList(['category_id'=>$category_id],['*'],null, ['translations' => function($query){
             $local = request()->query('local','vi');
-            $query->where(['lang'=> $local ])->first()->withDepth()->defaultOrder()->get()->toTree();
-        }]);
-        return view('admin.menu.index', compact('article_categories','menu_categories','menu','category_id','pages','product_categories','local','translations'));
+            $query->where(['lang'=> $local ]);
+        }])->toTree();
+        return view('admin.menu.index', compact('article_categories','menu_categories','menu','category_id','pages','product_categories','local'));
     }
 
     /**
@@ -78,11 +79,16 @@ class MenuController extends Controller
         try {
             $data = $req->validated();
             $menu = $this->menuRepository->create($data);
+            $local = request()->input('locale','vi');
+            foreach(\LaravelLocalization::getSupportedLocales() as $localeCode => $properties){
+                $langTranslation = new MenuTranslation([
+                    'lang' => $localeCode,
+                    'name' => $localeCode == $local ? $data['name']:null,
+                ]);
+                $menu->translations()->save($langTranslation);
+            }
             DB::commit();
-            $id_menu = [
-                'id' => $menu->id
-            ];
-            return $id_menu;
+            return $menu;
         } catch (\Exception $ex) {
             DB::rollBack();
             \Log::info([
@@ -119,12 +125,14 @@ class MenuController extends Controller
      */
     public function updateTree(Request $request)
     {
-        $local = request()->query('local','vi');
+        $local = $request->local;
         $data = $request->data;
         $this->menuRepository->updateTreeRebuild('id', $data);
-        $translations = $this->menuRepository->with(['translations']);
-        $data['lang'] = $local;
-        $translations->updateTreeRebuild('id', $data);
+        foreach ($data as $item){
+            $menu = MenuTranslation::where(['lang'=> $local,'menu_id' => $item['id']]);
+            $data2['name'] = $item['name'];
+            $menu->update($data2);
+        }
         return response()->json($data);
     }
 }

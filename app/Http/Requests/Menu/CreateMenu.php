@@ -26,7 +26,9 @@ class CreateMenu extends FormRequest
         return [
             'name' => 'required',
             'category_id' => 'required',
-            'link' => 'required'
+            'link' => 'required',
+            'name_url' => 'nullable',
+            'name_att' => 'nullable',
         ];
     }
 }

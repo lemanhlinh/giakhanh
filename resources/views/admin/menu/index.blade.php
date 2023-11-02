@@ -32,41 +32,41 @@
         <div class="col-sm-6">
             <ul id="item-list">
                 <li>
-                    <input type="checkbox" id="home" value="0" data-link="{{ route('home') }}" data-name="Trang chủ"><label for="home">Trang chủ</label>
+                    <input type="checkbox" id="home" value="0" data-link="{{ route('home') }}" data-name="Trang chủ" data-name-url="home" data-name-att=""><label for="home">Trang chủ</label>
                 </li>
                 <li>
-                    <input type="checkbox" id="home_video" value="0" data-link="{{ route('video') }}" data-name="Video"><label for="home_video">Video</label>
+                    <input type="checkbox" id="home_video" value="0" data-link="{{ route('video') }}" data-name="Video" data-name-url="video" data-name-att=""><label for="home_video">Video</label>
                 </li>
                 <li>
-                    <input type="checkbox" id="home_album" value="0" data-link="{{ route('album') }}" data-name="Hình ảnh"><label for="home_album">Hình ảnh</label>
+                    <input type="checkbox" id="home_album" value="0" data-link="{{ route('album') }}" data-name="Hình ảnh" data-name-url="album" data-name-att="" ><label for="home_album">Hình ảnh</label>
                 </li>
                 <li>
-                    <input type="checkbox" id="home_store" value="0" data-link="{{ route('store') }}" data-name="Hệ thống"><label for="home_store">Hệ thống</label>
+                    <input type="checkbox" id="home_store" value="0" data-link="{{ route('store') }}" data-name="Hệ thống" data-name-url="store" data-name-att=""><label for="home_store">Hệ thống</label>
                 </li>
                 <li>
-                    <input type="checkbox" id="home_contact" value="0" data-link="{{ route('detailContact') }}" data-name="Liên hệ"><label for="home_contact">Liên hệ</label>
+                    <input type="checkbox" id="home_contact" value="0" data-link="{{ route('detailContact') }}" data-name="Liên hệ" data-name-url="detailContact" data-name-att=""><label for="home_contact">Liên hệ</label>
                 </li>
                 <li>
-                    <input type="checkbox" id="home_product" value="0" data-link="{{ route('productHome') }}" data-name="Thực đơn"><label for="home_product">Thực đơn</label>
+                    <input type="checkbox" id="home_product" value="0" data-link="{{ route('productHome') }}" data-name="Thực đơn" data-name-url="productHome" data-name-att=""><label for="home_product">Thực đơn</label>
                 </li>
                 @if(!empty($product_categories))
                     @foreach($product_categories as $k => $product)
                         <li>
-                            <input type="checkbox" id="product_{{ $product->id }}" value="{{ $product->id }}"  data-link="{{ route('productCat',[$product->slug]) }}" data-name="{{ $product->title }}"><label for="product_{{ $product->id }}">{{ $product->title }}</label>
+                            <input type="checkbox" id="product_{{ $product->id }}" value="{{ $product->id }}"  data-link="{{ route('productCat',[$product->slug]) }}" data-name-url="productCat" data-name-att="slug:{{ $product->slug }}" data-name="{{ $product->title }}"><label for="product_{{ $product->id }}">{{ $product->title }}</label>
                         </li>
                     @endforeach
                 @endif
                 @if(!empty($article_categories))
                     @foreach($article_categories as $k => $article)
                         <li>
-                            <input type="checkbox" id="article_{{ $article->id }}" value="{{ $article->id }}"  data-link="{{ route('catArticle',[$article->slug]) }}" data-name="{{ $article->title }}"><label for="article_{{ $article->id }}">{{ $article->title }}</label>
+                            <input type="checkbox" id="article_{{ $article->id }}" value="{{ $article->id }}"  data-link="{{ route('catArticle',[$article->slug]) }}" data-name-url="catArticle" data-name-att="slug:{{ $article->slug }}" data-name="{{ $article->title }}"><label for="article_{{ $article->id }}">{{ $article->title }}</label>
                         </li>
                     @endforeach
                 @endif
                 @if(!empty($pages))
                     @foreach($pages as $k => $page)
                         <li>
-                            <input type="checkbox" id="page_{{ $page->id }}" value="{{ $page->id }}"  data-link="{{ route('page',[$page->slug]) }}" data-name="{{ $page->title }}"><label for="page_{{ $page->id }}">{{ $page->title }}</label>
+                            <input type="checkbox" id="page_{{ $page->id }}" value="{{ $page->id }}"  data-link="{{ route('page',[$page->slug]) }}" data-name-url="page" data-name-att="slug:{{ $page->slug }}" data-name="{{ $page->title }}"><label for="page_{{ $page->id }}">{{ $page->title }}</label>
                         </li>
                     @endforeach
                 @endif
@@ -141,6 +141,7 @@
                     url: dd.data('url'),
                     data: {
                         data: dataOutput,
+                        local: '{{ $local }}',
                         _token : $('meta[name="csrf-token"]').attr("content")
                     },
                     success: function (response) {
@@ -160,6 +161,7 @@
                     url: $(this).attr("data-url"),
                     data: {
                         category_id: $('#category_id').val(),
+                        local: '{{ $local }}',
                         _token : $('meta[name="csrf-token"]').attr("content")
                     },
                     success: function (response) {
@@ -201,6 +203,8 @@
                     data: {
                         name: item.getAttribute("data-name"),
                         link: item.getAttribute("data-link"),
+                        name_url: item.getAttribute("data-name-url"),
+                        name_att: item.getAttribute("data-name-att"),
                         category_id: $('#category_id').val(),
                         _token : $('meta[name="csrf-token"]').attr("content")
                     },

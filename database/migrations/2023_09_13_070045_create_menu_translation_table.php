@@ -16,13 +16,7 @@ class CreateMenuTranslationTable extends Migration
         Schema::create('menu_translation', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('menu_id')->unsigned();
-            $table->integer('parent_id')->default(0)->nullable();
-            $table->integer('_lft')->unsigned()->nullable();
-            $table->integer('_rgt')->unsigned()->nullable();
-            $table->integer('depth')->unsigned()->nullable();
             $table->string('name');
-            $table->string('link')->default('');
-            $table->integer('category_id')->default(0);
             $table->string('lang');
             $table->timestamps();
         });

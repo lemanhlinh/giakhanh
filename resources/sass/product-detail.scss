@@ -17,7 +17,14 @@
         font-size: 32px;
     }
     .content-product{
-
+        display: flex;
+        justify-content: space-between;
+        p:nth-child(1){
+            width: 45%;
+        }
+        p:nth-child(2){
+            width: 45%;
+        }
     }
     .number-add-to-cart{
         .number-input {

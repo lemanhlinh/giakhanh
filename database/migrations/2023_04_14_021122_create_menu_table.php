@@ -21,6 +21,8 @@ class CreateMenuTable extends Migration
             $table->integer('depth')->unsigned()->nullable();
             $table->string('name');
             $table->string('link')->default('');
+            $table->string('name_url')->default('');
+            $table->string('name_att')->default('')->nullable();
             $table->integer('category_id')->default(0);
             $table->timestamps();
         });
