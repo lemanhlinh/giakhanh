@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\DataTables\ArticleCategoryDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\ArticlesCategories;
+use App\Models\ArticlesCategoriesTranslation;
 use App\Repositories\Contracts\ArticleCategoryInterface;
 use App\Repositories\Contracts\ArticleInterface;
 use App\Http\Requests\Article\CreateArticleCategory;
@@ -41,7 +42,8 @@ class ArticlesCategoriesController extends Controller
      */
     public function create()
     {
-        return view('admin.article-category.create');
+        $local = request()->query('local','vi');
+        return view('admin.article-category.create',compact('local'));
     }
 
     /**
@@ -59,7 +61,23 @@ class ArticlesCategoriesController extends Controller
             if (\request()->hasFile('image')) {
                 $data['image'] = $this->articleCategoryRepository->saveFileUpload($data['image'],'images');
             }
-            $this->articleCategoryRepository->create($data);
+            $cat = $this->articleCategoryRepository->create($data);
+
+            $local = request()->input('locale','vi');
+            foreach(\LaravelLocalization::getSupportedLocales() as $localeCode => $properties){
+                $langTranslation = new ArticlesCategoriesTranslation([
+                    'lang' => $localeCode,
+                    'title' => $localeCode == $local ? $data['title']:'',
+                    'image' => $localeCode == $local ? $data['image']:'',
+                    'slug' => $localeCode == $local ? $data['slug']:'',
+                    'type' => $data['type'],
+                    'active' => $localeCode == $local ? $data['active']:0,
+                    'seo_title' => $localeCode == $local ? $data['seo_title']:'',
+                    'seo_keyword' => $localeCode == $local ? $data['seo_keyword']:'',
+                    'seo_description' => $localeCode == $local ? $data['seo_description']:''
+                ]);
+                $cat->translations()->save($langTranslation);
+            }
             DB::commit();
             Session::flash('success', trans('message.create_article_category_success'));
             return redirect()->back();
@@ -95,8 +113,11 @@ class ArticlesCategoriesController extends Controller
      */
     public function edit($id)
     {
-        $article_category = $this->articleCategoryRepository->getOneById($id);
-        return view('admin.article-category.update',compact('article_category'));
+        $local = request()->query('local','vi');
+        $article_category = $this->articleCategoryRepository->getOneById($id,['translations' => function($query) use ($local){
+            $query->where(['lang'=> $local ]);
+        }]);
+        return view('admin.article-category.update',compact('article_category','local'));
     }
 
     /**
@@ -111,15 +132,18 @@ class ArticlesCategoriesController extends Controller
         try {
             $data = $req->validated();
             $article_category = $this->articleCategoryRepository->getOneById($id);
-
             if (\request()->hasFile('image')) {
                 $data['image'] = $this->articleCategoryRepository->saveFileUpload($data['image'],'images');
             }
-
+            if (empty($data['slug'])){
+                $data['slug'] = $req->input('slug')?\Str::slug($req->input('slug'), '-'):\Str::slug($data['title'], '-');
+            }
             $article_category->update($data);
+            $local = request()->input('locale','vi');
+            $article_category->translations->where(['article_category_id'=> $id,'lang' =>$local])->update($data);
             DB::commit();
             Session::flash('success', trans('message.update_article_category_success'));
-            return redirect()->route('admin.article-category.edit', $id);
+            return redirect()->back();
         } catch (\Exception $exception) {
             \Log::info([
                 'message' => $exception->getMessage(),

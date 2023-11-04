@@ -12,7 +12,7 @@
                 <!-- text input -->
                 <div class="form-group">
                     <label>@lang('form.menu_category.name')</label> <span class="text-danger">*</span>
-                    <input type="text" class="form-control" name="name" value="{{ isset($menu_category) ? $menu_category->translations->first()->name : old('name') }}" required>
+                    <input type="text" class="form-control" name="name" value="{{ isset($menu_category) ? $menu_category->translations->name : old('name') }}" required>
                     @if ($errors->has('name'))
                         <span class="help-block text-danger">
                             <strong>{{ $errors->first('name') }}</strong>

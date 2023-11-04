@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Page;
+use App\Models\PagesTranslation;
 use Illuminate\Http\Request;
 use App\DataTables\PageDataTable;
 use Illuminate\Support\Facades\DB;
@@ -42,7 +43,8 @@ class PageController extends Controller
      */
     public function create()
     {
-        return view('admin.page.create');
+        $local = request()->query('local','vi');
+        return view('admin.page.create', compact('local'));
     }
 
     /**
@@ -69,6 +71,24 @@ class PageController extends Controller
             $model = $this->pageRepository->create($data);
             if (!empty($data['image'])){
                 $this->pageRepository->saveFileUpload($image_root,$this->resizeImage,$model->id,'page');
+            }
+            $local = request()->input('locale','vi');
+            foreach(\LaravelLocalization::getSupportedLocales() as $localeCode => $properties){
+                $langTranslation = new PagesTranslation([
+                    'lang' => $localeCode,
+                    'title' => $localeCode == $local ? $data['title']:'',
+                    'image' => $localeCode == $local ? $data['image']:'',
+                    'image_title' => $localeCode == $local ? $data['image_title']:'',
+                    'slug' => $localeCode == $local ? $data['slug']:'',
+                    'content' => $localeCode == $local ? $data['content']:'',
+                    'description' => $localeCode == $local ? $data['description']:'',
+                    'active' => $localeCode == $local ? $data['active']:0,
+                    'is_home' => $localeCode == $local ? $data['is_home']:0,
+                    'seo_title' => $localeCode == $local ? $data['seo_title']:'',
+                    'seo_keyword' => $localeCode == $local ? $data['seo_keyword']:'',
+                    'seo_description' => $localeCode == $local ? $data['seo_description']:''
+                ]);
+                $model->translations()->save($langTranslation);
             }
             DB::commit();
             Session::flash('success', trans('message.create_page_success'));
@@ -104,8 +124,11 @@ class PageController extends Controller
      */
     public function edit($id)
     {
-        $page = $this->pageRepository->getOneById($id);
-        return view('admin.page.update', compact('page'));
+        $local = request()->query('local','vi');
+        $page = $this->pageRepository->getOneById($id,['translations' => function($query) use ($local){
+            $query->where(['lang'=> $local ]);
+        }]);
+        return view('admin.page.update', compact('page','local'));
     }
 
     /**
@@ -133,9 +156,11 @@ class PageController extends Controller
                 $data['slug'] = $req->input('slug')?\Str::slug($req->input('slug'), '-'):\Str::slug($data['title'], '-');
             }
             $page->update($data);
+            $local = request()->input('locale','vi');
+            $page->translations->where(['page_id'=> $id,'lang' => $local])->update($data);
             DB::commit();
             Session::flash('success', trans('message.update_page_success'));
-            return redirect()->route('admin.page.edit', $id);
+            return redirect()->back();
         } catch (\Exception $exception) {
             \Log::info([
                 'message' => $exception->getMessage(),

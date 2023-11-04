@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\ProductsCategories;
+use App\Models\ProductsCategoriesTranslation;
 use Illuminate\Http\Request;
 use App\Repositories\Contracts\ProductCategoryInterface;
 use App\Repositories\Contracts\ProductInterface;
@@ -42,7 +43,8 @@ class ProductsCategoriesController extends Controller
      */
     public function create()
     {
-        return view('admin.product-category.create');
+        $local = request()->query('local','vi');
+        return view('admin.product-category.create',compact('local'));
     }
 
     /**
@@ -61,7 +63,22 @@ class ProductsCategoriesController extends Controller
                 $image_root = $data['image'];
                 $data['image'] = urldecode($image_root);
             }
-            $this->productCategoryRepository->create($data);
+            $cat = $this->productCategoryRepository->create($data);
+            $local = request()->input('locale','vi');
+            foreach(\LaravelLocalization::getSupportedLocales() as $localeCode => $properties){
+                $langTranslation = new ProductsCategoriesTranslation([
+                    'lang' => $localeCode,
+                    'title' => $localeCode == $local ? $data['title']:'',
+                    'image' => $localeCode == $local ? $data['image']:'',
+                    'slug' => $localeCode == $local ? $data['slug']:'',
+                    'ordering' => $localeCode == $local ? $data['ordering']:0,
+                    'active' => $localeCode == $local ? $data['active']:0,
+                    'seo_title' => $localeCode == $local ? $data['seo_title']:'',
+                    'seo_keyword' => $localeCode == $local ? $data['seo_keyword']:'',
+                    'seo_description' => $localeCode == $local ? $data['seo_description']:''
+                ]);
+                $cat->translations()->save($langTranslation);
+            }
             DB::commit();
             Session::flash('success', trans('message.create_product_category_success'));
             return redirect()->back();
@@ -97,8 +114,11 @@ class ProductsCategoriesController extends Controller
      */
     public function edit($id)
     {
-        $product_category = $this->productCategoryRepository->getOneById($id);
-        return view('admin.product-category.update', compact('product_category'));
+        $local = request()->query('local','vi');
+        $product_category = $this->productCategoryRepository->getOneById($id,['translations' => function($query) use ($local){
+            $query->where(['lang'=> $local ]);
+        }]);
+        return view('admin.product-category.update', compact('product_category','local'));
     }
 
     /**
@@ -114,17 +134,19 @@ class ProductsCategoriesController extends Controller
         DB::beginTransaction();
         try {
             $data = $req->validated();
-            $page = $this->productCategoryRepository->getOneById($id);
+            $product_cat = $this->productCategoryRepository->getOneById($id);
             if (!empty($data['image']) && $data_root->image != $data['image']){
                 $data['image'] = rawurldecode($data['image']);
             }
             if (empty($data['slug'])){
                 $data['slug'] = $req->input('slug')?\Str::slug($req->input('slug'), '-'):\Str::slug($data['title'], '-');
             }
-            $page->update($data);
+            $product_cat->update($data);
+            $local = request()->input('locale','vi');
+            $product_cat->translations->where(['product_category_id'=> $id,'lang' =>$local])->update($data);
             DB::commit();
             Session::flash('success', trans('message.update_product_category_success'));
-            return redirect()->route('admin.product-category.edit', $id);
+            return redirect()->back();
         } catch (\Exception $exception) {
             \Log::info([
                 'message' => $exception->getMessage(),

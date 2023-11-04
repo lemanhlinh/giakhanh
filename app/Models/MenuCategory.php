@@ -17,6 +17,6 @@ class MenuCategory extends Model
 
     public function translations()
     {
-        return $this->hasMany(MenuCategoryTranslation::class, 'menu_category_id');
+        return $this->hasOne(MenuCategoryTranslation::class, 'menu_category_id','id');
     }
 }

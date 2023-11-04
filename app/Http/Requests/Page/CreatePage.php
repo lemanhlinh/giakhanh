@@ -32,7 +32,6 @@ class CreatePage extends FormRequest
             'description' => 'nullable',
             'image' => 'nullable',
             'image_title' => 'nullable',
-            'ordering' => 'nullable',
             'seo_title' => 'nullable',
             'seo_keyword' => 'nullable',
             'seo_description' => 'nullable',

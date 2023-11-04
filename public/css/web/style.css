@@ -78,7 +78,6 @@ a:hover {
 #app .navbar-finalstyle {
   z-index: 3;
   height: 92px;
-  box-shadow: -1px 1px 1px rgba(0, 0, 0, 0.1607843137);
 }
 #app .navbar-finalstyle .navbar-brand {
   display: block;

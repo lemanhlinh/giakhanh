@@ -32,4 +32,9 @@ class Page extends Model
         }
         return $array_resize;
     }
+
+    public function translations()
+    {
+        return $this->hasOne(PagesTranslation::class, 'page_id','id');
+    }
 }

@@ -131,6 +131,7 @@ return [
         'category' => 'Danh mục sản phẩm',
         'date' => 'Ngày',
         'create' => 'Tạo mới',
+        'update' => 'Cập nhật sản phẩm',
         'ordering' => 'Thứ tự'
     ],
 

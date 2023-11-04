@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Menu;
 use App\Models\MenuTranslation;
 use Illuminate\Http\Request;
 use App\Repositories\Contracts\ArticleCategoryInterface;
@@ -59,11 +60,10 @@ class MenuController extends Controller
         if (empty($category_id)){
             $category_id = $menu_categories->first()->id;
         }
-//        $menu = $this->menuRepository->getMenusByCategoryId($category_id)->toTree();
-        $menu = $this->menuRepository->getList(['category_id'=>$category_id],['*'],null, ['translations' => function($query){
+        $menu = Menu::where(['category_id'=>$category_id])->with(['translations' => function($query){
             $local = request()->query('local','vi');
             $query->where(['lang'=> $local ]);
-        }])->toTree();
+        }])->withDepth()->defaultOrder()->get()->toTree();
         return view('admin.menu.index', compact('article_categories','menu_categories','menu','category_id','pages','product_categories','local'));
     }
 
@@ -131,7 +131,13 @@ class MenuController extends Controller
         foreach ($data as $item){
             $menu = MenuTranslation::where(['lang'=> $local,'menu_id' => $item['id']]);
             $data2['name'] = $item['name'];
-            $menu->update($data2);
+            if(count($menu->get())){
+                $menu->update($data2);
+            }else{
+                $data2['lang'] = $local;
+                $data2['menu_id'] = $item['id'];
+                $menu->create($data2);
+            }
         }
         return response()->json($data);
     }

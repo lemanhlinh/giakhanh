@@ -12,7 +12,7 @@ class Menu extends Model
     use NodeTrait;
     public $table = "menu";
     protected $fillable = ['name', 'link', 'parent_id','category_id','name_url','name_att'];
-    protected $guarded = ['id'];
+    protected $guarded = ['id','_lft','_rgt'];
     protected $appends = ['url'];
 
     public function category()

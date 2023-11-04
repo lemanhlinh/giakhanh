@@ -15,10 +15,10 @@ class CreateMenuCategoriesTranslationTable extends Migration
     {
         Schema::create('menu_categories_translation', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('menu_category_id')->unsigned();
             $table->string('name');
-            $table->string('lang');
             $table->timestamps();
+            $table->integer('menu_category_id')->unsigned();
+            $table->string('lang');
 
             $table->foreign('menu_category_id')->references('id')->on('menu_categories')->onDelete('cascade');
 

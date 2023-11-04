@@ -25,6 +25,11 @@ class Article extends Model
         return $this->belongsTo(ArticlesCategories::class, 'category_id', 'id');
     }
 
+    public function translations()
+    {
+        return $this->hasOne(ArticlesTranslation::class, 'article_id','id');
+    }
+
     public function getImageResizeAttribute()
     {
         $img_path = pathinfo($this->image, PATHINFO_DIRNAME);

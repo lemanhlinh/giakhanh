@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Menu;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\Contracts\SettingInterface;
 use App\Repositories\Contracts\MenuInterface;
@@ -43,9 +44,9 @@ class AppServiceProvider extends ServiceProvider
                 $setting = $settingRepository->getAll()->pluck('value', 'key');
             }
             if (Schema::hasTable('menu')) {
-                $menu = $menuRepository->getList(['category_id'=>1],['*'],null, ['translations' => function($query) use ($language){
+                $menu =  Menu::where(['category_id'=>1])->with(['translations' => function($query) use ($language){
                     $query->where(['lang'=> $language ]);
-                }])->toTree();
+                }])->withDepth()->defaultOrder()->get()->toTree();
             }
             if (Schema::hasTable('stores')) {
                 $stores = $storeRepository->getList(['active' => 1],['id','title']);

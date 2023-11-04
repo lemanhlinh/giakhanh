@@ -53,9 +53,8 @@ class MenuCategoryController extends Controller
         DB::beginTransaction();
         try {
             $data = $req->validated();
-            $local = request()->input('locale','vi');
-
             $model = $this->menuCategoryRepository->create($data);
+            $local = request()->input('locale','vi');
             foreach(\LaravelLocalization::getSupportedLocales() as $localeCode => $properties){
                 $langTranslation = new MenuCategoryTranslation(['lang' => $localeCode, 'name' => $localeCode == $local ? $data['name']:'']);
                 $model->translations()->save($langTranslation);
@@ -96,8 +95,7 @@ class MenuCategoryController extends Controller
     public function edit($id)
     {
         $local = request()->query('local','vi');
-        $menu_category = $this->menuCategoryRepository->getOneById($id,['translations' => function($query){
-            $local = request()->query('local','vi');
+        $menu_category = $this->menuCategoryRepository->getOneById($id,['translations' => function($query) use ($local){
             $query->where(['lang'=> $local ])->select('id','name','menu_category_id');
         }]);
         return view('admin.menu-category.update', compact('menu_category','local'));
@@ -114,8 +112,8 @@ class MenuCategoryController extends Controller
     {
         try {
             $data = $req->validated();
-            $local = request()->input('locale','vi');
             $category = $this->menuCategoryRepository->getOneById($id,['translations']);
+            $local = request()->input('locale','vi');
             $englishTranslation = $category->translations->where('lang', $local)->first();
             $category->translations->name = $data['name'];
             $category->translations->lang = $local;
@@ -125,6 +123,7 @@ class MenuCategoryController extends Controller
                 $englishTranslation->save();
             }
             $category->save();
+            DB::commit();
             Session::flash('success', trans('message.update_menu_category_success'));
             return redirect()->back();
         } catch (\Exception $exception) {
