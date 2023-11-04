@@ -44,7 +44,7 @@ class AppServiceProvider extends ServiceProvider
                 $setting = $settingRepository->getAll()->pluck('value', 'key');
             }
             if (Schema::hasTable('menu')) {
-                $menu =  Menu::where(['category_id'=>1])->with(['translations' => function($query) use ($language){
+                $menu = Menu::where(['category_id'=>1])->with(['translations' => function($query) use ($language){
                     $query->where(['lang'=> $language ]);
                 }])->withDepth()->defaultOrder()->get()->toTree();
             }

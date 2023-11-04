@@ -37,7 +37,7 @@
                     <div class="col-md-10">
                         <div class="img-about">
                             @if($page)
-                                @include('web.components.image', ['src' => $page->image_resize['lager'], 'title' => $page->title])
+                                @include('web.components.image', ['src' => $page->image, 'title' => $page->title])
                             @endif
                         </div>
                     </div>
@@ -77,21 +77,21 @@
                             @if(!empty($categories_product))
                                 @forelse($categories_product as $k => $category)
                                     <div class="tab-pane fade {{ $k === 0 ? 'show active' : '' }}" id="{{ $category->slug }}" role="tabpanel" aria-labelledby="{{ $category->slug }}-tab">
-                                        @if(!empty($category->products))
-                                            @forelse($category->products as $item)
+                                        @if(!empty($products[$category->id]))
+                                            @forelse($products[$category->id] as $item)
                                                 <div class="d-flex align-items-center justify-content-between item-product">
-                                                    <a href="{{ route('productDetail',['slugCat'=>$item->category->slug,'slug'=>$item->slug]) }}" title="{{ $item->title }}">
-                                                        @include('web.components.image', ['src' => $item->image_resize['small'], 'title' => $item->title])
+                                                    <a href="{{ route('productDetail',['slugCat'=>$category->slug,'slug'=>$item->slug]) }}" title="{{ $item->title }}">
+                                                        @include('web.components.image', ['src' => $item->image, 'title' => $item->title])
                                                     </a>
                                                     <div class="info-title-product">
                                                         <div class="left-hover-product align-items-center justify-content-between">
-                                                            <a href="{{ route('productDetail',['slugCat'=>$item->category->slug,'slug'=>$item->slug]) }}" title="{{ $item->title }}">
+                                                            <a href="{{ route('productDetail',['slugCat'=>$category->slug,'slug'=>$item->slug]) }}" title="{{ $item->title }}">
                                                                 <p class="title-product-box">{{ $item->title }}</p>
                                                             </a>
                                                             <p class="price-product-box">{{ number_format($item->price, 0, ',', '.') }}đ</p>
                                                         </div>
                                                         <div class="right-hover-product">
-                                                            <a href="{{ route('productDetail',['slugCat'=>$item->category->slug,'slug'=>$item->slug]) }}" class="btn btn-danger">Xem chi tiết</a>
+                                                            <a href="{{ route('productDetail',['slugCat'=>$category->slug,'slug'=>$item->slug]) }}" class="btn btn-danger">Xem chi tiết</a>
                                                             <button type="button" onclick="order({{ $item->id }})" class="btn btn-warning cartToastBtn">Thêm giỏ hàng</button>
                                                         </div>
 
@@ -236,7 +236,7 @@
                     <div class="article-item">
                         <div class="article-item-content">
                             <a href="{{ route('detailArticle',['slug' => $item->slug,'id' => $item->id]) }}">
-                                @include('web.components.image', ['src' => $item->image_resize['resize'], 'title' => $item->title])
+                                @include('web.components.image', ['src' => $item->image, 'title' => $item->title])
                             </a>
                             <div class="box-content-article">
                                 <p class="calendar-new"><i class="fas fa-calendar-alt"></i> {{ $item->created_at }}</p>

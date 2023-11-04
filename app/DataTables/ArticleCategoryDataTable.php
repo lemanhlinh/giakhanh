@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\ArticlesCategories;
+use App\Models\ArticlesCategoriesTranslation;
 use Carbon\Carbon;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
@@ -20,6 +21,7 @@ class ArticleCategoryDataTable extends DataTable
      */
     public function dataTable($query)
     {
+        $lang = request()->input('local','vi');
         return datatables()
             ->eloquent($query)
             ->editColumn('created_at', function ($q) {
@@ -28,10 +30,10 @@ class ArticleCategoryDataTable extends DataTable
             ->editColumn('updated_at', function ($q) {
                 return Carbon::parse($q->updated_at)->format('H:i:s Y/m/d');
             })
-            ->addColumn('action', function ($q){
-                $urlEdit = route('admin.article-category.edit', $q->id);
-                $urlDelete = route('admin.article-category.destroy', $q->id);
-                $lowerModelName = strtolower(class_basename(new ArticlesCategories()));
+            ->addColumn('action', function ($q) use ($lang){
+                $urlEdit = route('admin.article-category.edit', $q->article_category_id).'?local='.$lang;
+                $urlDelete = route('admin.article-category.destroy', $q->article_category_id).'?local='.$lang;
+                $lowerModelName = strtolower(class_basename(new ArticlesCategoriesTranslation()));
                 return view('admin.components.buttons.edit', compact('urlEdit'))->render() . view('admin.components.buttons.delete', compact('urlDelete', 'lowerModelName'))->render();
             });
     }
@@ -39,12 +41,13 @@ class ArticleCategoryDataTable extends DataTable
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\ArticlesCategories $model
+     * @param \App\Models\ArticlesCategoriesTranslation $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(ArticlesCategories $model)
+    public function query(ArticlesCategoriesTranslation $model)
     {
-        return $model->newQuery();
+        $lang = request()->input('local','vi');
+        return $model->newQuery()->where(['lang'=>$lang]);
     }
 
     /**

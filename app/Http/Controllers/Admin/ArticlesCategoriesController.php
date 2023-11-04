@@ -31,8 +31,9 @@ class ArticlesCategoriesController extends Controller
      */
     public function index(ArticleCategoryDataTable $dataTable)
     {
+        $local = request()->query('local','vi');
         $categories = $this->articleCategoryRepository->getAll();
-        return $dataTable->render('admin.article-category.index',compact('categories'));
+        return $dataTable->render('admin.article-category.index',compact('categories','local'));
     }
 
     /**
