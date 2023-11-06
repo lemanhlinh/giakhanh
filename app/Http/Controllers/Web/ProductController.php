@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\BookTable;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Setting;
+use Artesaos\SEOTools\Facades\SEOMeta;
+use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\Http\Request;
 use App\Repositories\Contracts\ProductCategoryInterface;
 use App\Repositories\Contracts\ProductInterface;
@@ -25,6 +28,17 @@ class ProductController extends Controller
     }
 
     public function index(){
+        $logo = Setting::where('key', 'logo')->first();
+
+        SEOTools::setTitle('Sản phẩm - Lẩu nấm gia khánh');
+        SEOTools::setDescription('Mỗi sản phẩm của Lẩu Nấm Gia Khánh đều được qua sàng lọc , chắt chiu, tinh khiết và quý báu nhất từ thiên nhiên. Nhằm mang đến cho thực khách những món ăn có giá trị về chất lượng và luôn lấy tiêu chí “Sức khỏe con người làm trung tâm”');
+        SEOMeta::setKeywords('Lẩu nấm gia khánh, lẩu nấm');
+        SEOTools::addImages(asset($logo->value));
+        SEOTools::setCanonical(url()->current());
+        SEOTools::opengraph()->setUrl(url()->current());
+        SEOTools::opengraph()->addProperty('type', 'articles');
+        SEOTools::twitter()->setSite('launamgiakhanh.vn');
+
         $cat = $this->productCategoryRepository->getList(['active' => 1],['id','title','slug'], 0);
         $products = $this->productRepository->paginate(12,['id','slug','image','title','price','category_id'],['active'=>1],['category']);
         return view('web.product.home',compact('cat','products'));
@@ -34,6 +48,16 @@ class ProductController extends Controller
         $cat = $this->productCategoryRepository->getOneBySlug($slug);
         $cats = $this->productCategoryRepository->getList(['active' => 1],['id','title','slug'], 0);
         $products = $this->productRepository->paginate(12,['id','slug','image','title','price','category_id'],['active'=>1,'category_id'=>$cat->id],['category']);
+
+        SEOTools::setTitle($cat->seo_title?$cat->seo_title:$cat->title);
+        SEOTools::setDescription($cat->seo_description?$cat->seo_description:$cat->description);
+        SEOTools::addImages($cat->image?asset($cat->image):null);
+        SEOTools::setCanonical(url()->current());
+        SEOTools::opengraph()->setUrl(url()->current());
+        SEOTools::opengraph()->addProperty('type', 'articles');
+        SEOTools::twitter()->setSite('launamgiakhanh.vn');
+        SEOMeta::setKeywords($cat->seo_keyword?$cat->seo_keyword:$cat->title);
+
         return view('web.product.cat',compact('cat','cats','products'));
     }
 
@@ -41,6 +65,16 @@ class ProductController extends Controller
         $cat = $this->productCategoryRepository->getOneBySlug($slugCat);
         $products = $this->productRepository->getList(['active' => 1],['id','title','slug','image','price','category_id'], 3,['category']);
         $product = $this->productRepository->getOneBySlug($slug);
+
+        SEOTools::setTitle($product->seo_title?$product->seo_title:$product->title);
+        SEOTools::setDescription($product->seo_description?$product->seo_description:$product->description);
+        SEOTools::addImages($product->image?asset($product->image):null);
+        SEOTools::setCanonical(url()->current());
+        SEOTools::opengraph()->setUrl(url()->current());
+        SEOTools::opengraph()->addProperty('type', 'articles');
+        SEOTools::twitter()->setSite('cocolux.com');
+        SEOMeta::setKeywords($product->seo_keyword?$product->seo_keyword:$product->title);
+
         return view('web.product.detail',compact('cat','product','products'));
     }
 

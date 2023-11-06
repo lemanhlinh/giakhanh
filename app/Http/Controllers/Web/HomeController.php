@@ -10,6 +10,9 @@ use App\Models\PagesTranslation;
 use App\Models\Product;
 use App\Models\ProductsCategoriesTranslation;
 use App\Models\ProductsTranslation;
+use App\Models\Setting;
+use Artesaos\SEOTools\Facades\SEOMeta;
+use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\Http\Request;
 use App\Repositories\Contracts\ArticleInterface;
 use App\Repositories\Contracts\SlideInterface;
@@ -46,6 +49,17 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $logo = Setting::where('key', 'logo')->first();
+
+        SEOTools::setTitle('Trang chủ - Lẩu nấm gia khánh');
+        SEOTools::setDescription('Mỗi sản phẩm của Lẩu Nấm Gia Khánh đều được qua sàng lọc , chắt chiu, tinh khiết và quý báu nhất từ thiên nhiên. Nhằm mang đến cho thực khách những món ăn có giá trị về chất lượng và luôn lấy tiêu chí “Sức khỏe con người làm trung tâm”');
+        SEOMeta::setKeywords('Lẩu nấm gia khánh, lẩu nấm');
+        SEOTools::addImages(asset($logo->value));
+        SEOTools::setCanonical(url()->current());
+        SEOTools::opengraph()->setUrl(url()->current());
+        SEOTools::opengraph()->addProperty('type', 'articles');
+        SEOTools::twitter()->setSite('launamgiakhanh.vn');
+
         $lang = LaravelLocalization::getCurrentLocale();
         $slider = $this->slideRepository->getAll();
         $images = $this->mediaImageRepository->getList(['active' => 1,'is_home' => 1],['id','title','image'], 2,['mediaImages']);

@@ -15,11 +15,11 @@
                 <div class="col-md-6 position-relative big-article">
                     <div class="article-item">
                         <div class="article-item-content">
-                            <a href="{{ route('detailArticle',['slug' => $articleFirst->slug,'id' => $articleFirst->id]) }}" class="image-other-article">
-                                @include('web.components.image', ['src' => $articleFirst->image_resize['lager'], 'title' => $articleFirst->title])
+                            <a href="{{ route('detailArticle',['slug' => $articleFirst->slug,'id' => $articleFirst->article_id]) }}" class="image-other-article">
+                                @include('web.components.image', ['src' => $articleFirst->image, 'title' => $articleFirst->title])
                             </a>
                             <div class="box-content-article">
-                                <a href="{{ route('detailArticle',['slug' => $articleFirst->slug,'id' => $articleFirst->id]) }}">
+                                <a href="{{ route('detailArticle',['slug' => $articleFirst->slug,'id' => $articleFirst->article_id]) }}">
                                     <h4 class="title-article title-article-main">{{ $articleFirst->title }}</h4>
                                 </a>
                                 <p class="calendar-new calendar-new-normal d-flex align-items-center justify-content-between">
@@ -37,11 +37,11 @@
                                 <div class="col-md-6 position-relative">
                                     <div class="article-item">
                                         <div class="article-item-content">
-                                            <a href="{{ route('detailArticle',['slug' => $item->slug,'id' => $item->id]) }}" class="image-other-article">
-                                                @include('web.components.image', ['src' => $item->image_resize['small'], 'title' => $item->title])
+                                            <a href="{{ route('detailArticle',['slug' => $item->slug,'id' => $item->article_id]) }}" class="image-other-article">
+                                                @include('web.components.image', ['src' => $item->image, 'title' => $item->title])
                                             </a>
                                             <div class="box-content-article">
-                                                <a href="{{ route('detailArticle',['slug' => $item->slug,'id' => $item->id]) }}">
+                                                <a href="{{ route('detailArticle',['slug' => $item->slug,'id' => $item->article_id]) }}">
                                                     <h4 class="title-article">{{ $item->title }}</h4>
                                                 </a>
                                                 <p class="calendar-new d-flex align-items-center justify-content-between">
@@ -64,13 +64,13 @@
                                 <div class="article-item-content">
                                     <div class="row">
                                         <div class="col-md-3">
-                                            <a href="{{ route('detailArticle',['slug' => $item->slug,'id' => $item->id]) }}" class="image-other-article">
-                                                @include('web.components.image', ['src' => $item->image_resize['resize'], 'title' => $item->title])
+                                            <a href="{{ route('detailArticle',['slug' => $item->slug,'id' => $item->article_id]) }}" class="image-other-article">
+                                                @include('web.components.image', ['src' => $item->image, 'title' => $item->title])
                                             </a>
                                         </div>
                                         <div class="col-md-9">
                                             <div class="box-content-article">
-                                                <a href="{{ route('detailArticle',['slug' => $item->slug,'id' => $item->id]) }}">
+                                                <a href="{{ route('detailArticle',['slug' => $item->slug,'id' => $item->article_id]) }}">
                                                     <h4 class="title-article title-article-normal">{{ $item->title }}</h4>
                                                 </a>
                                                 <p class="calendar-new d-flex align-items-center justify-content-between">
