@@ -22,6 +22,15 @@ class MediaVideoDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
+            ->editColumn('active', function ($q) {
+                $url = route('admin.media-video.changeActive', $q->id);
+                $status = $q->active == Media::STATUS_ACTIVE ? 'checked' : null;
+                return view('admin.components.buttons.change_status', [
+                    'url' => $url,
+                    'lowerModelName' => 'media-video',
+                    'status' => $status,
+                ])->render();
+            })
             ->editColumn('created_at', function ($q) {
                 return Carbon::parse($q->created_at)->format('H:i:s Y/m/d');
             })
@@ -33,7 +42,7 @@ class MediaVideoDataTable extends DataTable
                 $urlDelete = route('admin.media-video.destroy', $q->id);
                 $lowerModelName = strtolower(class_basename(new Media()));
                 return view('admin.components.buttons.edit', compact('urlEdit'))->render() . view('admin.components.buttons.delete', compact('urlDelete', 'lowerModelName'))->render();
-            });
+            })->rawColumns(['active','action']);
     }
 
     /**
@@ -59,7 +68,7 @@ class MediaVideoDataTable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('Bfrtip')
-                    ->orderBy(1)
+                    ->orderBy(0)
                     ->buttons(
                         Button::make('create'),
                         Button::make('export'),
@@ -82,6 +91,7 @@ class MediaVideoDataTable extends DataTable
             Column::make('image')->title(trans('form.article.image'))->render([
                 'renderImage(data)'
             ]),
+            Column::make('active'),
             Column::make('created_at'),
             Column::make('updated_at'),
             Column::computed('action')

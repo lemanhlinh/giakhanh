@@ -24,6 +24,24 @@ class ProductDataTable extends DataTable
         $lang = request()->input('local','vi');
         return datatables()
             ->eloquent($query)
+            ->editColumn('active', function ($q) {
+                $url = route('admin.product.changeActive', $q->id);
+                $status = $q->active == ProductsTranslation::STATUS_ACTIVE ? 'checked' : null;
+                return view('admin.components.buttons.change_status', [
+                    'url' => $url,
+                    'lowerModelName' => 'product',
+                    'status' => $status,
+                ])->render();
+            })
+            ->editColumn('is_home', function ($q) {
+                $url = route('admin.product.changeHome', $q->id);
+                $status = $q->is_home == ProductsTranslation::IS_HOME ? 'checked' : null;
+                return view('admin.components.buttons.change_status', [
+                    'url' => $url,
+                    'lowerModelName' => 'product',
+                    'status' => $status,
+                ])->render();
+            })
             ->editColumn('created_at', function ($q) {
                 return Carbon::parse($q->created_at)->format('H:i:s Y/m/d');
             })
@@ -35,7 +53,7 @@ class ProductDataTable extends DataTable
                 $urlDelete = route('admin.product.destroy', $q->product_id).'?local='.$lang;
                 $lowerModelName = strtolower(class_basename(new ProductsTranslation()));
                 return view('admin.components.buttons.edit', compact('urlEdit'))->render() . view('admin.components.buttons.delete', compact('urlDelete', 'lowerModelName'))->render();
-            });
+            })->rawColumns(['active','action','is_home']);
     }
 
     /**
@@ -82,6 +100,11 @@ class ProductDataTable extends DataTable
         return [
             Column::make('id'),
             Column::make('title'),
+            Column::make('image')->title(trans('form.product.image'))->render([
+                'renderImage(data)'
+            ]),
+            Column::make('active')->title('Kích hoạt'),
+            Column::make('is_home')->title('Hiển thị trang chủ'),
             Column::make('created_at'),
             Column::make('updated_at'),
             Column::computed('action')

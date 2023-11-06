@@ -179,4 +179,19 @@ class ArticlesCategoriesController extends Controller
         }
 
     }
+
+
+    /**
+     * @param $id
+     * @return array
+     */
+    public function changeActive($id)
+    {
+        $article_category = ArticlesCategoriesTranslation::findOrFail($id);
+        $article_category->update(['active' => !$article_category->active]);
+        return [
+            'status' => true,
+            'message' => trans('message.change_active_article_category_success')
+        ];
+    }
 }

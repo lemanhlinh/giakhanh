@@ -38,10 +38,18 @@ class AppServiceProvider extends ServiceProvider
         $path = parse_url($url, PHP_URL_PATH);
         $segments = array_filter(explode('/', $path));
         $language = reset($segments);
+        if (empty($language)){
+            $language = 'vi';
+        }
 
         if (!Request::is('admin/*')) {
             if (Schema::hasTable('setting')) {
-                $setting = $settingRepository->getAll()->pluck('value', 'key');
+                if ($language == 'vi'){
+                    $setting = $settingRepository->getAll()->pluck('value', 'key');
+                }else{
+                    $setting = $settingRepository->getAll()->pluck('value_en', 'key');
+                }
+
             }
             if (Schema::hasTable('menu')) {
                 $menu = Menu::where(['category_id'=>1])->with(['translations' => function($query) use ($language){

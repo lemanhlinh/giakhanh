@@ -4,6 +4,7 @@ namespace App\DataTables;
 
 use App\Models\MenuCategory;
 use App\Models\MenuCategoryTranslation;
+use Carbon\Carbon;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
@@ -25,6 +26,12 @@ class MenuCategoryDataTable extends DataTable
             ->eloquent($query)
             ->addColumn('name', function ($q) {
                 return $q->name;
+            })
+            ->editColumn('created_at', function ($q) {
+                return Carbon::parse($q->created_at)->format('H:i:s Y/m/d');
+            })
+            ->editColumn('updated_at', function ($q) {
+                return Carbon::parse($q->updated_at)->format('H:i:s Y/m/d');
             })
             ->addColumn('action', function ($q) use ($lang){
                 $urlEdit = route('admin.menu-category.edit', $q->menu_category_id).'?local='.$lang;
@@ -58,7 +65,7 @@ class MenuCategoryDataTable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('Bfrtip')
-                    ->orderBy(1)
+                    ->orderBy(0)
                     ->buttons(
                         Button::make('create'),
                         Button::make('export'),

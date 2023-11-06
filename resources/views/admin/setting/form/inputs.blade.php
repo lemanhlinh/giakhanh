@@ -78,11 +78,6 @@
                     <textarea class="form-control" rows="3" name="value" >{{ isset($setting) ? $setting->value : old('value') }}</textarea>
                 @elseif($template === '2')
                     @include('admin.components.buttons.image',['src' => isset($setting->value) ? $setting->value : old('value'),'name' => 'value'])
-                    @if ($errors->has('value'))
-                        <span class="help-block text-danger">
-                            <strong>{{ $errors->first('value') }}</strong>
-                        </span>
-                    @endif
                 @elseif($template === '3')
                     <textarea id="value" name="value" class="form-control" rows="10" >{{ isset($setting->value) ? $setting->value : old('value') }}</textarea>
                 @else
@@ -104,6 +99,41 @@
             @if ($errors->has('value'))
                 <span class="help-block text-danger">
                     <strong>{{ $errors->first('value') }}</strong>
+                </span>
+            @endif
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div class="form-group">
+            <label>@lang('form.setting.value_en')</label> <span class="text-danger">*</span>
+            @if($template)
+                @if($template === '0')
+                    <input type="text" class="form-control" name="value_en" value="{{ isset($setting) ? $setting->value_en : old('value_en') }}" >
+                @elseif($template === '1')
+                    <textarea class="form-control" rows="3" name="value_en" >{{ isset($setting) ? $setting->value_en : old('value_en') }}</textarea>
+                @elseif($template === '2')
+                    @include('admin.components.buttons.image',['src' => isset($setting->value_en) ? $setting->value_en : old('value_en'),'name' => 'value_en'])
+                @elseif($template === '3')
+                    <textarea id="value_en" name="value_en" class="form-control" rows="10" >{{ isset($setting->value_en) ? $setting->value_en : old('value_en') }}</textarea>
+                @else
+                    <input type="text" class="form-control" name="value_en" value="{{ isset($setting) ? $setting->value_en : old('value_en') }}" required>
+                @endif
+            @else
+                @if(isset($setting) && $setting->type == 0)
+                    <input type="text" class="form-control" name="value_en" value="{{ isset($setting) ? $setting->value_en : old('value_en') }}" >
+                @elseif(isset($setting) && $setting->type == 1)
+                    <textarea class="form-control" rows="3" name="value_en" >{{ isset($setting) ? $setting->value_en : old('value_en') }}</textarea>
+                @elseif(isset($setting) && $setting->type == 2)
+                    @include('admin.components.buttons.image',['src' => isset($setting->value) ? $setting->value_en : old('value_en'),'name' => 'value_en'])
+                @elseif(isset($setting) && $setting->type == 3)
+                    <textarea id="value_en" name="value_en" class="form-control" rows="10" >{{ isset($setting->value_en) ? $setting->value_en : old('value_en') }}</textarea>
+                @else
+                    <input type="text" class="form-control" name="value_en" value="{{ isset($setting) ? $setting->value_en : old('value_en') }}" required>
+                @endif
+            @endif
+            @if ($errors->has('value_en'))
+                <span class="help-block text-danger">
+                    <strong>{{ $errors->first('value_en') }}</strong>
                 </span>
             @endif
         </div>

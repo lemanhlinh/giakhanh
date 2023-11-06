@@ -279,4 +279,18 @@ class MediaController extends Controller
             'message' => trans('message.delete_media_video_success')
         ];
     }
+
+    /**
+     * @param $id
+     * @return array
+     */
+    public function changeActive($id)
+    {
+        $media_image = Media::findOrFail($id);
+        $media_image->update(['active' => !$media_image->active]);
+        return [
+            'status' => true,
+            'message' => trans('message.change_active_media_image_success')
+        ];
+    }
 }

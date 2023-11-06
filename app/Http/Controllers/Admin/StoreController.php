@@ -136,4 +136,18 @@ class StoreController extends Controller
             'message' => trans('message.delete_store_success')
         ];
     }
+
+    /**
+     * @param $id
+     * @return array
+     */
+    public function changeActive($id)
+    {
+        $store = Store::findOrFail($id);
+        $store->update(['active' => !$store->active]);
+        return [
+            'status' => true,
+            'message' => trans('message.change_active_store_success')
+        ];
+    }
 }

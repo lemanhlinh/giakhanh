@@ -86,6 +86,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
         Route::get('/edit/{id}', 'SettingController@edit')->name('edit')->middleware('permission:edit_setting');
         Route::post('/update/{id}', 'SettingController@update')->name('update')->middleware('permission:edit_setting');
         Route::post('/destroy/{id}', 'SettingController@destroy')->name('destroy')->middleware('permission:delete_setting');
+        Route::post('/change-active-setting/{id}', 'SettingController@changeActive')->name('changeActive')->middleware('permission:edit_setting');
     });
 
     Route::group(['prefix' => 'menu-category', 'as' => 'menu-category.', 'middleware' => ['permission:view_menu_categories']], function () {
@@ -115,6 +116,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
         Route::get('/edit/{id}', 'PageController@edit')->name('edit')->middleware('permission:edit_page');
         Route::post('/update/{id}', 'PageController@update')->name('update')->middleware('permission:edit_page');
         Route::post('/destroy/{id}', 'PageController@destroy')->name('destroy')->middleware('permission:delete_page');
+        Route::post('/change-active-page/{id}', 'PageController@changeActive')->name('changeActive')->middleware('permission:edit_page');
     });
 
     Route::group(['prefix' => 'contact', 'as' => 'contact.', 'middleware' => ['permission:view_contact']], function () {
@@ -128,6 +130,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
         Route::get('/edit/{id}', 'ArticlesCategoriesController@edit')->name('edit')->middleware('permission:edit_article_categories');
         Route::post('/update/{id}', 'ArticlesCategoriesController@update')->name('update')->middleware('permission:edit_article_categories');
         Route::post('/destroy/{id}', 'ArticlesCategoriesController@destroy')->name('destroy')->middleware('permission:delete_article_categories');
+        Route::post('/change-active-article-cat/{id}', 'ArticlesCategoriesController@changeActive')->name('changeActive')->middleware('permission:edit_article_categories');
     });
 
     Route::group(['prefix' => 'articles', 'as' => 'article.', 'middleware' => ['permission:view_article']], function () {
@@ -137,6 +140,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
         Route::get('/edit/{id}', 'ArticleController@edit')->name('edit')->middleware('permission:edit_article');
         Route::post('/update/{id}', 'ArticleController@update')->name('update')->middleware('permission:edit_article');
         Route::post('/destroy/{id}', 'ArticleController@destroy')->name('destroy')->middleware('permission:delete_article');
+        Route::post('/change-active-article/{id}', 'ArticleController@changeActive')->name('changeActive')->middleware('permission:edit_article');
+        Route::post('/change-home-article/{id}', 'ArticleController@changeHome')->name('changeHome')->middleware('permission:edit_article');
     });
 
     Route::group(['prefix' => 'product-category', 'as' => 'product-category.', 'middleware' => ['permission:view_product_categories']], function () {
@@ -146,6 +151,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
         Route::get('/edit/{id}', 'ProductsCategoriesController@edit')->name('edit')->middleware('permission:edit_product_categories');
         Route::post('/update/{id}', 'ProductsCategoriesController@update')->name('update')->middleware('permission:edit_product_categories');
         Route::post('/destroy/{id}', 'ProductsCategoriesController@destroy')->name('destroy')->middleware('permission:delete_product_categories');
+        Route::post('/change-active-article-cat/{id}', 'ProductsCategoriesController@changeActive')->name('changeActive')->middleware('permission:edit_product_categories');
     });
 
     Route::group(['prefix' => 'product', 'as' => 'product.', 'middleware' => ['permission:view_product']], function () {
@@ -155,6 +161,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
         Route::get('/edit/{id}', 'ProductController@edit')->name('edit')->middleware('permission:edit_product');
         Route::post('/update/{id}', 'ProductController@update')->name('update')->middleware('permission:edit_product');
         Route::post('/destroy/{id}', 'ProductController@destroy')->name('destroy')->middleware('permission:delete_product');
+        Route::post('/change-active-product/{id}', 'ProductController@changeActive')->name('changeActive')->middleware('permission:edit_product');
+        Route::post('/change-home-product/{id}', 'ProductController@changeHome')->name('changeHome')->middleware('permission:edit_product');
     });
 
     Route::group(['prefix' => 'book-table', 'as' => 'book-table.', 'middleware' => ['permission:view_book_table']], function () {
@@ -173,6 +181,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
         Route::get('/edit/{id}', 'MediaController@edit')->name('edit')->middleware('permission:edit_media_image');
         Route::post('/update/{id}', 'MediaController@update')->name('update')->middleware('permission:edit_media_image');
         Route::post('/destroy/{id}', 'MediaController@destroy')->name('destroy')->middleware('permission:delete_media_image');
+        Route::post('/change-active-image/{id}', 'MediaController@changeActive')->name('changeActive')->middleware('permission:edit_media_image');
     });
 
     Route::group(['prefix' => 'media-video', 'as' => 'media-video.', 'middleware' => ['permission:view_media_video']], function () {
@@ -182,6 +191,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
         Route::get('/edit/{id}', 'MediaController@editVideo')->name('edit')->middleware('permission:edit_media_video');
         Route::post('/update/{id}', 'MediaController@updateVideo')->name('update')->middleware('permission:edit_media_video');
         Route::post('/destroy/{id}', 'MediaController@destroyVideo')->name('destroy')->middleware('permission:delete_media_video');
+        Route::post('/change-active-image/{id}', 'MediaController@changeActive')->name('changeActive')->middleware('permission:edit_media_video');
     });
 
 
@@ -201,6 +211,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
         Route::get('/edit/{id}', 'SliderController@edit')->name('edit')->middleware('permission:edit_slider');
         Route::post('/update/{id}', 'SliderController@update')->name('update')->middleware('permission:edit_slider');
         Route::post('/destroy/{id}', 'SliderController@destroy')->name('destroy')->middleware('permission:delete_slider');
+        Route::post('/change-active-slide/{id}', 'SliderController@changeActive')->name('changeActive')->middleware('permission:edit_slider');
     });
 
     Route::group(['prefix' => 'store', 'as' => 'store.', 'middleware' => ['permission:view_store']], function () {
@@ -210,6 +221,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
         Route::get('/edit/{id}', 'StoreController@edit')->name('edit')->middleware('permission:edit_store');
         Route::post('/update/{id}', 'StoreController@update')->name('update')->middleware('permission:edit_store');
         Route::post('/destroy/{id}', 'StoreController@destroy')->name('destroy')->middleware('permission:delete_store');
+        Route::post('/change-active-store/{id}', 'StoreController@changeActive')->name('changeActive')->middleware('permission:edit_store');
     });
 
 });
