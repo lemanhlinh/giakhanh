@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Models\Setting;
+use Artesaos\SEOTools\Facades\SEOMeta;
+use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\Http\Request;
 use App\Models\Contact;
 use App\Http\Requests\Contact\CreateContact;
@@ -18,6 +21,17 @@ class ContactController extends Controller
      */
     public function index()
     {
+        $logo = Setting::where('key', 'logo')->first();
+
+        SEOTools::setTitle('Liên hệ - Lẩu nấm gia khánh');
+        SEOTools::setDescription('Với tiêu chí đó mỗi sản phẩm của Lẩu Nấm Gia Khánh đều được qua sàng lọc, chắt chiu, tinh khiết và quý báu nhất từ thiên nhiên. Nhằm mang đến cho thực khách những món ăn có giá trị về chất lượng và luôn lấy tiêu chí “ sức khỏe con người làm trung […]');
+        SEOMeta::setKeywords('Lẩu nấm gia khánh, lẩu nấm');
+        SEOTools::addImages(asset($logo->value));
+        SEOTools::setCanonical(url()->current());
+        SEOTools::opengraph()->setUrl(url()->current());
+        SEOTools::opengraph()->addProperty('type', 'articles');
+        SEOTools::twitter()->setSite('launamgiakhanh.vn');
+
         return view('web.contact.detail');
     }
 
