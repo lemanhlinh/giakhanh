@@ -90,14 +90,15 @@ interface BaseInterface
      * @param string $nameModule
      * @return mixed
      */
-    public function removeImageResize(string $file, array $resizeImage, int $id, string $nameModule);
+    public function removeImageResize(string $file, array $resizeImage, int $id, string $nameModule,string $local);
 
     /**
      * @param string $file
      * @param array $resizeImage
      * @param int $id
      * @param string $nameModule
+     * @param string $local
      * @return mixed
      */
-    public function saveFileUpload(string $file, array $resizeImage , int $id, string $nameModule);
+    public function saveFileUpload(string $file, array $resizeImage , int $id, string $nameModule, string $local);
 }

@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\Article;
+use App\Models\ArticlesTranslation;
 use Carbon\Carbon;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
@@ -20,6 +21,7 @@ class ArticleDataTable extends DataTable
      */
     public function dataTable($query)
     {
+        $lang = request()->input('local','vi');
         return datatables()
             ->eloquent($query)
             ->editColumn('created_at', function ($q) {
@@ -31,10 +33,10 @@ class ArticleDataTable extends DataTable
             ->editColumn('category_id', function ($q) {
                 return optional($q->category)->title;
             })
-            ->addColumn('action', function ($q) {
-                $urlEdit = route('admin.article.edit', $q->id);
-                $urlDelete = route('admin.article.destroy', $q->id);
-                $lowerModelName = strtolower(class_basename(new Article()));
+            ->addColumn('action', function ($q) use ($lang){
+                $urlEdit = route('admin.article.edit', $q->article_id).'?local='.$lang;
+                $urlDelete = route('admin.article.destroy', $q->article_id).'?local='.$lang;
+                $lowerModelName = strtolower(class_basename(new ArticlesTranslation()));
                 return view('admin.components.buttons.edit', compact('urlEdit'))->render() . view('admin.components.buttons.delete', compact('urlDelete', 'lowerModelName'))->render();
              });
     }
@@ -45,9 +47,10 @@ class ArticleDataTable extends DataTable
      * @param \App\Models\Article $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Article $model)
+    public function query(ArticlesTranslation $model)
     {
-        return $model->newQuery()->with('category');
+        $lang = request()->input('local','vi');
+        return $model->newQuery()->with('category')->where(['lang'=>$lang]);
     }
 
     /**

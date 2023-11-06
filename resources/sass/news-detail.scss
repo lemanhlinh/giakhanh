@@ -505,6 +505,9 @@
                     background: #FBF1D9;
                     backdrop-filter: blur(4px);
                     overflow: hidden;
+                    img{
+                        transition: transform 0.3s ease-in-out;
+                    }
                     .box-content-article{
                         color: #000;
                         padding: 24px;
@@ -531,6 +534,25 @@
                         }
                     }
                 }
+                &:hover{
+
+                    .article-item-content{
+                        background: var(--surface-white, #FFF);
+                        box-shadow: 8px 8px 48px 0px rgba(0, 0, 0, 0.12);
+                        img{
+                            transform: scale(1.2);
+                        }
+                        .box-content-article{
+                            .calendar-new{
+                                .btn-detail-article{
+                                }
+                            }
+                            .title-article{
+                                color: #E91A22;
+                            }
+                        }
+                    }
+                }
             }
         }
         .article-list-other{
@@ -540,9 +562,12 @@
                     .image-other-article{
                         display: block;
                         margin-bottom: 16px;
+                        border-radius: 8px;
+                        overflow: hidden;
                         img{
                             border-radius: 8px;
                             overflow: hidden;
+                            transition: transform 0.3s ease-in-out;
                         }
                     }
                     .box-content-article{
@@ -570,6 +595,26 @@
                             font-size: 14px;
                             line-height: 148%;
                             height: 62px;
+                        }
+                    }
+                }
+                &:hover{
+                    .article-item-content{
+                        .image-other-article{
+                            img{
+                                transform: scale(1.2);
+                            }
+                        }
+                        .box-content-article{
+                            .title-article{
+                                color: #E91A22;
+                            }
+                            .calendar-new{
+
+                            }
+                            .des-article-related{
+
+                            }
                         }
                     }
                 }

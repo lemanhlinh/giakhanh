@@ -3,6 +3,9 @@
 @section('title_file', trans('form.article.'))
 
 @section('content')
+    <div class="col-md-3">
+        @include('admin.components.buttons.change_lang',['url'=> route('admin.article.index')])
+    </div>
     <div class="row mb-3">
         <div class="col-sm-9">
             <form action="{{ route('admin.article.index') }}" method="GET" class="form-inline">

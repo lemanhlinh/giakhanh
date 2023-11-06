@@ -18,4 +18,9 @@ class ArticlesCategories extends Model
     {
         return $this->belongsTo(Article::class, 'id', 'category_id');
     }
+
+    public function translations()
+    {
+        return $this->hasOne(ArticlesCategoriesTranslation::class, 'article_category_id','id');
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Page;
+use App\Models\PagesTranslation;
 use Illuminate\Http\Request;
 use App\DataTables\PageDataTable;
 use Illuminate\Support\Facades\DB;
@@ -32,7 +33,8 @@ class PageController extends Controller
      */
     public function index(PageDataTable $dataTable)
     {
-        return $dataTable->render('admin.page.index');
+        $local = request()->query('local','vi');
+        return $dataTable->render('admin.page.index',compact('local'));
     }
 
     /**
@@ -42,7 +44,8 @@ class PageController extends Controller
      */
     public function create()
     {
-        return view('admin.page.create');
+        $local = request()->query('local','vi');
+        return view('admin.page.create', compact('local'));
     }
 
     /**
@@ -67,8 +70,27 @@ class PageController extends Controller
                 $data['image_title'] = urldecode($image_title);
             }
             $model = $this->pageRepository->create($data);
+            $local = request()->input('locale','vi');
             if (!empty($data['image'])){
-                $this->pageRepository->saveFileUpload($image_root,$this->resizeImage,$model->id,'page');
+                $this->pageRepository->saveFileUpload($image_root,$this->resizeImage,$model->id,'page',$local);
+            }
+
+            foreach(\LaravelLocalization::getSupportedLocales() as $localeCode => $properties){
+                $langTranslation = new PagesTranslation([
+                    'lang' => $localeCode,
+                    'title' => $localeCode == $local ? $data['title']:'',
+                    'image' => $localeCode == $local ? $data['image']:'',
+                    'image_title' => $localeCode == $local ? $data['image_title']:'',
+                    'slug' => $localeCode == $local ? $data['slug']:'',
+                    'content' => $localeCode == $local ? $data['content']:'',
+                    'description' => $localeCode == $local ? $data['description']:'',
+                    'active' => $localeCode == $local ? $data['active']:0,
+                    'is_home' => $localeCode == $local ? $data['is_home']:0,
+                    'seo_title' => $localeCode == $local ? $data['seo_title']:'',
+                    'seo_keyword' => $localeCode == $local ? $data['seo_keyword']:'',
+                    'seo_description' => $localeCode == $local ? $data['seo_description']:''
+                ]);
+                $model->translations()->save($langTranslation);
             }
             DB::commit();
             Session::flash('success', trans('message.create_page_success'));
@@ -104,8 +126,11 @@ class PageController extends Controller
      */
     public function edit($id)
     {
-        $page = $this->pageRepository->getOneById($id);
-        return view('admin.page.update', compact('page'));
+        $local = request()->query('local','vi');
+        $page = $this->pageRepository->getOneById($id,['translations' => function($query) use ($local){
+            $query->where(['lang'=> $local ]);
+        }]);
+        return view('admin.page.update', compact('page','local'));
     }
 
     /**
@@ -121,10 +146,11 @@ class PageController extends Controller
         DB::beginTransaction();
         try {
             $data = $req->validated();
+            $local = request()->input('locale','vi');
             $page = $this->pageRepository->getOneById($id);
             if (!empty($data['image']) && $data_root->image != $data['image']){
-                $this->pageRepository->removeImageResize($data_root->image,$this->resizeImage, $id,'page');
-                $data['image'] = $this->pageRepository->saveFileUpload($data['image'],$this->resizeImage, $id,'page');
+                $this->pageRepository->removeImageResize($data_root->image,$this->resizeImage, $id,'page',$local);
+                $data['image'] = $this->pageRepository->saveFileUpload($data['image'],$this->resizeImage, $id,'page',$local);
             }
             if (!empty($data['image_title']) && $data_root->image_title != $data['image_title']){
                 $data['image_title'] = rawurldecode($data['image_title']);
@@ -133,9 +159,11 @@ class PageController extends Controller
                 $data['slug'] = $req->input('slug')?\Str::slug($req->input('slug'), '-'):\Str::slug($data['title'], '-');
             }
             $page->update($data);
+            $local = request()->input('locale','vi');
+            $page->translations->where(['page_id'=> $id,'lang' => $local])->update($data);
             DB::commit();
             Session::flash('success', trans('message.update_page_success'));
-            return redirect()->route('admin.page.edit', $id);
+            return redirect()->back();
         } catch (\Exception $exception) {
             \Log::info([
                 'message' => $exception->getMessage(),
@@ -156,12 +184,12 @@ class PageController extends Controller
     public function destroy($id)
     {
         $data = $this->pageRepository->getOneById($id);
-
+        $local = request()->input('locale','vi');
         // Đường dẫn tới tệp tin
         $resize = $this->resizeImage;
         $img_path = pathinfo($data->image, PATHINFO_DIRNAME);
         foreach ($resize as $item){
-            $array_resize_ = str_replace($img_path.'/','/public/page/'.$item[0].'x'.$item[1].'/'.$data->id.'-',$data->image);
+            $array_resize_ = str_replace($img_path.'/','/public/page/'.$local.'/'.$item[0].'x'.$item[1].'/'.$data->id.'-',$data->image);
             $array_resize_ = str_replace(['.jpg', '.png','.bmp','.gif','.jpeg'],'.webp',$array_resize_);
             Storage::delete($array_resize_);
         }

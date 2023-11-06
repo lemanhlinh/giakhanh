@@ -16,4 +16,9 @@ class ProductsCategories extends Model
     {
         return $this->hasMany(Product::class, 'category_id', 'id');
     }
+
+    public function translations()
+    {
+        return $this->hasOne(ProductsCategoriesTranslation::class, 'product_category_id','id');
+    }
 }

@@ -106,9 +106,9 @@
                 var latLon = new Microsoft.Maps.Location(locations[i][1], locations[i][2]);
                 var customIcon = new Microsoft.Maps.Pushpin(latLon, {
                     icon: '{{ asset('images/point_map.svg') }}', // Đường dẫn tới hình ảnh biểu tượng
-                    anchor: new Microsoft.Maps.Point(0, 0), // Điểm neo của biểu tượng (thường là giữa dưới)
-                    width: 20, // Chiều rộng của biểu tượng
-                    height: 30, // Chiều cao của biểu tượng
+                    anchor: new Microsoft.Maps.Point(39, 56), // Điểm neo của biểu tượng (thường là giữa dưới)
+                    width: 39, // Chiều rộng của biểu tượng
+                    height: 56, // Chiều cao của biểu tượng
                 });
 
                 customIcon.Title = locations[i][0]; //usually title of the infobox

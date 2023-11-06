@@ -33,11 +33,11 @@ class ContactController extends Controller
             $data = $req->validated();
             Contact::create(
                 [
-                    'name' => $data['name'],
+                    'full_name' => $data['full_name'],
                     'content' => $data['content'],
                     'phone' => $data['phone'],
                     'email' => $data['email'],
-                    'address' =>  $data['address'],
+                    'title' =>  $data['title'],
                 ]
             );
             DB::commit();

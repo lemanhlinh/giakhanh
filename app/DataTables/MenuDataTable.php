@@ -32,7 +32,9 @@ class MenuDataTable extends DataTable
      */
     public function query(Menu $model)
     {
-        return $model->newQuery();
+        return $model->newQuery()->with(['translations' => function($query){
+            $query->where(['lang'=>'vi'])->select('*');
+        }]);
     }
 
     /**

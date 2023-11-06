@@ -37,7 +37,7 @@
                     <div class="col-md-10">
                         <div class="img-about">
                             @if($page)
-                                @include('web.components.image', ['src' => $page->image_resize['lager'], 'title' => $page->title])
+                                @include('web.components.image', ['src' => $page->image, 'title' => $page->title])
                             @endif
                         </div>
                     </div>
@@ -77,22 +77,22 @@
                             @if(!empty($categories_product))
                                 @forelse($categories_product as $k => $category)
                                     <div class="tab-pane fade {{ $k === 0 ? 'show active' : '' }}" id="{{ $category->slug }}" role="tabpanel" aria-labelledby="{{ $category->slug }}-tab">
-                                        @if(!empty($category->products))
-                                            @forelse($category->products as $item)
+                                        @if(!empty($products[$category->id]))
+                                            @forelse($products[$category->id] as $item)
                                                 <div class="d-flex align-items-center justify-content-between item-product">
-                                                    <a href="{{ route('productDetail',['slugCat'=>$item->category->slug,'slug'=>$item->slug]) }}" title="{{ $item->title }}">
-                                                        @include('web.components.image', ['src' => $item->image_resize['small'], 'title' => $item->title])
+                                                    <a href="{{ route('productDetail',['slugCat'=>$category->slug,'slug'=>$item->slug]) }}" title="{{ $item->title }}">
+                                                        @include('web.components.image', ['src' => $item->image, 'title' => $item->title])
                                                     </a>
                                                     <div class="info-title-product">
                                                         <div class="left-hover-product align-items-center justify-content-between">
-                                                            <a href="{{ route('productDetail',['slugCat'=>$item->category->slug,'slug'=>$item->slug]) }}" title="{{ $item->title }}">
+                                                            <a href="{{ route('productDetail',['slugCat'=>$category->slug,'slug'=>$item->slug]) }}" title="{{ $item->title }}">
                                                                 <p class="title-product-box">{{ $item->title }}</p>
                                                             </a>
                                                             <p class="price-product-box">{{ number_format($item->price, 0, ',', '.') }}đ</p>
                                                         </div>
                                                         <div class="right-hover-product">
-                                                            <a href="{{ route('productDetail',['slugCat'=>$item->category->slug,'slug'=>$item->slug]) }}" class="btn btn-danger">Xem chi tiết</a>
-                                                            <a href="" class="btn btn-warning">Thêm giỏ hàng</a>
+                                                            <a href="{{ route('productDetail',['slugCat'=>$category->slug,'slug'=>$item->slug]) }}" class="btn btn-danger">Xem chi tiết</a>
+                                                            <button type="button" onclick="order({{ $item->id }})" class="btn btn-warning cartToastBtn">Thêm giỏ hàng</button>
                                                         </div>
 
                                                     </div>
@@ -112,7 +112,8 @@
                 <div class="col-md-6 ps-5">
                     <p class="title-order">Đặt bàn trước</p>
                     <p class="des-order">Quý khách vui lòng đặt bàn trước 1 giờ để được phục vụ tốt nhất, mọi chi tiết liên hệ: <b>1900 0056 – 0909 911 112</b></p>
-                    <form action="{{ route('order') }}" method="post">
+                    <form action="{{ route('bookTable') }}" method="post">
+                        @csrf
                         <input type="text" class="form-control" placeholder="Họ và tên" name="full_name">
                         <div class="row">
                             <div class="col-md-6">
@@ -122,17 +123,23 @@
                                 <input type="text" class="form-control" placeholder="Địa chỉ Email" name="email">
                             </div>
                         </div>
-                        <select name="" id="" class="form-control">
+                        <select name="store_id" class="form-control">
                             <option value="" selected disabled>Vui lòng chọn cơ sở</option>
+                            @if($stores)
+                                @forelse($stores as $store)
+                                    <option value="{{ $store->id }}">{{ $store->title }}</option>
+                                @empty
+                                @endforelse
+                            @endif
                         </select>
                         <div class="row">
                             <div class="col-md-6">
-                                <input type="date" class="form-control" name="date">
+                                <input type="date" class="form-control" name="book_time">
                             </div>
                             <div class="col-md-6">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <select name="" id="" class="form-control" required>
+                                        <select name="book_hour" id="" class="form-control" required>
                                             <option value="Giờ đặt(*):">Giờ đặt(*):</option>
                                             <option value="9h">9h</option>
                                             <option value="9h30">9h30</option>
@@ -158,13 +165,13 @@
 
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="number" class="form-control" min="1" placeholder="Số khách" name="number_customer">
+                                        <input type="number" class="form-control" min="1" placeholder="Số khách" name="number_customers">
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <textarea name="" id="" cols="30" rows="4" class="form-control" placeholder="Ghi chú khi đặt bàn"></textarea>
-                        <button class="btn btn-order-now" type="button" >Đặt bàn ngay <i class="fas fa-chevron-right"></i></button>
+                        <textarea name="note" id="" cols="30" rows="4" class="form-control" placeholder="Ghi chú khi đặt bàn"></textarea>
+                        <button class="btn btn-order-now" type="submit" >Đặt bàn ngay <i class="fas fa-chevron-right"></i></button>
                     </form>
                 </div>
             </div>
@@ -229,7 +236,7 @@
                     <div class="article-item">
                         <div class="article-item-content">
                             <a href="{{ route('detailArticle',['slug' => $item->slug,'id' => $item->id]) }}">
-                                @include('web.components.image', ['src' => $item->image_resize['resize'], 'title' => $item->title])
+                                @include('web.components.image', ['src' => $item->image, 'title' => $item->title])
                             </a>
                             <div class="box-content-article">
                                 <p class="calendar-new"><i class="fas fa-calendar-alt"></i> {{ $item->created_at }}</p>

@@ -115,7 +115,7 @@ abstract class BaseRepository implements BaseInterface
      * @param int $limit
      * @return mixed
      */
-    public function getList(array $where, array $columns = ['*'], int $limit, array $relationships = [])
+    public function getList(array $where = null, array $columns = ['*'], int $limit = null, array $relationships = [])
     {
         $query = $this->model->select($columns);
 
@@ -155,12 +155,15 @@ abstract class BaseRepository implements BaseInterface
      * @param string $nameModule
      * @return string
      */
-    public function removeImageResize(string $file,array $resizeImage = null,int $id = null, string $nameModule)
+    public function removeImageResize(string $file,array $resizeImage = null,int $id = null, string $nameModule, string $local)
     {
+        if (empty($local)){
+            $local = 'vi';
+        }
         $img_path = pathinfo($file, PATHINFO_DIRNAME);
         if (!empty($resizeImage) && !empty($id)){
             foreach ($resizeImage as $item){
-                $array_resize_ = str_replace($img_path.'/','/public/'.$nameModule.'/'.$item[0].'x'.$item[1].'/'.$id.'-',$file);
+                $array_resize_ = str_replace($img_path.'/','/public/'.$nameModule.'/'.$local.'/'.$item[0].'x'.$item[1].'/'.$id.'-',$file);
                 $array_resize_ = str_replace(['.jpg', '.png','.bmp','.gif','.jpeg'],'.webp',$array_resize_);
                 Storage::delete($array_resize_);
             }
@@ -173,18 +176,21 @@ abstract class BaseRepository implements BaseInterface
      * @param array $resizeImage
      * @param int $id
      * @param string $nameModule
+     * @param string $local
      * @return string
      */
-    public function saveFileUpload(string $file,array $resizeImage = null,int $id = null, string $nameModule)
+    public function saveFileUpload(string $file,array $resizeImage,int $id, string $nameModule, string $local)
     {
+        if (empty($local)){
+            $local = 'vi';
+        }
         $fileNameWithoutExtension = urldecode(pathinfo($file, PATHINFO_FILENAME));
         $fileName = $fileNameWithoutExtension. '.webp';
-
         if (!empty($resizeImage) && !empty($id)){
             foreach ($resizeImage as $item){
                 $thumbnail = Image::make(asset($file))->fit($item[0], $item[1])->encode('webp', 75);
-                $thumbnailPath = 'storage/'.$nameModule.'/'.$item[0].'x'.$item[1].'/' .$id.'-'. $fileName;
-                Storage::makeDirectory('public/'.$nameModule.'/'.$item[0].'x'.$item[1].'/');
+                $thumbnailPath = 'storage/'.$nameModule.'/'.$local.'/'.$item[0].'x'.$item[1].'/' .$id.'-'. $fileName;
+                Storage::makeDirectory('public/'.$nameModule.'/'.$local.'/'.$item[0].'x'.$item[1].'/');
                 $thumbnail->save($thumbnailPath);
             }
         }

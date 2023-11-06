@@ -194,6 +194,9 @@ a{
         width: 100%;
         background: #fff;
     }
+    .content{
+        background: #f5f5f5;
+    }
     .main-footer{
         background: linear-gradient(180deg, #800E13 0%, #620B0E 100%);
         .top-footer{
@@ -272,6 +275,58 @@ a{
                     }
                 }
             }
+        }
+    }
+    .cart-all-page{
+        right: 20px;
+        .number-added-cart{
+            background: #E4A812;
+            font-family: GoogleSans-Bold;
+            font-size: 14px;
+            padding: 2px 8px;
+            right: -12px;
+            top: -6px;
+            border-radius: 50%;
+            text-align: center;
+        }
+    }
+    .scroll-top{
+        z-index: 5;
+        bottom: 30px;
+        right: 20px;
+        @media (max-width: 768px) {
+            display: none;
+        }
+        a{
+            width: 48px;
+            border-radius: 100%;
+            height: 48px;
+            background: #A51218;
+            display: block;
+            text-align: center;
+            line-height: 48px;
+            font-size: 20px;
+            color: #fff;
+        }
+    }
+    .cartToast{
+        border-radius: 16px;
+        background: var(--surface-white-active, #FBF1D9);
+        padding: 8px 16px;
+        width: 310px;
+        .toast-body{
+            color: var(--neutral-neutral-13, #0E0202);
+            font-size: 14px;
+            font-weight: 500;
+            line-height: normal;
+        }
+    }
+    .social-chat-online{
+        z-index: 5;
+        bottom: 80px;
+        right: 20px;
+        @media (max-width: 768px) {
+            display: none;
         }
     }
 }

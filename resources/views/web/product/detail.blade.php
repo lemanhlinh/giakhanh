@@ -12,9 +12,13 @@
                     <p class="price-product">{{ number_format($product->price, 0, ',', '.') }}đ</p>
                     <hr class="my-3">
                     <div class="content-product">{!! $product->content_include !!}</div>
-                    <div class="d-flex">
-                        <input type="number" value="1" placeholder="Số lượng" class="me-3" min="1">
-                        <button type="button" class="btn btn-danger">Thêm vào giỏ hàng <i class="fas fa-angle-right"></i></button>
+                    <div class="d-flex number-add-to-cart">
+                        <div class="number-input me-3">
+                            <button onclick="this.parentNode.querySelector('input.quantity').stepDown()"></button>
+                            <input type="number" min="1" name="quantity" id="quantity" class="quantity" value="1">
+                            <button onclick="this.parentNode.querySelector('input.quantity').stepUp()" class="plus"></button>
+                        </div>
+                        <button type="button" class="w-100 btn btn-danger btn-add-to-cart cartToastBtn" id="cartToastBtn" onclick="order({{ $product->id }})">Thêm vào giỏ hàng <i class="fas fa-angle-right"></i></button>
                     </div>
                 </div>
             </div>

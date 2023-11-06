@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\ArticlesCategories;
+use App\Models\ArticlesTranslation;
 use Illuminate\Http\Request;
 use App\DataTables\ArticleDataTable;
 use App\DataTables\Scopes\ArticleDataTableScope;
@@ -37,12 +39,13 @@ class ArticleController extends Controller
     public function index(ArticleDataTable $dataTable)
     {
         $data = request()->all();
+        $local = request()->query('local','vi');
         $categories = $this->articleCategoryRepository->getAll();
         if ($categories->count() === 0){
             Session::flash('danger', 'Chưa có danh mục nào');
             return redirect()->route('admin.article-category.index');
         }
-        return $dataTable->addScope(new ArticleDataTableScope())->render('admin.article.index', compact('data','categories'));
+        return $dataTable->addScope(new ArticleDataTableScope())->render('admin.article.index', compact('data','categories','local'));
     }
 
     /**
@@ -52,8 +55,9 @@ class ArticleController extends Controller
      */
     public function create()
     {
+        $local = request()->query('local','vi');
         $categories = $this->articleCategoryRepository->getAll();
-        return view('admin.article.create',compact('categories'));
+        return view('admin.article.create',compact('categories','local'));
     }
 
     /**
@@ -76,8 +80,28 @@ class ArticleController extends Controller
             $category = $this->articleCategoryRepository->getOneById($data['category_id']);
             $data['type'] = $category->type;
             $model = $this->articleRepository->create($data);
+            $local = request()->input('locale','vi');
             if (!empty($data['image'])){
-                $this->articleRepository->saveFileUpload($image_root,$this->resizeImage,$model->id,'article');
+                $this->articleRepository->saveFileUpload($image_root,$this->resizeImage,$model->id,'article',$local);
+            }
+            foreach(\LaravelLocalization::getSupportedLocales() as $localeCode => $properties){
+                $langTranslation = new ArticlesTranslation([
+                    'lang' => $localeCode,
+                    'title' => $localeCode == $local ? $data['title']:'',
+                    'image' => $localeCode == $local ? $data['image']:'',
+                    'slug' => $localeCode == $local ? $data['slug']:'',
+                    'category_id' => $data['category_id'],
+                    'content' => $localeCode == $local ? $data['content']:'',
+                    'description' => $localeCode == $local ? $data['description']:'',
+                    'type' => $data['type'],
+                    'active' => $localeCode == $local ? $data['active']:0,
+                    'is_home' => $localeCode == $local ? $data['is_home']:0,
+                    'ordering' => $localeCode == $local ? $data['ordering']:0,
+                    'seo_title' => $localeCode == $local ? $data['seo_title']:'',
+                    'seo_keyword' => $localeCode == $local ? $data['seo_keyword']:'',
+                    'seo_description' => $localeCode == $local ? $data['seo_description']:''
+                ]);
+                $model->translations()->save($langTranslation);
             }
             DB::commit();
             Session::flash('success', trans('message.create_article_success'));
@@ -113,9 +137,14 @@ class ArticleController extends Controller
      */
     public function edit($id)
     {
-        $article = $this->articleRepository->getOneById($id);
-        $categories = $this->articleCategoryRepository->getAll();
-        return view('admin.article.update', compact('article','categories'));
+        $local = request()->query('local','vi');
+        $article = $this->articleRepository->getOneById($id,['translations' => function($query) use ($local){
+            $query->where(['lang'=> $local ]);
+        }]);
+        $categories = ArticlesCategories::with(['translations' => function($query) use ($local){
+            $query->where(['lang'=> $local ]);
+        }])->get();
+        return view('admin.article.update', compact('article','categories','local'));
     }
 
     /**
@@ -132,9 +161,10 @@ class ArticleController extends Controller
         try {
             $data = $req->validated();
             $article = $this->articleRepository->getOneById($id);
+            $local = request()->input('locale','vi');
             if (!empty($data['image']) && $data_root->image != $data['image']){
-                $this->articleRepository->removeImageResize($data_root->image,$this->resizeImage, $id,'article');
-                $data['image'] = $this->articleRepository->saveFileUpload($data['image'],$this->resizeImage, $id,'article');
+                $this->articleRepository->removeImageResize($data_root->image,$this->resizeImage, $id,'article',$local);
+                $data['image'] = $this->articleRepository->saveFileUpload($data['image'],$this->resizeImage, $id,'article',$local);
             }
             if (empty($data['slug'])){
                 $data['slug'] = $req->input('slug')?\Str::slug($req->input('slug'), '-'):\Str::slug($data['title'], '-');
@@ -142,9 +172,10 @@ class ArticleController extends Controller
             $category = $this->articleCategoryRepository->getOneById($data['category_id']);
             $data['type'] = $category->type;
             $article->update($data);
+            $article->translations->where(['article_id'=> $id,'lang' => $local])->update($data);
             DB::commit();
             Session::flash('success', trans('message.update_article_success'));
-            return redirect()->route('admin.article.edit', $id);
+            return redirect()->back();
         } catch (\Exception $exception) {
             \Log::info([
                 'message' => $exception->getMessage(),
@@ -165,12 +196,12 @@ class ArticleController extends Controller
     public function destroy($id)
     {
         $data = $this->articleRepository->getOneById($id);
-
+        $local = request()->input('locale','vi');
         // Đường dẫn tới tệp tin
         $resize = $this->resizeImage;
         $img_path = pathinfo($data->image, PATHINFO_DIRNAME);
         foreach ($resize as $item){
-            $array_resize_ = str_replace($img_path.'/','/public/article/'.$item[0].'x'.$item[1].'/'.$data->id.'-',$data->image);
+            $array_resize_ = str_replace($img_path.'/','/public/article/'.$local.'/'.$item[0].'x'.$item[1].'/'.$data->id.'-',$data->image);
             $array_resize_ = str_replace(['.jpg', '.png','.bmp','.gif','.jpeg'],'.webp',$array_resize_);
             Storage::delete($array_resize_);
         }

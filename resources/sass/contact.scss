@@ -17,13 +17,14 @@
             margin-bottom: 20px;
             i{
                 border-radius: 8px;
-                background: #FEFBF3;
+                background: #f9df9b;
                 color: #A2770D;
                 width: 80px;
                 height: 80px;
                 line-height: 80px;
                 text-align: center;
                 font-size: 32px;
+                border-radius: 50%;
             }
         }
         .title-item-contact{
@@ -40,7 +41,7 @@
 .content-detail-bottom{
     form{
         input,textarea{
-            background: none;
+            background: #fff;
         }
         .btn-contact{
             border-radius: 8px;
@@ -54,5 +55,5 @@
             }
         }
     }
-    margin-bottom: 80px;
+    padding-bottom: 80px;
 }

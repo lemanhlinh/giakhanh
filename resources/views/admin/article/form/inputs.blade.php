@@ -3,11 +3,18 @@
     <input type="hidden" value="0" name="type" id="type">
     <div class="col-sm-7">
         <div class="row">
+            <div class="col-md-12">
+                @if(isset($article))
+                    @include('admin.components.buttons.change_lang',['url'=> route('admin.article.edit',['id'=>$article->id])])
+                @else
+                    @include('admin.components.buttons.change_lang',['url'=> route('admin.article.create')])
+                @endif
+            </div>
             <div class="col-sm-6">
                 <!-- text input -->
                 <div class="form-group">
                     <label>@lang('form.article.title')</label> <span class="text-danger">*</span>
-                    <input type="text" class="form-control" name="title" value="{{ isset($article) ? $article->title : old('title') }}" required>
+                    <input type="text" class="form-control" name="title" value="{{ isset($article) ? $article->translations->title : old('title') }}" required>
                     @if ($errors->has('title'))
                         <span class="help-block text-danger">
                     <strong>{{ $errors->first('title') }}</strong>
@@ -19,7 +26,7 @@
                 <!-- text input -->
                 <div class="form-group">
                     <label>@lang('form.article.slug')</label> <span class="text-danger">(@lang('form.auto_slug'))</span>
-                    <input type="text" class="form-control" name="slug" value="{{ isset($article) ? $article->slug : old('slug') }}">
+                    <input type="text" class="form-control" name="slug" value="{{ isset($article) ? $article->translations->slug : old('slug') }}">
                     @if ($errors->has('slug'))
                         <span class="help-block text-danger">
                     <strong>{{ $errors->first('slug') }}</strong>
@@ -33,11 +40,11 @@
                     <label>@lang('form.article.active')</label> <span class="text-danger">*</span>
                     <div class="form-group">
                         <div class="icheck-success d-inline">
-                            <input class="" type="radio" id="statusRadio1" name="active" value="{{ \App\Models\Article::STATUS_ACTIVE }}" {{ (isset($article->active) && $article->active == \App\Models\Article::STATUS_ACTIVE) ? 'checked' : (old('active') && (old('active') == \App\Models\Article::STATUS_ACTIVE)) ? 'checked' : '' }}  required>
+                            <input class="" type="radio" id="statusRadio1" name="active" value="{{ \App\Models\Article::STATUS_ACTIVE }}" {{ (isset($article->translations->active) && $article->translations->active == \App\Models\Article::STATUS_ACTIVE) ? 'checked' : (old('active') && (old('active') == \App\Models\Article::STATUS_ACTIVE)) ? 'checked' : '' }}  required>
                             <label for="statusRadio1" class="custom-control-label">@lang('form.status.active')&nbsp;&nbsp;&nbsp;&nbsp;</label>
                         </div>
                         <div class="icheck-danger d-inline">
-                            <input class="" type="radio" id="statusRadio2" name="active" value="{{ \App\Models\Article::STATUS_INACTIVE }}" {{ (isset($article) && $article->active == \App\Models\Article::STATUS_INACTIVE) ? 'checked' : (old('active') && (old('active') == \App\Models\Article::STATUS_INACTIVE)) ? 'checked' : '' }}  required>
+                            <input class="" type="radio" id="statusRadio2" name="active" value="{{ \App\Models\Article::STATUS_INACTIVE }}" {{ (isset($article) && $article->translations->active == \App\Models\Article::STATUS_INACTIVE) ? 'checked' : (old('active') && (old('active') == \App\Models\Article::STATUS_INACTIVE)) ? 'checked' : '' }}  required>
                             <label for="statusRadio2" class="custom-control-label">@lang('form.status.inactive')</label>
                         </div>
                     </div>
@@ -54,7 +61,7 @@
                     <label>@lang('form.article.is_home')</label> <span class="text-danger">*</span>
                     <div class="form-group">
                         <div class="icheck-success d-inline">
-                            <input class="" type="radio" id="homeRadio1" name="is_home" value="{{ \App\Models\Article::IS_HOME }}" {{ (isset($article->is_home) && $article->is_home == \App\Models\Article::IS_HOME) ? 'checked' : (old('is_home') && (old('is_home') == \App\Models\Article::IS_HOME)) ? 'checked' : '' }}  required>
+                            <input class="" type="radio" id="homeRadio1" name="is_home" value="{{ \App\Models\Article::IS_HOME }}" {{ (isset($article->translations->is_home) && $article->translations->is_home == \App\Models\Article::IS_HOME) ? 'checked' : (old('is_home') && (old('is_home') == \App\Models\Article::IS_HOME)) ? 'checked' : '' }}  required>
                             <label for="homeRadio1" class="custom-control-label">@lang('form.status.is_home')&nbsp;&nbsp;&nbsp;&nbsp;</label>
                         </div>
                         <div class="icheck-danger d-inline">
@@ -76,7 +83,7 @@
                     <label>@lang('form.article.category')</label> <span class="text-danger">*</span>
                     <select name="category_id" id="category_id" class="form-control" required>
                         @forelse($categories as $key => $category)
-                            <option value="{{ $category['id'] }}" {{ isset($article->category_id) && $article->category_id == $category['id'] ? 'selected' : old('category_id') == $category['id'] ? 'selected' : '' }}>{{ $category['title'] }}</option>
+                            <option value="{{ $category->id }}" {{ isset($article->translations->category_id) && $article->translations->category_id == $category->id ? 'selected' : old('category_id') == $category->id ? 'selected' : '' }}>{{ $category->translations->title }}</option>
                         @empty
                         @endforelse
                     </select>
@@ -86,7 +93,7 @@
                 <div class="form-group">
                     <label>@lang('form.article.image')</label> <span class="text-danger">*</span>
                     <div class="input-group">
-                        @include('admin.components.buttons.image',['src' => isset($article->image) ? $article->image : old('image'),'name' => 'image'])
+                        @include('admin.components.buttons.image',['src' => isset($article->translations->image) ? $article->translations->image : old('image'),'name' => 'image'])
                         @if ($errors->has('image'))
                             <span class="help-block text-danger">
                                 <strong>{{ $errors->first('image') }}</strong>
@@ -99,7 +106,7 @@
                 <!-- text input -->
                 <div class="form-group">
                     <label>@lang('form.article.ordering')</label>
-                    <input type="text" class="form-control" name="ordering" value="{{ isset($article) ? $article->ordering : old('ordering') }}" >
+                    <input type="text" class="form-control" name="ordering" value="{{ isset($article) ? $article->translations->ordering : old('ordering') }}" >
                     @if ($errors->has('ordering'))
                         <span class="help-block text-danger">
                     <strong>{{ $errors->first('ordering') }}</strong>
@@ -110,7 +117,7 @@
             <div class="col-sm-12">
                 <div class="form-group">
                     <label>@lang('form.description')</label> <span class="text-danger">*</span>
-                    <textarea class="form-control" rows="3" name="description" required >{{ isset($article) ? $article->description : old('description') }}</textarea>
+                    <textarea class="form-control" rows="3" name="description" required >{{ isset($article) ? $article->translations->description : old('description') }}</textarea>
                     @if ($errors->has('description'))
                         <span class="help-block text-danger">
                             <strong>{{ $errors->first('description') }}</strong>
@@ -121,7 +128,7 @@
             <div class="col-sm-12">
                 <div class="form-group">
                     <label>@lang('form.content')</label> <span class="text-danger">*</span>
-                    <textarea id="content" name="content" class="form-control" rows="10" >{{ isset($article->content) ? $article->content : old('content') }}</textarea>
+                    <textarea id="content" name="content" class="form-control" rows="10" >{{ isset($article->translations->content) ? $article->translations->content : old('content') }}</textarea>
                     @if ($errors->has('content'))
                         <span class="help-block text-danger">
                     <strong>{{ $errors->first('content') }}</strong>
@@ -140,7 +147,7 @@
             <div class="card-body p-3">
                 <div class="form-group">
                     <label>@lang('form.seo_title')</label>
-                    <input type="text" class="form-control" name="seo_title" value="{{ isset($article) ? $article->seo_title : old('seo_title') }}" >
+                    <input type="text" class="form-control" name="seo_title" value="{{ isset($article) ? $article->translations->seo_title : old('seo_title') }}" >
                     @if ($errors->has('seo_title'))
                         <span class="help-block text-danger">
                             <strong>{{ $errors->first('seo_title') }}</strong>
@@ -149,7 +156,7 @@
                 </div>
                 <div class="form-group">
                     <label>@lang('form.seo_keyword')</label>
-                    <input type="text" class="form-control" name="seo_keyword" value="{{ isset($article) ? $article->seo_keyword : old('seo_keyword') }}" >
+                    <input type="text" class="form-control" name="seo_keyword" value="{{ isset($article) ? $article->translations->seo_keyword : old('seo_keyword') }}" >
                     @if ($errors->has('seo_keyword'))
                         <span class="help-block text-danger">
                             <strong>{{ $errors->first('seo_keyword') }}</strong>
@@ -158,7 +165,7 @@
                 </div>
                 <div class="form-group">
                     <label>@lang('form.seo_description')</label>
-                    <textarea class="form-control" rows="3" name="seo_description" >{{ isset($article) ? $article->seo_description : old('seo_description') }}</textarea>
+                    <textarea class="form-control" rows="3" name="seo_description" >{{ isset($article) ? $article->translations->seo_description : old('seo_description') }}</textarea>
                     @if ($errors->has('seo_description'))
                         <span class="help-block text-danger">
                             <strong>{{ $errors->first('seo_description') }}</strong>

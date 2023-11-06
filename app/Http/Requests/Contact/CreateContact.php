@@ -24,9 +24,9 @@ class CreateContact extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
+            'full_name' => 'required',
             'phone' => 'required',
-            'address' => 'required',
+            'title' => 'required',
             'content' => 'required',
             'email' => 'required'
         ];

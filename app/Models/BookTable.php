@@ -9,4 +9,5 @@ class BookTable extends Model
 {
 //    use HasFactory;
     protected $table = 'books_table';
+    protected $guarded = ['id'];
 }
