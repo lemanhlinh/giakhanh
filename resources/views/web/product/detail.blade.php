@@ -5,7 +5,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    @include('web.components.image', ['src' => $product->image_resize['lager'], 'title' => $product->title])
+                    @include('web.components.image', ['src' => $product->image, 'title' => $product->title])
                 </div>
                 <div class="col-md-6">
                     <h1 class="title-product">{{ $product->title }}</h1>
@@ -33,7 +33,7 @@
                         @forelse($products as $k => $item)
                             <div class="col-md-4 item-product">
                                 <a href="{{ route('productDetail',['slugCat'=>$item->category->slug,'slug'=>$item->slug]) }}" title="{{ $item->title }}">
-                                    @include('web.components.image', ['src' => $item->image_resize['resize'], 'title' => $item->title])
+                                    @include('web.components.image', ['src' => $item->image, 'title' => $item->title])
                                     <h4 class="title-product">{{ $item->title }}</h4>
                                 </a>
                                 <p class="price-product">{{ number_format($item->price, 0, ',', '.') }}đ</p>
@@ -50,7 +50,7 @@
                         @forelse($products as $k => $item)
                             <div class="col-md-4 item-product">
                                 <a href="{{ route('productDetail',['slugCat'=>$item->category->slug,'slug'=>$item->slug]) }}" title="{{ $item->title }}">
-                                    @include('web.components.image', ['src' => $item->image_resize['resize'], 'title' => $item->title])
+                                    @include('web.components.image', ['src' => $item->image, 'title' => $item->title])
                                     <h4 class="title-product">{{ $item->title }}</h4>
                                 </a>
                                 <p class="price-product">{{ number_format($item->price, 0, ',', '.') }}đ</p>

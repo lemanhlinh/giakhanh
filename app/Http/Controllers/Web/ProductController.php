@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\BookTable;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\ProductsCategoriesTranslation;
+use App\Models\ProductsTranslation;
 use App\Models\Setting;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Artesaos\SEOTools\Facades\SEOTools;
@@ -16,6 +18,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use App\Http\Requests\Order\CreateOrder;
 use App\Http\Requests\BookTable\CreateBookTable;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class ProductController extends Controller
 {
@@ -39,15 +42,21 @@ class ProductController extends Controller
         SEOTools::opengraph()->addProperty('type', 'articles');
         SEOTools::twitter()->setSite('launamgiakhanh.vn');
 
-        $cat = $this->productCategoryRepository->getList(['active' => 1],['id','title','slug'], 0);
-        $products = $this->productRepository->paginate(12,['id','slug','image','title','price','category_id'],['active'=>1],['category']);
+        $lang = LaravelLocalization::getCurrentLocale();
+        $cat = ProductsCategoriesTranslation::select('id','title','slug','product_category_id')->where(['active' => 1,'lang'=>$lang])->get();
+        $products = ProductsTranslation::select('id','slug','image','title','price','category_id','product_id')
+            ->where(['active' => 1,'lang'=>$lang])->with(['categoryTranslation' => function($query) use ($lang){
+                $query->where(['active' => 1,'lang'=>$lang]);
+            }])->paginate(12);
         return view('web.product.home',compact('cat','products'));
     }
 
     public function cat($slug){
-        $cat = $this->productCategoryRepository->getOneBySlug($slug);
-        $cats = $this->productCategoryRepository->getList(['active' => 1],['id','title','slug'], 0);
-        $products = $this->productRepository->paginate(12,['id','slug','image','title','price','category_id'],['active'=>1,'category_id'=>$cat->id],['category']);
+        $lang = LaravelLocalization::getCurrentLocale();
+        $cat = ProductsCategoriesTranslation::select('id','title','slug','product_category_id')->where(['active' => 1,'lang'=>$lang,'slug'=>$slug])->first();
+        $cats = ProductsCategoriesTranslation::select('id','title','slug','product_category_id')->where(['active' => 1,'lang'=>$lang])->get();
+        $products = ProductsTranslation::select('id','slug','image','title','price','category_id','product_id')
+            ->where(['active'=>1,'category_id'=>$cat->id,'lang'=>$lang])->with(['category'])->orderBy('id','DESC')->paginate(12);
 
         SEOTools::setTitle($cat->seo_title?$cat->seo_title:$cat->title);
         SEOTools::setDescription($cat->seo_description?$cat->seo_description:$cat->description);
@@ -62,9 +71,15 @@ class ProductController extends Controller
     }
 
     public function detail ($slugCat,$slug){
-        $cat = $this->productCategoryRepository->getOneBySlug($slugCat);
-        $products = $this->productRepository->getList(['active' => 1],['id','title','slug','image','price','category_id'], 3,['category']);
-        $product = $this->productRepository->getOneBySlug($slug);
+        $lang = LaravelLocalization::getCurrentLocale();
+        $cat = ProductsCategoriesTranslation::select('id','title','slug','product_category_id')->where(['active' => 1,'lang'=>$lang,'slug'=>$slugCat])->first();
+        if (!$cat) {
+//            return redirect()->route('home');
+            abort(404);
+        }
+        $products = ProductsTranslation::select('id','slug','image','title','price','category_id','product_id')
+            ->where(['active'=>1,'category_id'=>$cat->id,'lang'=>$lang])->with(['category'])->orderBy('id','DESC')->limit(3)->get();
+        $product = ProductsTranslation::where(['active' => 1,'lang'=>$lang,'slug'=>$slug])->first();
 
         SEOTools::setTitle($product->seo_title?$product->seo_title:$product->title);
         SEOTools::setDescription($product->seo_description?$product->seo_description:$product->description);
@@ -72,7 +87,7 @@ class ProductController extends Controller
         SEOTools::setCanonical(url()->current());
         SEOTools::opengraph()->setUrl(url()->current());
         SEOTools::opengraph()->addProperty('type', 'articles');
-        SEOTools::twitter()->setSite('cocolux.com');
+        SEOTools::twitter()->setSite('launamgiakhanh.vn');
         SEOMeta::setKeywords($product->seo_keyword?$product->seo_keyword:$product->title);
 
         return view('web.product.detail',compact('cat','product','products'));
