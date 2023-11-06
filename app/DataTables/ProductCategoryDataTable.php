@@ -24,6 +24,15 @@ class ProductCategoryDataTable extends DataTable
         $lang = request()->input('local','vi');
         return datatables()
             ->eloquent($query)
+            ->editColumn('active', function ($q) {
+                $url = route('admin.product-category.changeActive', $q->id);
+                $status = $q->active == ProductsCategoriesTranslation::STATUS_ACTIVE ? 'checked' : null;
+                return view('admin.components.buttons.change_status', [
+                    'url' => $url,
+                    'lowerModelName' => 'product-categories',
+                    'status' => $status,
+                ])->render();
+            })
             ->editColumn('created_at', function ($q) {
                 return Carbon::parse($q->created_at)->format('H:i:s Y/m/d');
             })
@@ -35,7 +44,7 @@ class ProductCategoryDataTable extends DataTable
                 $urlDelete = route('admin.product-category.destroy', $q->product_category_id).'?local='.$lang;
                 $lowerModelName = strtolower(class_basename(new ProductsCategoriesTranslation()));
                 return view('admin.components.buttons.edit', compact('urlEdit'))->render() . view('admin.components.buttons.delete', compact('urlDelete', 'lowerModelName'))->render();
-            });
+            })->rawColumns(['active','action']);
     }
 
     /**

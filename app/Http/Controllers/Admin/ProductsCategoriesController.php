@@ -174,4 +174,18 @@ class ProductsCategoriesController extends Controller
             'message' => trans('message.delete_product_category_success')
         ];
     }
+
+    /**
+     * @param $id
+     * @return array
+     */
+    public function changeActive($id)
+    {
+        $product_category = ProductsCategoriesTranslation::findOrFail($id);
+        $product_category->update(['active' => !$product_category->active]);
+        return [
+            'status' => true,
+            'message' => trans('message.change_active_product_category_success')
+        ];
+    }
 }

@@ -24,6 +24,24 @@ class ArticleDataTable extends DataTable
         $lang = request()->input('local','vi');
         return datatables()
             ->eloquent($query)
+            ->editColumn('active', function ($q) {
+                $url = route('admin.article.changeActive', $q->id);
+                $status = $q->active == ArticlesTranslation::STATUS_ACTIVE ? 'checked' : null;
+                return view('admin.components.buttons.change_status', [
+                    'url' => $url,
+                    'lowerModelName' => 'articles',
+                    'status' => $status,
+                ])->render();
+            })
+            ->editColumn('is_home', function ($q) {
+                $url = route('admin.article.changeHome', $q->id);
+                $status = $q->is_home == ArticlesTranslation::IS_HOME ? 'checked' : null;
+                return view('admin.components.buttons.change_status', [
+                    'url' => $url,
+                    'lowerModelName' => 'articles',
+                    'status' => $status,
+                ])->render();
+            })
             ->editColumn('created_at', function ($q) {
                 return Carbon::parse($q->created_at)->format('H:i:s Y/m/d');
             })
@@ -38,7 +56,7 @@ class ArticleDataTable extends DataTable
                 $urlDelete = route('admin.article.destroy', $q->article_id).'?local='.$lang;
                 $lowerModelName = strtolower(class_basename(new ArticlesTranslation()));
                 return view('admin.components.buttons.edit', compact('urlEdit'))->render() . view('admin.components.buttons.delete', compact('urlDelete', 'lowerModelName'))->render();
-             });
+             })->rawColumns(['active','action','is_home']);
     }
 
     /**
@@ -89,12 +107,8 @@ class ArticleDataTable extends DataTable
                 'renderImage(data)'
             ]),
             Column::make('category_id')->title(trans('form.article_category.')),
-            Column::make('active')->title(trans('form.article.active'))->render([
-                'renderLabelActive(data)'
-            ]),
-            Column::make('is_home')->title(trans('form.home_page'))->render([
-                'renderLabelShowHomeOrder(data)'
-            ]),
+            Column::make('active')->title(trans('form.article.active')),
+            Column::make('is_home')->title(trans('form.home_page')),
             Column::make('created_at')->title(trans('form.created_at')),
             Column::make('updated_at')->title(trans('form.updated_at')),
             Column::computed('action')

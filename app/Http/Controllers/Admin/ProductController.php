@@ -213,4 +213,32 @@ class ProductController extends Controller
             'message' => trans('message.delete_product_success')
         ];
     }
+
+    /**
+     * @param $id
+     * @return array
+     */
+    public function changeActive($id)
+    {
+        $product = ProductsTranslation::findOrFail($id);
+        $product->update(['active' => !$product->active]);
+        return [
+            'status' => true,
+            'message' => trans('message.change_active_product_success')
+        ];
+    }
+
+    /**
+     * @param $id
+     * @return array
+     */
+    public function changeHome($id)
+    {
+        $product = ProductsTranslation::findOrFail($id);
+        $product->update(['is_home' => !$product->is_home]);
+        return [
+            'status' => true,
+            'message' => trans('message.change_is_home_product_success')
+        ];
+    }
 }

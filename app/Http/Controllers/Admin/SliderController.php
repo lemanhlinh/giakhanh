@@ -162,4 +162,18 @@ class SliderController extends Controller
             'message' => trans('message.delete_slide_success')
         ];
     }
+
+    /**
+     * @param $id
+     * @return array
+     */
+    public function changeActive($id)
+    {
+        $slide = Sliders::findOrFail($id);
+        $slide->update(['active' => !$slide->active]);
+        return [
+            'status' => true,
+            'message' => trans('message.change_active_slide_success')
+        ];
+    }
 }

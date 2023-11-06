@@ -152,7 +152,8 @@ return [
         'description' => 'Mô tả',
         'active' => 'Trạng thái',
         'manage' => 'Cấu hình',
-        'value' => 'Giá trị'
+        'value' => 'Giá trị',
+        'value_en' => 'Giá trị tiếng anh'
     ],
     'contact' => [
         '' => 'Liên hệ',

@@ -24,6 +24,15 @@ class PageDataTable extends DataTable
         $lang = request()->input('local','vi');
         return datatables()
             ->eloquent($query)
+            ->editColumn('active', function ($q) {
+                $url = route('admin.page.changeActive', $q->id);
+                $status = $q->active == PagesTranslation::STATUS_ACTIVE ? 'checked' : null;
+                return view('admin.components.buttons.change_status', [
+                    'url' => $url,
+                    'lowerModelName' => 'page',
+                    'status' => $status,
+                ])->render();
+            })
             ->editColumn('created_at', function ($q) {
                 return Carbon::parse($q->created_at)->format('H:i:s Y/m/d');
             })
@@ -35,7 +44,7 @@ class PageDataTable extends DataTable
                 $urlDelete = route('admin.page.destroy', $q->page_id).'?local='.$lang;
                 $lowerModelName = strtolower(class_basename(new PagesTranslation()));
                 return view('admin.components.buttons.edit', compact('urlEdit'))->render() . view('admin.components.buttons.delete', compact('urlDelete', 'lowerModelName'))->render();
-            });
+            })->rawColumns(['active','action']);
     }
 
     /**
@@ -83,6 +92,7 @@ class PageDataTable extends DataTable
 
             Column::make('id'),
             Column::make('title'),
+            Column::make('active'),
             Column::make('created_at'),
             Column::make('updated_at'),
             Column::computed('action')

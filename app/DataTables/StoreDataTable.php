@@ -22,6 +22,15 @@ class StoreDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
+            ->editColumn('active', function ($q) {
+                $url = route('admin.store.changeActive', $q->id);
+                $status = $q->active == Store::STATUS_ACTIVE ? 'checked' : null;
+                return view('admin.components.buttons.change_status', [
+                    'url' => $url,
+                    'lowerModelName' => 'store',
+                    'status' => $status,
+                ])->render();
+            })
             ->editColumn('created_at', function ($q) {
                 return Carbon::parse($q->created_at)->format('H:i:s Y/m/d');
             })
@@ -33,7 +42,7 @@ class StoreDataTable extends DataTable
                 $urlDelete = route('admin.store.destroy', $q->id);
                 $lowerModelName = strtolower(class_basename(new Store()));
                 return view('admin.components.buttons.edit', compact('urlEdit'))->render() . view('admin.components.buttons.delete', compact('urlDelete', 'lowerModelName'))->render();
-            });
+            })->rawColumns(['active','action']);
     }
 
     /**
@@ -59,7 +68,7 @@ class StoreDataTable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('Bfrtip')
-                    ->orderBy(1)
+                    ->orderBy(0)
                     ->buttons(
                         Button::make('create'),
                         Button::make('export'),
@@ -79,6 +88,7 @@ class StoreDataTable extends DataTable
         return [
             Column::make('id'),
             Column::make('title'),
+            Column::make('active'),
             Column::make('created_at'),
             Column::make('updated_at'),
             Column::computed('action')

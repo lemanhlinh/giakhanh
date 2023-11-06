@@ -28,6 +28,7 @@ class CreateSetting extends FormRequest
             'key' => 'required',
             'type' => 'required',
             'value' => 'required',
+            'value_en' => 'required',
             'active' => 'required',
             'description' => 'required'
         ];

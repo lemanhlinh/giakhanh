@@ -61,6 +61,7 @@ class SettingController extends Controller
                 'name' => $data['name'],
                 'key' => $data['key'],
                 'value' => $data['value'],
+                'value_en' => $data['value_en'],
                 'type' => $data['type'],
                 'active' => $data['active'],
                 'description' => $data['description'],
@@ -124,10 +125,16 @@ class SettingController extends Controller
                 $image = $this->settingRepository->saveFileUpload($data['value'],'images');
             }
 
+            $image_en = null;
+            if (\request()->hasFile('value_en')) {
+                $image_en = $this->settingRepository->saveFileUpload($data['value_en'],'images');
+            }
+
             $setting->update([
                 'name' => $data['name'],
                 'key' => $data['key'],
                 'value' => $image?$image:$data['value'],
+                'value_en' => $image_en?$image_en:$data['value_en'],
                 'type' => $data['type'],
                 'active' => $data['active'],
                 'description' => $data['description'],
@@ -159,6 +166,20 @@ class SettingController extends Controller
         return [
             'status' => true,
             'message' => trans('message.delete_setting_success')
+        ];
+    }
+
+    /**
+     * @param $id
+     * @return array
+     */
+    public function changeActive($id)
+    {
+        $setting = Setting::findOrFail($id);
+        $setting->update(['active' => !$setting->active]);
+        return [
+            'status' => true,
+            'message' => trans('message.change_active_setting_success')
         ];
     }
 }
