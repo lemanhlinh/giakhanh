@@ -25,4 +25,9 @@ class ProductsTranslation extends Model
     {
         return $this->belongsTo(ProductsCategories::class, 'category_id', 'id');
     }
+
+    public function categoryTranslation()
+    {
+        return $this->belongsTo(ProductsCategoriesTranslation::class, 'category_id', 'product_category_id');
+    }
 }
