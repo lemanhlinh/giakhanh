@@ -33,7 +33,8 @@ class PageController extends Controller
      */
     public function index(PageDataTable $dataTable)
     {
-        return $dataTable->render('admin.page.index');
+        $local = request()->query('local','vi');
+        return $dataTable->render('admin.page.index',compact('local'));
     }
 
     /**
@@ -69,10 +70,11 @@ class PageController extends Controller
                 $data['image_title'] = urldecode($image_title);
             }
             $model = $this->pageRepository->create($data);
-            if (!empty($data['image'])){
-                $this->pageRepository->saveFileUpload($image_root,$this->resizeImage,$model->id,'page');
-            }
             $local = request()->input('locale','vi');
+            if (!empty($data['image'])){
+                $this->pageRepository->saveFileUpload($image_root,$this->resizeImage,$model->id,'page',$local);
+            }
+
             foreach(\LaravelLocalization::getSupportedLocales() as $localeCode => $properties){
                 $langTranslation = new PagesTranslation([
                     'lang' => $localeCode,
@@ -144,10 +146,11 @@ class PageController extends Controller
         DB::beginTransaction();
         try {
             $data = $req->validated();
+            $local = request()->input('locale','vi');
             $page = $this->pageRepository->getOneById($id);
             if (!empty($data['image']) && $data_root->image != $data['image']){
-                $this->pageRepository->removeImageResize($data_root->image,$this->resizeImage, $id,'page');
-                $data['image'] = $this->pageRepository->saveFileUpload($data['image'],$this->resizeImage, $id,'page');
+                $this->pageRepository->removeImageResize($data_root->image,$this->resizeImage, $id,'page',$local);
+                $data['image'] = $this->pageRepository->saveFileUpload($data['image'],$this->resizeImage, $id,'page',$local);
             }
             if (!empty($data['image_title']) && $data_root->image_title != $data['image_title']){
                 $data['image_title'] = rawurldecode($data['image_title']);
@@ -181,12 +184,12 @@ class PageController extends Controller
     public function destroy($id)
     {
         $data = $this->pageRepository->getOneById($id);
-
+        $local = request()->input('locale','vi');
         // Đường dẫn tới tệp tin
         $resize = $this->resizeImage;
         $img_path = pathinfo($data->image, PATHINFO_DIRNAME);
         foreach ($resize as $item){
-            $array_resize_ = str_replace($img_path.'/','/public/page/'.$item[0].'x'.$item[1].'/'.$data->id.'-',$data->image);
+            $array_resize_ = str_replace($img_path.'/','/public/page/'.$local.'/'.$item[0].'x'.$item[1].'/'.$data->id.'-',$data->image);
             $array_resize_ = str_replace(['.jpg', '.png','.bmp','.gif','.jpeg'],'.webp',$array_resize_);
             Storage::delete($array_resize_);
         }

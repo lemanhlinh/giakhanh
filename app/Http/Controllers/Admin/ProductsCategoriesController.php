@@ -33,7 +33,8 @@ class ProductsCategoriesController extends Controller
      */
     public function index(ProductCategoryDataTable $dataTable)
     {
-        return $dataTable->render('admin.product-category.index');
+        $local = request()->query('local','vi');
+        return $dataTable->render('admin.product-category.index',compact('local'));
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\MenuCategory;
+use App\Models\MenuCategoryTranslation;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
@@ -19,15 +20,16 @@ class MenuCategoryDataTable extends DataTable
      */
     public function dataTable($query)
     {
+        $lang = request()->input('local','vi');
         return datatables()
             ->eloquent($query)
             ->addColumn('name', function ($q) {
-                return optional($q->translations->first())->name;
+                return $q->name;
             })
-            ->addColumn('action', function ($q){
-                $urlEdit = route('admin.menu-category.edit', $q->id);
-                $urlDelete = route('admin.menu-category.destroy', $q->id);
-                $lowerModelName = strtolower(class_basename(new MenuCategory()));
+            ->addColumn('action', function ($q) use ($lang){
+                $urlEdit = route('admin.menu-category.edit', $q->menu_category_id).'?local='.$lang;
+                $urlDelete = route('admin.menu-category.destroy', $q->menu_category_id).'?local='.$lang;
+                $lowerModelName = strtolower(class_basename(new MenuCategoryTranslation()));
                 return view('admin.components.buttons.edit', compact('urlEdit'))->render() . view('admin.components.buttons.delete', compact('urlDelete', 'lowerModelName'))->render();
             });
     }
@@ -38,11 +40,10 @@ class MenuCategoryDataTable extends DataTable
      * @param \App\Models\MenuCategory $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(MenuCategory $model)
+    public function query(MenuCategoryTranslation $model)
     {
-        return $model->newQuery()->with(['translations' => function($query){
-            $query->where(['lang'=>'vi'])->select('id','name','menu_category_id');
-        }]);
+        $lang = request()->input('local','vi');
+        return $model->newQuery()->where(['lang'=>$lang]);
     }
 
     /**

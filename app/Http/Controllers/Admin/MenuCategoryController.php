@@ -28,7 +28,8 @@ class MenuCategoryController extends Controller
      */
     public function index(MenuCategoryDataTable $dataTable)
     {
-        return $dataTable->render('admin.menu-category.index');
+        $lang = request()->input('local','vi');
+        return $dataTable->render('admin.menu-category.index',compact('lang'));
     }
 
     /**

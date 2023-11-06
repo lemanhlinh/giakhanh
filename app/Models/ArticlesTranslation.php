@@ -14,4 +14,9 @@ class ArticlesTranslation extends Model
     {
         return $this->belongsTo(Menu::class, 'article_id');
     }
+
+    public function category()
+    {
+        return $this->belongsTo(ArticlesCategories::class, 'category_id', 'id');
+    }
 }

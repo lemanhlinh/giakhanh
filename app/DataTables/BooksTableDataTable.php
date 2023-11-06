@@ -66,7 +66,6 @@ class BooksTableDataTable extends DataTable
     {
         return [
             Column::make('id'),
-            Column::make('title'),
             Column::make('full_name'),
             Column::make('email'),
             Column::make('phone'),

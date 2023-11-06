@@ -48,20 +48,18 @@ class MenuController extends Controller
         $category_id = request()->query('category_id');
         $article_categories = $this->articleCategoryRepository->getAll();
         $product_categories = $this->productRepository->getAll();
-        $menu_categories = $this->menuCategoryRepository->getList(null,['*'],null,['translations' => function($query){
-            $local = request()->query('local','vi');
+        $menu_categories = $this->menuCategoryRepository->getList(null,['*'],null,['translations' => function($query) use ($local){
             $query->where(['lang'=> $local ])->select('id','name','menu_category_id');
         }]);
         $pages = $this->pageRepository->getAll();
-        if ($menu_categories->count() === 0){
+        if ($menu_categories->count() == 0){
             Session::flash('danger', 'Chưa có nhóm menu nào');
             return redirect()->route('admin.menu-category.index');
         }
         if (empty($category_id)){
             $category_id = $menu_categories->first()->id;
         }
-        $menu = Menu::where(['category_id'=>$category_id])->with(['translations' => function($query){
-            $local = request()->query('local','vi');
+        $menu = Menu::where(['category_id'=>$category_id])->with(['translations' => function($query) use ($local){
             $query->where(['lang'=> $local ]);
         }])->withDepth()->defaultOrder()->get()->toTree();
         return view('admin.menu.index', compact('article_categories','menu_categories','menu','category_id','pages','product_categories','local'));

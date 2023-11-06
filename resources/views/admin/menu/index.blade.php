@@ -85,7 +85,7 @@
                     <label>Nhóm danh mục</label>
                     <select name="category_id" id="category_id" class="form-control">
                         @foreach($menu_categories as $menu_category)
-                            <option value="{{ $menu_category->translations->first()->id }}" {{ (isset($category_id) && $category_id == $menu_category->translations->first()->id) ?'selected':'' }}>{{ $menu_category->translations->first()->name }}</option>
+                            <option value="{{ $menu_category->translations->id }}" {{ (isset($category_id) && $category_id == $menu_category->translations->id) ?'selected':'' }}>{{ $menu_category->translations->name }}</option>
                         @endforeach
                     </select>
                 </div>

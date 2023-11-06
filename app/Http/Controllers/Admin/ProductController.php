@@ -39,12 +39,13 @@ class ProductController extends Controller
     public function index(ProductDataTable $dataTable)
     {
         $data = request()->all();
+        $local = request()->query('local','vi');
         $categories = $this->productCategoryResponstory->getAll();
         if ($categories->count() === 0){
             Session::flash('danger', 'Chưa có danh mục nào');
             return redirect()->route('admin.product-category.index');
         }
-        return $dataTable->addScope(new ProductDataTableScope())->render('admin.product.index', compact('data', 'categories'));
+        return $dataTable->addScope(new ProductDataTableScope())->render('admin.product.index', compact('data', 'categories','local'));
     }
 
     /**
@@ -76,11 +77,12 @@ class ProductController extends Controller
                 $image_root = $data['image'];
                 $data['image'] = urldecode($image_root);
             }
+            $local = request()->input('locale','vi');
             $model = $this->productResponstory->create($data);
             if (!empty($data['image'])){
-                $this->productResponstory->saveFileUpload($image_root,$this->resizeImage,$model->id,'product');
+                $this->productResponstory->saveFileUpload($image_root,$this->resizeImage,$model->id,'product',$local);
             }
-            $local = request()->input('locale','vi');
+
             foreach(\LaravelLocalization::getSupportedLocales() as $localeCode => $properties){
                 $langTranslation = new ProductsTranslation([
                     'lang' => $localeCode,
@@ -157,17 +159,18 @@ class ProductController extends Controller
         try {
             $data = $req->validated();
             $product = $this->productResponstory->getOneById($id);
+            $local = request()->input('locale','vi');
             if (!empty($data['image']) && $data_root->image != $data['image']){
                 if ($data_root->image){
-                    $this->productResponstory->removeImageResize($data_root->image,$this->resizeImage, $id,'product');
+                    $this->productResponstory->removeImageResize($data_root->image,$this->resizeImage, $id,'product',$local);
                 }
-                $data['image'] = $this->productResponstory->saveFileUpload($data['image'],$this->resizeImage, $id,'product');
+                $data['image'] = $this->productResponstory->saveFileUpload($data['image'],$this->resizeImage, $id,'product',$local);
             }
             if (empty($data['slug'])){
                 $data['slug'] = $req->input('slug')?\Str::slug($req->input('slug'), '-'):\Str::slug($data['title'], '-');
             }
             $product->update($data);
-            $local = request()->input('locale','vi');
+
             $product->translations->where(['product_id'=> $id,'lang' => $local])->update($data);
             DB::commit();
             Session::flash('success', trans('message.update_product_success'));
@@ -193,12 +196,12 @@ class ProductController extends Controller
     {
 
         $data = $this->productResponstory->getOneById($id);
-
+        $local = request()->input('locale','vi');
         // Đường dẫn tới tệp tin
         $resize = $this->resizeImage;
         $img_path = pathinfo($data->image, PATHINFO_DIRNAME);
         foreach ($resize as $item){
-            $array_resize_ = str_replace($img_path.'/','/public/product/'.$item[0].'x'.$item[1].'/'.$data->id.'-',$data->image);
+            $array_resize_ = str_replace($img_path.'/','/public/product/'.$local.'/'.$item[0].'x'.$item[1].'/'.$data->id.'-',$data->image);
             $array_resize_ = str_replace(['.jpg', '.png','.bmp','.gif','.jpeg'],'.webp',$array_resize_);
             Storage::delete($array_resize_);
         }

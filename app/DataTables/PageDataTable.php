@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\Page;
+use App\Models\PagesTranslation;
 use Carbon\Carbon;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
@@ -20,6 +21,7 @@ class PageDataTable extends DataTable
      */
     public function dataTable($query)
     {
+        $lang = request()->input('local','vi');
         return datatables()
             ->eloquent($query)
             ->editColumn('created_at', function ($q) {
@@ -28,10 +30,10 @@ class PageDataTable extends DataTable
             ->editColumn('updated_at', function ($q) {
                 return Carbon::parse($q->updated_at)->format('H:i:s Y/m/d');
             })
-            ->addColumn('action', function ($q) {
-                $urlEdit = route('admin.page.edit', $q->id);
-                $urlDelete = route('admin.page.destroy', $q->id);
-                $lowerModelName = strtolower(class_basename(new Page()));
+            ->addColumn('action', function ($q) use ($lang) {
+                $urlEdit = route('admin.page.edit', $q->page_id).'?local='.$lang;
+                $urlDelete = route('admin.page.destroy', $q->page_id).'?local='.$lang;
+                $lowerModelName = strtolower(class_basename(new PagesTranslation()));
                 return view('admin.components.buttons.edit', compact('urlEdit'))->render() . view('admin.components.buttons.delete', compact('urlDelete', 'lowerModelName'))->render();
             });
     }
@@ -42,9 +44,10 @@ class PageDataTable extends DataTable
      * @param \App\Models\Page $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Page $model)
+    public function query(PagesTranslation $model)
     {
-        return $model->newQuery();
+        $lang = request()->input('local','vi');
+        return $model->newQuery()->where(['lang'=>$lang]);
     }
 
     /**
@@ -59,7 +62,7 @@ class PageDataTable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('Bfrtip')
-                    ->orderBy(1)
+                    ->orderBy(0)
                     ->buttons(
                         Button::make('create'),
                         Button::make('export'),
