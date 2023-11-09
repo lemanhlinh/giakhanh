@@ -14,7 +14,7 @@
                         <div class="article-item">
                             <div class="article-item-content">
                                 <a class="d-block overflow-hidden" href="{{ route('detailArticle',['slug' => $item->slug]) }}">
-                                    @include('web.components.image', ['src' => $item->image_resize['resize'], 'title' => $item->title])
+                                    @include('web.components.image', ['src' => $item->image, 'title' => $item->title])
                                 </a>
                                 <div class="box-content-article">
                                     <a href="{{ route('detailArticle',['slug' => $item->slug]) }}">
