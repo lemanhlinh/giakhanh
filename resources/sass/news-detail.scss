@@ -510,7 +510,9 @@
                     background: #FBF1D9;
                     backdrop-filter: blur(4px);
                     overflow: hidden;
-                    max-height: 165px;
+                    >a{
+                        max-height: 165px;
+                    }
                     img{
                         transition: transform 0.3s ease-in-out;
                     }
