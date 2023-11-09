@@ -27,6 +27,9 @@
             background: #FBF1D9;
             backdrop-filter: blur(4px);
             overflow: hidden;
+            >a{
+                max-height: 245px;
+            }
             .box-content-article{
                 color: #000;
                 padding: 24px;
@@ -80,6 +83,7 @@
             width: 55%;
             .article-item{
                 .article-item-content{
+                    max-height: 440px;
                     .image-other-article{
                         margin-bottom: 36px;
                     }
@@ -112,6 +116,7 @@
                 margin-bottom: 16px;
                 overflow: hidden;
                 border-radius: 8px;
+                max-height: 245px;
                 img{
                     border-radius: 8px;
                     overflow: hidden;
