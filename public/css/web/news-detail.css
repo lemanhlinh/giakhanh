@@ -511,6 +511,8 @@
   -webkit-backdrop-filter: blur(4px);
           backdrop-filter: blur(4px);
   overflow: hidden;
+}
+.content-detail .content-news-related .mg-for-article .article-item .article-item-content > a {
   max-height: 165px;
 }
 .content-detail .content-news-related .mg-for-article .article-item .article-item-content img {
