@@ -83,9 +83,9 @@
             width: 55%;
             .article-item{
                 .article-item-content{
-                    max-height: 440px;
                     .image-other-article{
                         margin-bottom: 36px;
+                        max-height: 440px;
                     }
                 }
             }
@@ -116,7 +116,7 @@
                 margin-bottom: 16px;
                 overflow: hidden;
                 border-radius: 8px;
-                max-height: 245px;
+                max-height: 165px;
                 img{
                     border-radius: 8px;
                     overflow: hidden;
@@ -140,6 +140,7 @@
                 }
                 .title-article-normal{
                     font-size: 24px;
+                    line-height: 35px;
                 }
                 .calendar-new{
                     font-size: 14px;
