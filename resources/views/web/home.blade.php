@@ -85,7 +85,7 @@
                                                     </a>
                                                     <div class="info-title-product">
                                                         <div class="left-hover-product align-items-center justify-content-between">
-                                                            <a href="{{ route('productDetail',['slugCat'=>$category->slug,'slug'=>$item->slug]) }}" title="{{ $item->title }}">
+                                                            <a href="{{ route('productDetail',['slug'=>$item->slug]) }}" title="{{ $item->title }}">
                                                                 <p class="title-product-box">{{ $item->title }}</p>
                                                             </a>
                                                             <p class="price-product-box">{{ number_format($item->price, 0, ',', '.') }}đ</p>
@@ -235,12 +235,12 @@
                 @forelse($articles as $item)
                     <div class="article-item">
                         <div class="article-item-content">
-                            <a href="{{ route('detailArticle',['slug' => $item->slug,'id' => $item->id]) }}">
+                            <a href="{{ route('detailArticle',['slug' => $item->slug]) }}">
                                 @include('web.components.image', ['src' => $item->image, 'title' => $item->title])
                             </a>
                             <div class="box-content-article">
                                 <p class="calendar-new"><i class="fas fa-calendar-alt"></i> {{ $item->created_at }}</p>
-                                <a href="{{ route('detailArticle',['slug' => $item->slug,'id' => $item->id]) }}">
+                                <a href="{{ route('detailArticle',['slug' => $item->slug]) }}">
                                     <h4 class="title-article">{{ $item->title }}</h4>
                                 </a>
                                 <p class="description-article">{{ $item->description }}</p>

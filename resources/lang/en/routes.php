@@ -3,7 +3,7 @@ return [
     "page"    =>  "page/{slug}",
     "article"  =>  [
         "cat" => 'category-article/{slug}',
-        "detail" => 'detail-article/{slug}/{id}',
+        "detail" => '{slug}.html',
     ],
     "contact"    =>  'contact',
     "album"    =>  'album',
@@ -12,7 +12,7 @@ return [
     "product"    =>  [
         'home' => 'menu',
         'cat' => 'menu/{slug}',
-        'detail' => 'menu/{slugCat}/{slug}',
+        'detail' => 'product/{slug}',
     ],
     'cart' => [
         'home' => 'cart',

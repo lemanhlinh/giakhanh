@@ -64,10 +64,10 @@ class ArticleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function detail($slug, $id)
+    public function detail($slug)
     {
         $lang = LaravelLocalization::getCurrentLocale();
-        $article = ArticlesTranslation::where(['article_id' => $id,'active'=>1,'lang'=>$lang])->with('category')->first();
+        $article = ArticlesTranslation::where(['slug' => $slug,'active'=>1,'lang'=>$lang])->with('category')->first();
         if ($article->type == 0){
             $limit = 4;
         }else{
