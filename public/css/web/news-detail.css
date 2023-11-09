@@ -472,6 +472,9 @@
   font-size: 14px;
   margin-bottom: 30px;
 }
+.content-detail .box-content-top .show-content img {
+  max-width: 100% !important;
+}
 .content-detail .content-news-related .title-article-other {
   display: flex;
   color: #0E0202;

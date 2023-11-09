@@ -470,6 +470,11 @@
             font-size: 14px;
             margin-bottom: 30px;
         }
+        .show-content{
+            img{
+                max-width: 100% !important;
+            }
+        }
     }
     .content-news-related{
         .title-article-other{
