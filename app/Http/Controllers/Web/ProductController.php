@@ -70,16 +70,19 @@ class ProductController extends Controller
         return view('web.product.cat',compact('cat','cats','products'));
     }
 
-    public function detail ($slugCat,$slug){
+    public function detail ($slug){
         $lang = LaravelLocalization::getCurrentLocale();
-        $cat = ProductsCategoriesTranslation::select('id','title','slug','product_category_id')->where(['active' => 1,'lang'=>$lang,'slug'=>$slugCat])->first();
+        $product = ProductsTranslation::where(['active' => 1,'lang'=>$lang,'slug'=>$slug])->first();
+        if (!$product) {
+            abort(404);
+        }
+        $cat = ProductsCategoriesTranslation::select('id','title','slug','product_category_id')->where(['active' => 1,'lang'=>$lang,'id'=>$product->category_id])->first();
         if (!$cat) {
 //            return redirect()->route('home');
             abort(404);
         }
         $products = ProductsTranslation::select('id','slug','image','title','price','category_id','product_id')
             ->where(['active'=>1,'category_id'=>$cat->id,'lang'=>$lang])->with(['category'])->orderBy('id','DESC')->limit(3)->get();
-        $product = ProductsTranslation::where(['active' => 1,'lang'=>$lang,'slug'=>$slug])->first();
 
         SEOTools::setTitle($product->seo_title?$product->seo_title:$product->title);
         SEOTools::setDescription($product->seo_description?$product->seo_description:$product->description);

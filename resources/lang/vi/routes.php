@@ -3,16 +3,16 @@ return [
     "page"    =>  "trang/{slug}",
     "article"  =>  [
         "cat" => 'danh-muc-tin/{slug}',
-        "detail" => 'chi-tiet-tin/{slug}/{id}',
+        "detail" => '{slug}.html',
     ],
     "contact"    =>  'lien-he',
     "album"    =>  'hinh-anh',
-    "video"    =>  'video',
+    "video"    =>  'videos',
     "store"    =>  'he-thong-cua-hang',
     "product"    =>  [
         'home' => 'thuc-don',
         'cat' => 'thuc-don/{slug}',
-        'detail' => 'thuc-don/{slugCat}/{slug}',
+        'detail' => 'san-pham/{slug}',
     ],
     'cart' => [
         'home' => 'cart',

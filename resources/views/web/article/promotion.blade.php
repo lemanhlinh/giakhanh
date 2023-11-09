@@ -13,11 +13,11 @@
                     <div class="col-md-4 position-relative">
                         <div class="article-item">
                             <div class="article-item-content">
-                                <a class="d-block overflow-hidden" href="{{ route('detailArticle',['slug' => $item->slug,'id' => $item->id]) }}">
+                                <a class="d-block overflow-hidden" href="{{ route('detailArticle',['slug' => $item->slug]) }}">
                                     @include('web.components.image', ['src' => $item->image_resize['resize'], 'title' => $item->title])
                                 </a>
                                 <div class="box-content-article">
-                                    <a href="{{ route('detailArticle',['slug' => $item->slug,'id' => $item->id]) }}">
+                                    <a href="{{ route('detailArticle',['slug' => $item->slug]) }}">
                                         <h4 class="title-article">{{ $item->title }}</h4>
                                     </a>
                                     <p class="calendar-new d-flex align-items-center justify-content-between">

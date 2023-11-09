@@ -23,23 +23,23 @@
         </div>
         <div class="content-news-related mt-4">
             <div class="container">
-                @if($article->category->type === 1)
+                @if($article->type === 1)
                     <div class="title-article-other">Ưu đãi hấp dẫn khác</div>
                     <div class="row g-0 mg-for-article">
                         @foreach($articles as $k => $item)
                             <div class="col-md-4 position-relative">
                                 <div class="article-item">
                                     <div class="article-item-content">
-                                        <a class="d-block overflow-hidden" href="{{ route('detailArticle',['slug' => $item->slug,'id' => $item->article_id]) }}">
+                                        <a class="d-block overflow-hidden" href="{{ route('detailArticle',['slug' => $item->slug]) }}">
                                             @include('web.components.image', ['src' => $item->image, 'title' => $item->title])
                                         </a>
                                         <div class="box-content-article">
-                                            <a href="{{ route('detailArticle',['slug' => $item->slug,'id' => $item->article_id]) }}">
+                                            <a href="{{ route('detailArticle',['slug' => $item->slug]) }}">
                                                 <h4 class="title-article">{{ $item->title }}</h4>
                                             </a>
                                             <p class="calendar-new d-flex align-items-center justify-content-between">
                                                 <span><i class="fas fa-calendar-alt"></i> {{ $item->created_at }}</span>
-                                                <a href="{{ route('detailArticle',['slug' => $item->slug,'id' => $item->id]) }}" class="btn btn-detail-article">
+                                                <a href="{{ route('detailArticle',['slug' => $item->slug]) }}" class="btn btn-detail-article">
                                                     Chi tiết <i class="fas fa-angle-right"></i>
                                                 </a>
                                             </p>
@@ -56,11 +56,11 @@
                             <div class="col-md-3 position-relative">
                                 <div class="article-item">
                                     <div class="article-item-content">
-                                        <a href="{{ route('detailArticle',['slug' => $item->slug,'id' => $item->article_id]) }}" class="image-other-article">
+                                        <a href="{{ route('detailArticle',['slug' => $item->slug]) }}" class="image-other-article">
                                             @include('web.components.image', ['src' => $item->image, 'title' => $item->title])
                                         </a>
                                         <div class="box-content-article">
-                                            <a href="{{ route('detailArticle',['slug' => $item->slug,'id' => $item->article_id]) }}">
+                                            <a href="{{ route('detailArticle',['slug' => $item->slug]) }}">
                                                 <h4 class="title-article">{{ $item->title }}</h4>
                                             </a>
                                             <p class="calendar-new d-flex align-items-center justify-content-between">
