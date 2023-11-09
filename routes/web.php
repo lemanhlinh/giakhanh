@@ -18,6 +18,19 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::get('/gioi-thieu', 'RedirectController@pageGioiThieu');
+Route::get('/tin-tuc', 'RedirectController@catTinTuc');
+Route::get('/uu-dai', 'RedirectController@catUuDai');
+Route::get('/combo', 'RedirectController@catProductCombo');
+Route::get('/khai-vi', 'RedirectController@catProductKhaiVi');
+Route::get('/thit', 'RedirectController@catProductThit');
+Route::get('/canh', 'RedirectController@catProductCanh');
+Route::get('/nam', 'RedirectController@catProductNam');
+Route::get('/nam-thien-nhien', 'RedirectController@catProductNamThienNhien');
+Route::get('/cac-loai-rau', 'RedirectController@catProductCacLoaiRau');
+Route::get('/lau-tai-nha', 'RedirectController@catProductLauTaiNha');
+Route::get('/mon-theo-set', 'RedirectController@catProductMonTheoSet');
+
 Route::group(['namespace' => 'Web', 'middleware' => 'language', 'prefix' => LaravelLocalization::setLocale()], function (){
     Route::get('/', 'HomeController@index')->name('home');
     Route::get(LaravelLocalization::transRoute('routes.page'), 'PageController@index')->name('page');
