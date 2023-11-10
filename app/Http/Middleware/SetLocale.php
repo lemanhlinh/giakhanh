@@ -16,7 +16,7 @@ class SetLocale
      */
     public function handle(Request $request, Closure $next)
     {
-        $locale = $request->input('locale');
+        $locale = $request->input('locale','vi');
         if (!in_array($locale, ['en', 'vi'])) {
             $locale = 'vi'; // Nếu không tồn tại, sử dụng ngôn ngữ mặc định
         }
