@@ -30,10 +30,9 @@
                             <div class="text-center menu-bottom-ft">
                                 <div class="title-menu-bt">Liên kết nhanh</div>
                                 <ul class="list-unstyled list-item-menu-bt">
-                                    <li><a href="">Liên hệ</a></li>
-                                    <li><a href="">Thực đơn</a></li>
+                                    <li><a href="{{ route('detailContact') }}">Liên hệ</a></li>
+                                    <li><a href="{{ route('productHome') }}">Thực đơn</a></li>
                                     <li><a href="">Khuyến mại</a></li>
-                                    <li><a href="">Đặt bàn</a></li>
                                     <li><a href="">Câu hỏi thường gặp</a></li>
                                 </ul>
                             </div>

@@ -1,6 +1,6 @@
 <li class="nav-item" data-id="{{ $item->id }}" data-name="{{ $item->name }}" >
     <a class="nav-link @if (request()->is('admin/role*')) active @endif" href="{{ $item->url }}">
-        {{ isset($item->translations->name)?$item->translations->name:$item->name }} {!! (count($item->children) > 0)?'<i class="fas fa-angle-down"></i>':'' !!}
+        {{ $item->name }} {!! (count($item->children) > 0)?'<i class="fas fa-angle-down"></i>':'' !!}
     </a>
     @if (count($item->children) > 0)
         <ul class="sub-menu">
