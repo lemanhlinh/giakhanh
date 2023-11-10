@@ -24,9 +24,7 @@ class MediaController extends Controller
     public function album(){
         $images = $this->mediaImageRepository->paginate(9,['id','title','image','created_at'],['active'=>1,'type'=>0],['mediaImages']);
 //        $images = Media::with('mediaImages')->select('id','title','image')->get();
-        if (!$images) {
-            abort(404);
-        }
+
 
         $logo = Setting::where('key', 'logo')->first();
 
@@ -45,9 +43,7 @@ class MediaController extends Controller
     public function video(){
         $videos = $this->mediaVideoRepository->paginate(9,['id','title','image','link_video','created_at'],['active'=>1,'type'=>1]);
 //        $videos = Media::select('id','title','image','link_video')->get();
-        if (!$videos) {
-            abort(404);
-        }
+
 
         $logo = Setting::where('key', 'logo')->first();
 

@@ -15,9 +15,7 @@ class PageController extends Controller
     public function index($slug){
         $lang = LaravelLocalization::getCurrentLocale();
         $page = PagesTranslation::select('id','title','content','page_id','image','image_title','description','seo_title','seo_description','seo_keyword')->where('slug', $slug)->where('lang',$lang)->first();
-        if (!$page) {
-            abort(404);
-        }
+
 
         SEOTools::setTitle($page->seo_title?$page->seo_title:$page->title);
         SEOTools::setDescription($page->seo_description?$page->seo_description:$page->description);
