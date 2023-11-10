@@ -31,7 +31,7 @@ Route::get('/cac-loai-rau', 'RedirectController@catProductCacLoaiRau');
 Route::get('/lau-tai-nha', 'RedirectController@catProductLauTaiNha');
 Route::get('/mon-theo-set', 'RedirectController@catProductMonTheoSet');
 
-Route::group(['namespace' => 'Web', 'middleware' => 'language', 'prefix' => LaravelLocalization::setLocale()], function (){
+Route::group(['namespace' => 'Web', 'middleware' => [ 'localize' ], 'prefix' => LaravelLocalization::setLocale()], function (){
     Route::get('/', 'HomeController@index')->name('home');
     Route::get(LaravelLocalization::transRoute('routes.page'), 'PageController@index')->name('page');
     Route::get(LaravelLocalization::transRoute('routes.article.cat'), 'ArticleController@cat')->name('catArticle');

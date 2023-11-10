@@ -37,9 +37,7 @@ class ArticleController extends Controller
         $category = ArticlesCategoriesTranslation::where(['slug'=> $slug,'active'=> 1,'lang'=>$lang])
             ->select('id','title','type','seo_title','seo_keyword','seo_description')
             ->first();
-        if (!$category) {
-            abort(404);
-        }
+
         SEOTools::setTitle($category->seo_title?$category->seo_title:$category->title);
         SEOTools::setDescription($category->seo_description?$category->seo_description:$category->description);
         SEOTools::addImages($category->image?asset($category->image):null);

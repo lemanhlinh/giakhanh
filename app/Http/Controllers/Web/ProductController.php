@@ -73,14 +73,7 @@ class ProductController extends Controller
     public function detail ($slug){
         $lang = LaravelLocalization::getCurrentLocale();
         $product = ProductsTranslation::where(['active' => 1,'lang'=>$lang,'slug'=>$slug])->first();
-        if (!$product) {
-            abort(404);
-        }
         $cat = ProductsCategoriesTranslation::select('id','title','slug','product_category_id')->where(['active' => 1,'lang'=>$lang,'id'=>$product->category_id])->first();
-        if (!$cat) {
-//            return redirect()->route('home');
-            abort(404);
-        }
         $products = ProductsTranslation::select('id','slug','image','title','price','category_id','product_id')
             ->where(['active'=>1,'category_id'=>$cat->id,'lang'=>$lang])->with(['category'])->orderBy('id','DESC')->limit(3)->get();
 
@@ -123,9 +116,6 @@ class ProductController extends Controller
         $quantity = $req['quantity'];
         $product = $this->productRepository->getOneById($productId);
 
-        if (!$product) {
-            abort(404);
-        }
 
         $cart = Session::get('cart', []);
 
