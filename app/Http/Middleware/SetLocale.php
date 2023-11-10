@@ -16,15 +16,10 @@ class SetLocale
      */
     public function handle(Request $request, Closure $next)
     {
-        $locale = $request->input('locale','vi');
-        if (!in_array($locale, ['en', 'vi'])) {
-            $locale = 'vi'; // Nếu không tồn tại, sử dụng ngôn ngữ mặc định
+        if (! $request->segment(1)) {
+            \LaravelLocalization::setLocale(config('app.locale'));
         }
-        session(['locale' => $locale]);
-        config(['app.locale' => session('locale')]);
-        // hoặc
-        // $response->cookie('locale', $locale);
-//dd(session('locale'));
+
         return $next($request);
     }
 }
