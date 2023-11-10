@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Menu;
+use App\Models\MenuTranslation;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\Contracts\SettingInterface;
 use App\Repositories\Contracts\MenuInterface;
@@ -34,17 +35,11 @@ class AppServiceProvider extends ServiceProvider
         $setting = null;
         $stores = null;
 
-        $url = Request::url();
-        $path = parse_url($url, PHP_URL_PATH);
-        $segments = array_filter(explode('/', $path));
-        $language = reset($segments);
-        if (empty($language)){
-            $language = 'vi';
-        }
+        $language = \LaravelLocalization::getCurrentLocale();
 
         if (!Request::is('admin/*')) {
             if (Schema::hasTable('setting')) {
-                if ($language == 'vi'){
+                if ($language == 'vi' || $language == null){
                     $setting = $settingRepository->getAll()->pluck('value', 'key');
                 }else{
                     $setting = $settingRepository->getAll()->pluck('value_en', 'key');
@@ -52,9 +47,7 @@ class AppServiceProvider extends ServiceProvider
 
             }
             if (Schema::hasTable('menu')) {
-                $menu = Menu::where(['category_id'=>1])->with(['translations' => function($query) use ($language){
-                    $query->where(['lang'=> $language ]);
-                }])->withDepth()->defaultOrder()->get()->toTree();
+                $menu = MenuTranslation::where(['category_id'=>1,'lang'=> $language?$language:'vi'])->withDepth()->defaultOrder()->get()->toTree();
             }
             if (Schema::hasTable('stores')) {
                 $stores = $storeRepository->getList(['active' => 1],['id','title']);
