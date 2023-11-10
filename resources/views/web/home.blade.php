@@ -80,7 +80,7 @@
                                         @if(!empty($products[$category->id]))
                                             @forelse($products[$category->id] as $item)
                                                 <div class="d-flex align-items-center justify-content-between item-product">
-                                                    <a href="{{ route('productDetail',['slugCat'=>$category->slug,'slug'=>$item->slug]) }}" title="{{ $item->title }}">
+                                                    <a href="{{ route('productDetail',['slug'=>$item->slug]) }}" title="{{ $item->title }}">
                                                         @include('web.components.image', ['src' => $item->image, 'title' => $item->title])
                                                     </a>
                                                     <div class="info-title-product">
@@ -91,7 +91,7 @@
                                                             <p class="price-product-box">{{ number_format($item->price, 0, ',', '.') }}đ</p>
                                                         </div>
                                                         <div class="right-hover-product">
-                                                            <a href="{{ route('productDetail',['slugCat'=>$category->slug,'slug'=>$item->slug]) }}" class="btn btn-danger">Xem chi tiết</a>
+                                                            <a href="{{ route('productDetail',['slug'=>$item->slug]) }}" class="btn btn-danger">Xem chi tiết</a>
                                                             <button type="button" onclick="order({{ $item->id }})" class="btn btn-warning cartToastBtn">Thêm giỏ hàng</button>
                                                         </div>
 
