@@ -21,7 +21,8 @@
                         <i class="fas fa-globe"></i>
                         <select name="locale" id="change_locale" class="text-capitalize" >
                             @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-                                <option value="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}" {{ LaravelLocalization::getCurrentLocale() == $localeCode ? 'selected' : '' }}>{{ $localeCode }}</option>
+                                <option value="https://launamgiakhanh.vn/{{ $localeCode }}" {{ LaravelLocalization::getCurrentLocale() == $localeCode ? 'selected' : '' }}>{{ $localeCode }}</option>
+{{--                                <option value="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}" {{ LaravelLocalization::getCurrentLocale() == $localeCode ? 'selected' : '' }}>{{ $localeCode }}</option>--}}
                             @endforeach
                         </select>
                     </div>
