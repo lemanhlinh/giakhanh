@@ -100,7 +100,9 @@
                                             @empty
                                             @endforelse
                                         @endif
-                                        <a href="{{ route('productCat', $category->slug) }}" class="see-all-product">Xem tất cả <i class="fas fa-chevron-right"></i></a>
+                                        @if($category->slug)
+                                        <a href="{{ route('productCat', ['slug'=>$category->slug]) }}" class="see-all-product">Xem tất cả <i class="fas fa-chevron-right"></i></a>
+                                        @endif
                                     </div>
                                 @empty
                                 @endforelse
