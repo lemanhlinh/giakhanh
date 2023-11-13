@@ -9,6 +9,12 @@
   margin-bottom: 45px;
   text-align: center;
 }
+@media (max-width: 768px) {
+  .top-content-products .title-page {
+    margin-bottom: 20px;
+    font-size: 30px;
+  }
+}
 .top-content-products .list-menu-page {
   text-align: center;
   margin-bottom: 45px;
@@ -29,6 +35,18 @@
 .top-content-products .list-menu-page li .active {
   color: #fff;
   background: #E91A22;
+}
+@media (max-width: 768px) {
+  .top-content-products .list-menu-page {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-bottom: 20px;
+  }
+}
+@media (max-width: 768px) {
+  .top-content-products {
+    padding-top: 20px;
+  }
 }
 
 .list-products-home .mg-for-product {

@@ -11,13 +11,19 @@
                             </div>
                         </div>
                         <div class="col-md-5">
-                            <div class="info-ft-phone">
-                                <p>Hotline</p>
-                                <span>{!! $setting['hotline'] !!}</span>
-                            </div>
-                            <div class="info-ft-phone">
-                                <p>Giờ mở cửa</p>
-                                <span class="open-store">{!! $setting['time_work'] !!}</span>
+                            <div class="row">
+                                <div class="col-md-12 col-6">
+                                    <div class="info-ft-phone">
+                                        <p>Hotline</p>
+                                        <span>{!! $setting['hotline'] !!}</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-6">
+                                    <div class="info-ft-phone">
+                                        <p>Giờ mở cửa</p>
+                                        <span class="open-store">{!! $setting['time_work'] !!}</span>
+                                    </div>
+                                </div>
                             </div>
                             <button class="btn btn-order" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Đặt bàn ngay <i class="fas fa-chevron-right"></i></button>
                         </div>
@@ -38,7 +44,7 @@
                             </div>
                         </div>
                         <div class="col-md-7">
-                            <div class="fb-page" data-href="https://www.facebook.com/giakhanhhotpot" data-tabs="" data-width="" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/giakhanhhotpot" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/giakhanhhotpot">Lẩu Nấm Gia Khánh</a></blockquote></div>
+                            <div class="fb-page d-none d-md-block" data-href="https://www.facebook.com/giakhanhhotpot" data-tabs="" data-width="" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/giakhanhhotpot" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/giakhanhhotpot">Lẩu Nấm Gia Khánh</a></blockquote></div>
                             <div class="link-to-restaurant">
                                 <a href="{{ route('store') }}" class="btn btn-store"><i class="fas fa-map-marker-alt"></i> Hệ thống nhà hàng</a>
                             </div>

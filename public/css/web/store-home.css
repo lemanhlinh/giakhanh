@@ -9,6 +9,15 @@
   margin-bottom: 45px;
   text-align: center;
 }
+@media (max-width: 768px) {
+  .top-content-media {
+    padding-top: 20px;
+  }
+  .top-content-media .title-page {
+    font-size: 30px;
+    margin-bottom: 20px;
+  }
+}
 
 .list-store-home {
   margin-bottom: 80px;
