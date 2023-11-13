@@ -16,9 +16,7 @@ class SetLocale
      */
     public function handle(Request $request, Closure $next)
     {
-        if (! $request->segment(1)) {
-            \LaravelLocalization::setLocale(config('app.locale'));
-        }
+        \LaravelLocalization::setLocale(config('app.locale'));
 
         return $next($request);
     }
