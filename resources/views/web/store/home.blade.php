@@ -17,7 +17,7 @@
                 <div class="col-md-4">
                     <div class="search mb-3">
                         <form action="#" method="post" name="search_agency" id="search_agency">
-                            <div class="row g-2">
+                            <div class="row g-2 mt-3 mt-md-0">
                                 <div class="col-md-5">
                                     <select name="province" id="province" class="select_box form-control">
                                         <option value="">--Tỉnh Thành--</option>
