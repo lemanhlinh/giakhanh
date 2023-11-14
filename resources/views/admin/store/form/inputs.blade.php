@@ -17,7 +17,7 @@
                 <!-- text input -->
                 <div class="form-group">
                     <label>@lang('form.store.city_id')</label>
-                    <select name="city_id" id="city_id" class="form-control">
+                    <select name="city_id" id="city_id" class="form-control" required>
                         @forelse($cities as $city)
                             <option value="{{ $city->id }}" {{ isset($store) ? $store->city_id == $city->id ? 'selected': '' : old('city_id') }}>{{ $city->name }}</option>
                         @empty
@@ -34,7 +34,7 @@
                 <!-- text input -->
                 <div class="form-group">
                     <label>@lang('form.store.phone')</label>
-                    <input type="text" class="form-control" name="phone" value="{{ isset($store) ? $store->phone : old('phone') }}">
+                    <input type="text" class="form-control" name="phone" value="{{ isset($store) ? $store->phone : old('phone') }}" required>
                     @if ($errors->has('phone'))
                         <span class="help-block text-danger">
                     <strong>{{ $errors->first('phone') }}</strong>
@@ -46,7 +46,7 @@
                 <!-- text input -->
                 <div class="form-group">
                     <label>@lang('form.store.address')</label>
-                    <input type="text" class="form-control" name="address" value="{{ isset($store) ? $store->address : old('address') }}">
+                    <input type="text" class="form-control" name="address" value="{{ isset($store) ? $store->address : old('address') }}" required>
                     @if ($errors->has('address'))
                         <span class="help-block text-danger">
                     <strong>{{ $errors->first('address') }}</strong>

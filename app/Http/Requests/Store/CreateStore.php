@@ -26,7 +26,7 @@ class CreateStore extends FormRequest
         return [
             'title' => 'required',
             'phone' => 'nullable',
-            'address' => 'nullable',
+            'address' => 'required',
             'latitude' => 'nullable',
             'longitude' => 'nullable',
             'city_id' => 'nullable',
