@@ -7,6 +7,10 @@
         text-transform: uppercase;
         margin-bottom: 45px;
         text-align: center;
+        @media (max-width: 768px) {
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
     }
     .list-menu-page{
         text-align: center;
@@ -27,6 +31,12 @@
                 background: #E91A22;
             }
         }
+        @media (max-width: 768px) {
+            margin-bottom: 20px;
+        }
+    }
+    @media(max-width:768px){
+        padding-top: 40px;
     }
 }
 .list-news-home{
@@ -63,6 +73,9 @@
                         line-height: revert;
                     }
                 }
+            }
+            @media(max-width:768px){
+                margin-bottom: 20px;
             }
         }
     }

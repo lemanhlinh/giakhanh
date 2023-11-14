@@ -30,13 +30,13 @@
             </div>
         </div>
     </div>
-    <div class="content-detail-bottom py-4">
+    <div class="content-detail-bottom py-md-4 py-0">
         <div class="container">
             <div class="row">
-                <div class="col-md-6 pe-5">
+                <div class="col-md-6 pe-md-5">
                     {!! $setting['map_contact'] !!}
                 </div>
-                <div class="col-md-6 ps-5">
+                <div class="col-md-6 ps-md-5">
                     {!! $setting['info_contact'] !!}
                     <form action="{{ route('detailContactStore') }}" method="POST" enctype="multipart/form-data">
                         @csrf
