@@ -54,7 +54,7 @@ class OrderDataTable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('Bfrtip')
-                    ->orderBy(1)
+                    ->orderBy(0)
                     ->buttons(
                         Button::make('create'),
                         Button::make('export'),
@@ -73,7 +73,7 @@ class OrderDataTable extends DataTable
     {
         return [
             Column::make('id'),
-            Column::make('full_name')->title('Họ và tên'),
+            Column::make('full_name')->title('Họ và tên')->width('150'),
             Column::make('gender')->title('Giới tính'),
             Column::make('email')->title('Email'),
             Column::make('phone')->title('Số điện thoại'),
