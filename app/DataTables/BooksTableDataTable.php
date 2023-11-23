@@ -21,6 +21,9 @@ class BooksTableDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
+            ->editColumn('store_id', function ($q) {
+                return $q->store->title;
+            })
             ->addColumn('action', 'bookstabledatatable.action');
     }
 
@@ -32,7 +35,7 @@ class BooksTableDataTable extends DataTable
      */
     public function query(BookTable $model)
     {
-        return $model->newQuery();
+        return $model->newQuery()->with('store');
     }
 
     /**
@@ -66,14 +69,14 @@ class BooksTableDataTable extends DataTable
     {
         return [
             Column::make('id'),
-            Column::make('full_name'),
-            Column::make('email'),
-            Column::make('phone'),
-            Column::make('store_id'),
-            Column::make('book_time'),
-            Column::make('book_hour'),
-            Column::make('number_customers'),
-            Column::make('note'),
+            Column::make('full_name')->title('Họ và tên'),
+            Column::make('email')->title('Email'),
+            Column::make('phone')->title('Số điện thoại'),
+            Column::make('store_id')->searchable(false)->title('Cửa hàng'),
+            Column::make('book_time')->title('Ngày đặt'),
+            Column::make('book_hour')->title('Giờ đặt'),
+            Column::make('number_customers')->title('Số lượng khách'),
+            Column::make('note')->width('300')->title('Ghi chú'),
             Column::make('created_at'),
             Column::make('updated_at'),
             Column::computed('action')

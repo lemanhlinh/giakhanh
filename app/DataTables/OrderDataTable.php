@@ -70,8 +70,8 @@ class OrderDataTable extends DataTable
             Column::make('gender')->title('Giới tính'),
             Column::make('email')->title('Email'),
             Column::make('phone')->title('Số điện thoại'),
-            Column::make('address')->title('Địa chỉ'),
-            Column::make('note')->title('Ghi chú')->width('500'),
+            Column::make('address')->title('Địa chỉ')->width('300'),
+            Column::make('note')->title('Ghi chú')->width('300'),
             Column::make('created_at'),
             Column::make('updated_at'),
             Column::computed('action')
