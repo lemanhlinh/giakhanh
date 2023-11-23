@@ -66,12 +66,12 @@ class OrderDataTable extends DataTable
     {
         return [
             Column::make('id'),
-            Column::make('full_name'),
-            Column::make('gender'),
-            Column::make('email'),
-            Column::make('phone'),
-            Column::make('address'),
-            Column::make('note'),
+            Column::make('full_name')->title('Họ và tên'),
+            Column::make('gender')->title('Giới tính'),
+            Column::make('email')->title('Email'),
+            Column::make('phone')->title('Số điện thoại'),
+            Column::make('address')->title('Địa chỉ'),
+            Column::make('note')->title('Ghi chú')->width('500'),
             Column::make('created_at'),
             Column::make('updated_at'),
             Column::computed('action')
