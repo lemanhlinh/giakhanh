@@ -45,6 +45,10 @@ class ContactController extends Controller
         DB::beginTransaction();
         try {
             $data = $req->validated();
+            if ($data['contact_me_by_fax_only']){
+                Session::flash('danger', trans('message.create_contact_error'));
+                return redirect()->back();
+            }
             Contact::create(
                 [
                     'full_name' => $data['full_name'],

@@ -44,6 +44,7 @@
                         <p class="text-end">
                             <button type="submit" class="btn btn-contact">Gửi liên hệ <i class="fas fa-angle-right"></i></button>
                         </p>
+                        <input type="text" name="contact_me_by_fax_only" style="opacity: 0 !important" tabindex="-1" autocomplete="off">
                     </form>
                 </div>
             </div>

@@ -28,7 +28,8 @@ class CreateContact extends FormRequest
             'phone' => 'required',
             'title' => 'required',
             'content' => 'required',
-            'email' => 'required'
+            'email' => 'required',
+            'contact_me_by_fax_only' => 'nullable'
         ];
     }
 }
