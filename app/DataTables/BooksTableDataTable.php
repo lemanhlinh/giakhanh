@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\BookTable;
+use Carbon\Carbon;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
@@ -23,6 +24,12 @@ class BooksTableDataTable extends DataTable
             ->eloquent($query)
             ->editColumn('store_id', function ($q) {
                 return $q->store->title;
+            })
+            ->editColumn('created_at', function ($q) {
+                return Carbon::parse($q->created_at)->format('H:i:s Y/m/d');
+            })
+            ->editColumn('updated_at', function ($q) {
+                return Carbon::parse($q->updated_at)->format('H:i:s Y/m/d');
             })
             ->addColumn('action', 'bookstabledatatable.action');
     }
@@ -76,7 +83,7 @@ class BooksTableDataTable extends DataTable
             Column::make('book_time')->title('Ngày đặt'),
             Column::make('book_hour')->title('Giờ đặt'),
             Column::make('number_customers')->title('Số lượng khách'),
-            Column::make('note')->width('300')->title('Ghi chú'),
+            Column::make('note')->title('Ghi chú')->width('300'),
             Column::make('created_at'),
             Column::make('updated_at'),
             Column::computed('action')

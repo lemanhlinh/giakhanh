@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\Order;
+use Carbon\Carbon;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
@@ -21,6 +22,12 @@ class OrderDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
+            ->editColumn('created_at', function ($q) {
+                return Carbon::parse($q->created_at)->format('H:i:s Y/m/d');
+            })
+            ->editColumn('updated_at', function ($q) {
+                return Carbon::parse($q->updated_at)->format('H:i:s Y/m/d');
+            })
             ->addColumn('action', 'orderdatatable.action');
     }
 
