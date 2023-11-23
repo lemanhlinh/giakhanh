@@ -70,9 +70,10 @@ class ContactDataTable extends DataTable
     {
         return [
             Column::make('id'),
-            Column::make('name')->title(trans('form.contact.name')),
+            Column::make('full_name')->title("Họ và Tên"),
             Column::make('phone')->title(trans('form.contact.phone')),
             Column::make('email')->title(trans('form.contact.email')),
+            Column::make('title')->title("Vấn đề cần trao đổi"),
             Column::make('content')->title(trans('form.contact.content')),
             Column::make('created_at')
 //            Column::computed('action')
