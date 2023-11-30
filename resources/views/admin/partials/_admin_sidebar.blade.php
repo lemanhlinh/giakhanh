@@ -232,13 +232,54 @@
                     </li>
                 @endcan
                 @can(['view_store'])
-                    <li class="nav-item">
-                        <a href="{{ route('admin.store.index') }}" class="nav-link @if (request()->is('admin/store')) active @endif">
-                            <i class="nav-icon fas fa-store"></i>
+                    <li class="nav-item @if (request()->is('admin/store*') || request()->is('admin/store*')) menu-open @endif">
+                        <a href="#" class="nav-link @if (request()->is('admin/store*')) active @endif">
+                            <i class="fas fa-store"></i>
                             <p>
                                 @lang('form.store.')
+                                <i class="fas fa-angle-left right"></i>
                             </p>
                         </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('admin.store.index') }}" class="nav-link @if (request()->is('admin/store')) active @endif">
+                                    <i class="nav-icon fas fa-store"></i>
+                                    <p>
+                                        @lang('form.store.')
+                                    </p>
+                                </a>
+                            </li>
+                            @can(['view_store_floor'])
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.store-floor.index') }}" class="nav-link @if (request()->is('admin/store-floor')) active @endif">
+                                        <i class="nav-icon fas fas fa-vihara"></i>
+                                        <p>
+                                            Tầng của cửa hàng
+                                        </p>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can(['view_store_floor_desk'])
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.store-floor-desk.index') }}" class="nav-link @if (request()->is('admin/store-floor-desk')) active @endif">
+                                        <i class="nav-icon fab fa-first-order-alt"></i>
+                                        <p>
+                                            Bàn của cửa hàng
+                                        </p>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can(['view_store_user'])
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.store-user.index') }}" class="nav-link @if (request()->is('admin/store-user*')) active @endif">
+                                        <i class="nav-icon fas fa-user-friends"></i>
+                                        <p>
+                                            User quản lý bàn
+                                        </p>
+                                    </a>
+                                </li>
+                            @endcan
+                        </ul>
                     </li>
                 @endcan
             </ul>
