@@ -28,7 +28,12 @@ class StoreFloorDataTable extends DataTable
             ->editColumn('updated_at', function ($q) {
                 return Carbon::parse($q->updated_at)->format('H:i:s Y/m/d');
             })
-            ->addColumn('action', 'storefloor.action');
+            ->addColumn('action', function ($q){
+                $urlEdit = route('admin.store-floor.edit', $q->id);
+                $urlDelete = route('admin.store-floor.destroy', $q->id);
+                $lowerModelName = strtolower(class_basename(new StoreFloor()));
+                return view('admin.components.buttons.edit', compact('urlEdit'))->render() . view('admin.components.buttons.delete', compact('urlDelete', 'lowerModelName'))->render();
+            });
     }
 
     /**

@@ -3,9 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\StoreFloor;
 use App\Models\StoreFloorDesk;
 use Illuminate\Http\Request;
 use App\DataTables\StoreFloorDeskDataTable;
+use App\Http\Requests\Store\CreateStoreFloorDesk;
+use App\Http\Requests\Store\UpdateStoreFloorDesk;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class StoreFloorDeskController extends Controller
 {
@@ -26,7 +31,9 @@ class StoreFloorDeskController extends Controller
      */
     public function create()
     {
-        //
+        $store_floors = StoreFloor::all();
+        $types = StoreFloorDesk::TYPE_TYPE;
+        return view('admin.store-floor-desk.create',compact('types','store_floors'));
     }
 
     /**
@@ -35,9 +42,25 @@ class StoreFloorDeskController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateStoreFloorDesk $req)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $data = $req->validated();
+            $model = StoreFloorDesk::create($data);
+            DB::commit();
+            Session::flash('success', trans('message.create_store_floor_desk_success'));
+            return redirect()->back();
+        } catch (\Exception $ex) {
+            DB::rollBack();
+            \Log::info([
+                'message' => $ex->getMessage(),
+                'line' => __LINE__,
+                'method' => __METHOD__
+            ]);
+            Session::flash('danger', trans('message.create_store_floor_desk_error'));
+            return redirect()->back();
+        }
     }
 
     /**
@@ -57,9 +80,12 @@ class StoreFloorDeskController extends Controller
      * @param  \App\Models\StoreFloorDesk  $storeFloorDesk
      * @return \Illuminate\Http\Response
      */
-    public function edit(StoreFloorDesk $storeFloorDesk)
+    public function edit($id)
     {
-        //
+        $store_floor_desk = StoreFloorDesk::findOrFail($id);
+        $store_floors = StoreFloor::all();
+        $types = StoreFloorDesk::TYPE_TYPE;
+        return view('admin.store-floor-desk.update', compact('store_floor_desk','store_floors','types'));
     }
 
     /**
@@ -69,9 +95,25 @@ class StoreFloorDeskController extends Controller
      * @param  \App\Models\StoreFloorDesk  $storeFloorDesk
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, StoreFloorDesk $storeFloorDesk)
+    public function update(UpdateStoreFloorDesk $req, $id)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $data = $req->validated();
+            $page = StoreFloorDesk::findOrFail($id);
+            $page->update($data);
+            DB::commit();
+            Session::flash('success', trans('message.update_store_floor_desk_success'));
+            return redirect()->route('admin.store-floor-desk.edit', $id);
+        } catch (\Exception $exception) {
+            \Log::info([
+                'message' => $exception->getMessage(),
+                'line' => __LINE__,
+                'method' => __METHOD__
+            ]);
+            Session::flash('danger', trans('message.update_store_floor_desk_error'));
+            return back();
+        }
     }
 
     /**
@@ -80,8 +122,12 @@ class StoreFloorDeskController extends Controller
      * @param  \App\Models\StoreFloorDesk  $storeFloorDesk
      * @return \Illuminate\Http\Response
      */
-    public function destroy(StoreFloorDesk $storeFloorDesk)
+    public function destroy($id)
     {
-        //
+        StoreFloorDesk::destroy($id);
+        return [
+            'status' => true,
+            'message' => trans('message.delete_store_floor_desk_success')
+        ];
     }
 }

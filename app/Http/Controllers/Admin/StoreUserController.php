@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\StoreUser;
 use Illuminate\Http\Request;
 use App\DataTables\StoreUserDataTable;
+use App\Http\Requests\Store\CreateStoreUser;
+use App\Http\Requests\Store\UpdateStoreUser;
 
 class StoreUserController extends Controller
 {
@@ -26,7 +28,7 @@ class StoreUserController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.store-user.create');
     }
 
     /**
@@ -35,7 +37,7 @@ class StoreUserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateStoreUser $req)
     {
         //
     }
@@ -57,9 +59,9 @@ class StoreUserController extends Controller
      * @param  \App\Models\StoreUser  $storeUser
      * @return \Illuminate\Http\Response
      */
-    public function edit(StoreUser $storeUser)
+    public function edit($id)
     {
-        //
+        return view('admin.store-user.update');
     }
 
     /**
@@ -69,7 +71,7 @@ class StoreUserController extends Controller
      * @param  \App\Models\StoreUser  $storeUser
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, StoreUser $storeUser)
+    public function update(UpdateStoreUser $req, $id)
     {
         //
     }
@@ -80,7 +82,7 @@ class StoreUserController extends Controller
      * @param  \App\Models\StoreUser  $storeUser
      * @return \Illuminate\Http\Response
      */
-    public function destroy(StoreUser $storeUser)
+    public function destroy($id)
     {
         //
     }

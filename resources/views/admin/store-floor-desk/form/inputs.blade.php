@@ -4,11 +4,11 @@
             <div class="col-sm-6">
                 <!-- text input -->
                 <div class="form-group">
-                    <label>@lang('form.store.title')</label> <span class="text-danger">*</span>
-                    <input type="text" class="form-control" name="title" value="{{ isset($store) ? $store->title : old('title') }}" required>
-                    @if ($errors->has('title'))
+                    <label>@lang('form.store-floor-desk.name')</label> <span class="text-danger">*</span>
+                    <input type="text" class="form-control" name="name" value="{{ isset($store_floor_desk) ? $store_floor_desk->name : old('name') }}" required>
+                    @if ($errors->has('name'))
                         <span class="help-block text-danger">
-                    <strong>{{ $errors->first('title') }}</strong>
+                    <strong>{{ $errors->first('name') }}</strong>
                 </span>
                     @endif
                 </div>
@@ -16,16 +16,18 @@
             <div class="col-sm-6">
                 <!-- text input -->
                 <div class="form-group">
-                    <label>@lang('form.store.city_id')</label>
-                    <select name="city_id" id="city_id" class="form-control" required>
-                        @forelse($cities as $city)
-                            <option value="{{ $city->id }}" {{ isset($store) ? $store->city_id == $city->id ? 'selected': '' : old('city_id') }}>{{ $city->name }}</option>
-                        @empty
-                        @endforelse
+                    <label>@lang('form.store-floor.store_floor_id')</label>
+                    <select name="store_floor_id" id="store_floor_id" class="form-control" required>
+                        @if($store_floors)
+                            @forelse($store_floors as $store_floor)
+                                <option value="{{ $store_floor->id }}" {{ isset($store_floor_desk) ? $store_floor_desk->store_id == $store_floor->id ? 'selected': '' : old('store_id') }}>{{ $store_floor->name }}</option>
+                            @empty
+                            @endforelse
+                        @endif
                     </select>
-                    @if ($errors->has('city_id'))
+                    @if ($errors->has('store_id'))
                         <span class="help-block text-danger">
-                            <strong>{{ $errors->first('city_id') }}</strong>
+                            <strong>{{ $errors->first('store_id') }}</strong>
                         </span>
                     @endif
                 </div>
@@ -33,49 +35,23 @@
             <div class="col-sm-6">
                 <!-- text input -->
                 <div class="form-group">
-                    <label>@lang('form.store.phone')</label>
-                    <input type="text" class="form-control" name="phone" value="{{ isset($store) ? $store->phone : old('phone') }}" required>
-                    @if ($errors->has('phone'))
+                    <label>@lang('form.store-floor-desk.number_desk')</label> <span class="text-danger">*</span>
+                    <input type="text" class="form-control" name="number_desk" value="{{ isset($store_floor_desk) ? $store_floor_desk->number_desk : old('number_desk') }}" required>
+                    @if ($errors->has('number_desk'))
                         <span class="help-block text-danger">
-                    <strong>{{ $errors->first('phone') }}</strong>
+                    <strong>{{ $errors->first('number_desk') }}</strong>
                 </span>
                     @endif
                 </div>
             </div>
             <div class="col-sm-6">
-                <!-- text input -->
                 <div class="form-group">
-                    <label>@lang('form.store.address')</label>
-                    <input type="text" class="form-control" name="address" value="{{ isset($store) ? $store->address : old('address') }}" required>
-                    @if ($errors->has('address'))
-                        <span class="help-block text-danger">
-                    <strong>{{ $errors->first('address') }}</strong>
-                </span>
-                    @endif
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <!-- text input -->
-                <div class="form-group">
-                    <label>@lang('form.store.latitude')</label>
-                    <input type="text" class="form-control" name="latitude" value="{{ isset($store) ? $store->latitude : old('latitude') }}">
-                    @if ($errors->has('latitude'))
-                        <span class="help-block text-danger">
-                    <strong>{{ $errors->first('latitude') }}</strong>
-                </span>
-                    @endif
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <!-- text input -->
-                <div class="form-group">
-                    <label>@lang('form.store.longitude')</label>
-                    <input type="text" class="form-control" name="longitude" value="{{ isset($store) ? $store->longitude : old('longitude') }}">
-                    @if ($errors->has('longitude'))
-                        <span class="help-block text-danger">
-                    <strong>{{ $errors->first('longitude') }}</strong>
-                </span>
-                    @endif
+                    <label>Loại bàn</label>
+                    <select class="form-control" id="type" name="type">
+                        @foreach($types as $k => $type)
+                            <option value="{{ $k }}" {{ (isset($store_floor_desk) && $store_floor_desk->type == $k) ? 'selected' : '' }}>{{ $type }}</option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
             <div class="col-sm-6">
@@ -84,11 +60,11 @@
                     <label>@lang('form.page.active')</label> <span class="text-danger">*</span>
                     <div class="form-group">
                         <div class="icheck-success d-inline">
-                            <input class="" type="radio" id="statusRadio1" name="active" value="{{ \App\Models\Store::STATUS_ACTIVE }}" {{ (isset($store->active) && $store->active == \App\Models\Store::STATUS_ACTIVE) ? 'checked' : (old('active') && (old('active') == \App\Models\Page::STATUS_ACTIVE)) ? 'checked' : '' }}  required>
+                            <input class="" type="radio" id="statusRadio1" name="active" value="{{ \App\Models\Store::STATUS_ACTIVE }}" {{ (isset($store_floor_desk->active) && $store_floor_desk->active == \App\Models\Store::STATUS_ACTIVE) ? 'checked' : (old('active') && (old('active') == \App\Models\Page::STATUS_ACTIVE)) ? 'checked' : '' }}  required>
                             <label for="statusRadio1" class="custom-control-label">@lang('form.status.active')&nbsp;&nbsp;&nbsp;&nbsp;</label>
                         </div>
                         <div class="icheck-danger d-inline">
-                            <input class="" type="radio" id="statusRadio2" name="active" value="{{ \App\Models\Store::STATUS_INACTIVE }}" {{ (isset($store) && $store->active == \App\Models\Store::STATUS_INACTIVE) ? 'checked' : (old('active') && (old('active') == \App\Models\Page::STATUS_INACTIVE)) ? 'checked' : '' }}  required>
+                            <input class="" type="radio" id="statusRadio2" name="active" value="{{ \App\Models\Store::STATUS_INACTIVE }}" {{ (isset($store_floor_desk) && $store_floor_desk->active == \App\Models\Store::STATUS_INACTIVE) ? 'checked' : (old('active') && (old('active') == \App\Models\Page::STATUS_INACTIVE)) ? 'checked' : '' }}  required>
                             <label for="statusRadio2" class="custom-control-label">@lang('form.status.inactive')</label>
                         </div>
                     </div>
@@ -102,7 +78,7 @@
         </div>
     </div>
     <div class="col-sm-5">
-{{--        @include('admin.store.form.ping')--}}
+{{--        @include('admin.store-floor-desk.form.ping')--}}
     </div>
 </div>
 @section('script')

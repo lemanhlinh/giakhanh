@@ -4,10 +4,10 @@
 
 @section('content')
     <div class="card card-primary card-body">
-        <form action="{{ route('admin.store-floor.update', $store->id) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.store-floor.update', $store_floor->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @include('admin.store-floor.form.inputs')
-            <input type="hidden" name="id" value="{{ $store->id }}">
+            <input type="hidden" name="id" value="{{ $store_floor->id }}">
             <button type="submit" class="btn btn-primary">@lang('form.button.update')</button>
         </form>
     </div>
