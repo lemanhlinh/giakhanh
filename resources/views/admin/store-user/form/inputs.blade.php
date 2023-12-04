@@ -109,6 +109,26 @@
     <div class="col-sm-4">
         <!-- text input -->
         <div class="form-group">
+            <label>@lang('form.user.store')</label>
+            @if(isset($stores))
+            <div class="form-group clearfix">
+                <select class="form-control js-select2" name="stores[]" multiple="multiple">
+                    @foreach ($stores as $store)
+                        <option value="{{ $store->id }}" @if (isset($workIdsOfTrainee) && in_array($store->id, $workIdsOfTrainee)) selected @elseif (is_array(old('store')) && in_array($store->id, old('store'))) selected @endif>{{ $store->title }}</option>
+                    @endforeach
+                </select>
+            </div>
+            @if ($errors->has('stores'))
+                <span class="help-block text-danger">
+                    <strong>{{ $errors->first('stores') }}</strong>
+                </span>
+            @endif
+            @endif
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <!-- text input -->
+        <div class="form-group">
             <label>@lang('form.user.gender')</label> <span class="text-danger">*</span>
             <div class="form-group clearfix">
                 <div class="icheck-success d-inline">

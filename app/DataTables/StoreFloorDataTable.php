@@ -31,8 +31,11 @@ class StoreFloorDataTable extends DataTable
             ->addColumn('action', function ($q){
                 $urlEdit = route('admin.store-floor.edit', $q->id);
                 $urlDelete = route('admin.store-floor.destroy', $q->id);
+                $urlListDesk = route('admin.store-floor.showDesk', ['storeId'=>$q->store->id,'deskId'=>$q->id]);
                 $lowerModelName = strtolower(class_basename(new StoreFloor()));
-                return view('admin.components.buttons.edit', compact('urlEdit'))->render() . view('admin.components.buttons.delete', compact('urlDelete', 'lowerModelName'))->render();
+                return view('admin.components.modals.update-floor-modal', compact('q'))->render() .
+                    view('admin.components.buttons.delete', compact('urlDelete', 'lowerModelName'))->render().
+                    view('admin.components.buttons.list_desk', compact('urlListDesk'))->render();
             });
     }
 
@@ -44,7 +47,14 @@ class StoreFloorDataTable extends DataTable
      */
     public function query(StoreFloor $model)
     {
-        return $model->newQuery();
+        $storeId = $this->store_id;
+        return $model->with([
+            'store' => function ($q) use ($storeId) {
+                $q->where('id', $storeId);
+            }
+        ])->whereHas('store', function ($q) use ($storeId) {
+            $q->where('store_id', $storeId);
+        });
     }
 
     /**
@@ -79,7 +89,6 @@ class StoreFloorDataTable extends DataTable
         return [
             Column::make('id'),
             Column::make('name'),
-            Column::make('store_id'),
             Column::make('created_at'),
             Column::make('updated_at'),
             Column::computed('action')

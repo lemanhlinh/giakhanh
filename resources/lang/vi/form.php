@@ -48,6 +48,7 @@ return [
         'refresh' => 'Làm mới',
         'show_hidden' => 'Ẩn/hiện',
         'back' => 'Quay lại',
+        'list_desk' => 'Danh sách bàn',
     ],
     'admin' => 'Admin',
     'gender' => [
@@ -223,6 +224,21 @@ return [
         'is_home' => 'Hiển thị trang chủ',
         'ordering' => 'Thứ tự',
         'active' => 'Trạng thái'
+    ],
+
+    'store-floor' => [
+        '' => 'Tầng mỗi cửa hàng',
+        'name' => 'Tiêu đề',
+        'active' => 'Trạng thái',
+        'ordering' => 'Thứ tự'
+    ],
+
+    'store-floor-desk' => [
+        '' => 'Bàn mỗi tầng',
+        'name' => 'Tiêu đề',
+        'number_desk' => 'Bàn số',
+        'active' => 'Trạng thái',
+        'ordering' => 'Thứ tự'
     ],
 
 ];

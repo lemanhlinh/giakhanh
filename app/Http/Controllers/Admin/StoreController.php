@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\DataTables\StoreFloorDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Store;
 use App\Models\City;
@@ -149,5 +150,10 @@ class StoreController extends Controller
             'status' => true,
             'message' => trans('message.change_active_store_success')
         ];
+    }
+
+    public function showFloor($storeId, StoreFloorDataTable $dataTable){
+        $store = $this->storeRepository->getOneById($storeId);
+        return $dataTable->with(['store_id' => $storeId])->render('admin.store-floor.index', compact('store'));
     }
 }

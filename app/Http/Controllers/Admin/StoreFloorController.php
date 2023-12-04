@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\DataTables\StoreFloorDeskDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Store;
 use App\Models\StoreFloor;
+use App\Models\StoreFloorDesk;
 use Illuminate\Http\Request;
 use App\DataTables\StoreFloorDataTable;
 use App\Http\Requests\Store\CreateStoreFloor;
@@ -14,26 +16,6 @@ use Illuminate\Support\Facades\Session;
 
 class StoreFloorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(StoreFloorDataTable $dataTable)
-    {
-        return $dataTable->render('admin.store-floor.index');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        $stores = Store::all();
-        return view('admin.store-floor.create', compact('stores'));
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -63,30 +45,6 @@ class StoreFloorController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\StoreFloor  $storeFloor
-     * @return \Illuminate\Http\Response
-     */
-    public function show(StoreFloor $storeFloor)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\StoreFloor  $storeFloor
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $stores = Store::all();
-        $store_floor = StoreFloor::findOrFail($id);
-        return view('admin.store-floor.update', compact('stores','store_floor'));
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -102,7 +60,7 @@ class StoreFloorController extends Controller
             $page->update($data);
             DB::commit();
             Session::flash('success', trans('message.update_store_floor_success'));
-            return redirect()->route('admin.store-floor.edit', $id);
+            return redirect()->back();
         } catch (\Exception $exception) {
             \Log::info([
                 'message' => $exception->getMessage(),
@@ -127,5 +85,12 @@ class StoreFloorController extends Controller
             'status' => true,
             'message' => trans('message.delete_store_floor_success')
         ];
+    }
+
+    public function showDesk($storeId, $deskId, StoreFloorDeskDataTable $dataTable){
+        $store = Store::findOrFail($storeId);
+        $desk = StoreFloor::findOrFail($deskId);
+        $types = StoreFloorDesk::TYPE_TYPE;
+        return $dataTable->with(['store_id' => $storeId,'desk_id' => $deskId])->render('admin.store-floor-desk.index', compact('store','desk','types'));
     }
 }

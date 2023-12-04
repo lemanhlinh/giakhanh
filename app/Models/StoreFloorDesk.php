@@ -18,4 +18,14 @@ class StoreFloorDesk extends Model
         self::TYPE_TABLE_NORMAL => 'Bàn thường',
         self::TYPE_TABLE_VIP => 'Bàn vip'
     ];
+
+    public function Store()
+    {
+        return $this->belongsTo(Store::class,'store_id','id');
+    }
+
+    public function StoreFloor()
+    {
+        return $this->belongsTo(StoreFloor::class,'store_floor_id','id');
+    }
 }

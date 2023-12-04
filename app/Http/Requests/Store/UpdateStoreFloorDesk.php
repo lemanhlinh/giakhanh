@@ -26,6 +26,7 @@ class UpdateStoreFloorDesk extends FormRequest
         return [
             'name' => 'required',
             'number_desk' => 'nullable',
+            'store_id' => 'required',
             'store_floor_id' => 'required',
             'type' => 'nullable',
             'active' => 'nullable',

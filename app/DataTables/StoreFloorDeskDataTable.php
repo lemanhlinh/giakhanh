@@ -2,6 +2,7 @@
 
 namespace App\DataTables;
 
+use App\Models\StoreFloor;
 use App\Models\StoreFloorDesk;
 use Carbon\Carbon;
 use Yajra\DataTables\Html\Button;
@@ -28,7 +29,13 @@ class StoreFloorDeskDataTable extends DataTable
             ->editColumn('updated_at', function ($q) {
                 return Carbon::parse($q->updated_at)->format('H:i:s Y/m/d');
             })
-            ->addColumn('action', 'storefloordesk.action');
+            ->addColumn('action', function ($q){
+                $urlDelete = route('admin.store-floor.destroy', $q->id);
+                $lowerModelName = strtolower(class_basename(new StoreFloor()));
+                $types = StoreFloorDesk::TYPE_TYPE;
+                return view('admin.components.modals.update-floor-desk-modal', compact('q','types'))->render() .
+                    view('admin.components.buttons.delete', compact('urlDelete', 'lowerModelName'))->render();
+            });
     }
 
     /**
@@ -39,7 +46,19 @@ class StoreFloorDeskDataTable extends DataTable
      */
     public function query(StoreFloorDesk $model)
     {
-        return $model->newQuery();
+        $storeId = $this->store_id;
+        $deskId = $this->desk_id;
+        return $model->with([
+            'store' => function ($q) use ($storeId) {
+                $q->where('id', $storeId);
+            }, 'storeFloor' => function ($q) use ($deskId) {
+                $q->where('id', $deskId);
+            }
+        ])->whereHas('store', function ($q) use ($storeId) {
+            $q->where('store_id', $storeId);
+        })->whereHas('storeFloor', function ($q) use ($deskId) {
+            $q->where('store_floor_id', $deskId);
+        });
     }
 
     /**
@@ -75,7 +94,6 @@ class StoreFloorDeskDataTable extends DataTable
             Column::make('id'),
             Column::make('name'),
             Column::make('number_desk'),
-            Column::make('store_floor_id'),
             Column::make('created_at'),
             Column::make('updated_at'),
             Column::computed('action')

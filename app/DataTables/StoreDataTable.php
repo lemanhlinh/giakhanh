@@ -40,8 +40,11 @@ class StoreDataTable extends DataTable
             ->addColumn('action', function ($q) {
                 $urlEdit = route('admin.store.edit', $q->id);
                 $urlDelete = route('admin.store.destroy', $q->id);
+                $urlListFloor = route('admin.store.showFloor', $q->id);
                 $lowerModelName = strtolower(class_basename(new Store()));
-                return view('admin.components.buttons.edit', compact('urlEdit'))->render() . view('admin.components.buttons.delete', compact('urlDelete', 'lowerModelName'))->render();
+                return view('admin.components.buttons.edit', compact('urlEdit'))->render() .
+                    view('admin.components.buttons.delete', compact('urlDelete', 'lowerModelName'))->render().
+                    view('admin.components.buttons.list_floor', compact('urlListFloor'))->render();
             })->rawColumns(['active','action']);
     }
 

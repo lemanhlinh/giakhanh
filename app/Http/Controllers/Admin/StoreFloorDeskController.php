@@ -14,27 +14,6 @@ use Illuminate\Support\Facades\Session;
 
 class StoreFloorDeskController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(StoreFloorDeskDataTable $dataTable)
-    {
-        return $dataTable->render('admin.store-floor-desk.index');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        $store_floors = StoreFloor::all();
-        $types = StoreFloorDesk::TYPE_TYPE;
-        return view('admin.store-floor-desk.create',compact('types','store_floors'));
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -64,31 +43,6 @@ class StoreFloorDeskController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\StoreFloorDesk  $storeFloorDesk
-     * @return \Illuminate\Http\Response
-     */
-    public function show(StoreFloorDesk $storeFloorDesk)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\StoreFloorDesk  $storeFloorDesk
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $store_floor_desk = StoreFloorDesk::findOrFail($id);
-        $store_floors = StoreFloor::all();
-        $types = StoreFloorDesk::TYPE_TYPE;
-        return view('admin.store-floor-desk.update', compact('store_floor_desk','store_floors','types'));
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -104,7 +58,7 @@ class StoreFloorDeskController extends Controller
             $page->update($data);
             DB::commit();
             Session::flash('success', trans('message.update_store_floor_desk_success'));
-            return redirect()->route('admin.store-floor-desk.edit', $id);
+            return redirect()->back();
         } catch (\Exception $exception) {
             \Log::info([
                 'message' => $exception->getMessage(),

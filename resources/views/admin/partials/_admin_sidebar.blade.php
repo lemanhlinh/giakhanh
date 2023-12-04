@@ -242,33 +242,13 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{{ route('admin.store.index') }}" class="nav-link @if (request()->is('admin/store')) active @endif">
+                                <a href="{{ route('admin.store.index') }}" class="nav-link @if (request()->is('admin/store/*')) active @endif">
                                     <i class="nav-icon fas fa-store"></i>
                                     <p>
                                         @lang('form.store.')
                                     </p>
                                 </a>
                             </li>
-                            @can(['view_store_floor'])
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.store-floor.index') }}" class="nav-link @if (request()->is('admin/store-floor')) active @endif">
-                                        <i class="nav-icon fas fas fa-vihara"></i>
-                                        <p>
-                                            Tầng của cửa hàng
-                                        </p>
-                                    </a>
-                                </li>
-                            @endcan
-                            @can(['view_store_floor_desk'])
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.store-floor-desk.index') }}" class="nav-link @if (request()->is('admin/store-floor-desk')) active @endif">
-                                        <i class="nav-icon fab fa-first-order-alt"></i>
-                                        <p>
-                                            Bàn của cửa hàng
-                                        </p>
-                                    </a>
-                                </li>
-                            @endcan
                             @can(['view_store_user'])
                                 <li class="nav-item">
                                     <a href="{{ route('admin.store-user.index') }}" class="nav-link @if (request()->is('admin/store-user*')) active @endif">

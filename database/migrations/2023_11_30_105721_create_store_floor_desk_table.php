@@ -17,6 +17,7 @@ class CreateStoreFloorDeskTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->integer('number_desk');
+            $table->integer('store_id')->unsigned()->nullable();
             $table->integer('store_floor_id')->unsigned()->nullable();
             $table->tinyInteger('type')->default(0)->comment('0: Bàn mặc định; 1: Bàn Vip');
             $table->tinyInteger('active')->default(0)->comment('0: Không hoạt động; 1: Hoạt động');
