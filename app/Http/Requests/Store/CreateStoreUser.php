@@ -25,9 +25,9 @@ class CreateStoreUser extends FormRequest
     {
         return [
             'name' => 'required|max:50',
-            'email' => 'required|email|unique:users',
+            'email' => 'required|email|unique:store_user',
             'phone' => 'required|min:8|max:15',
-            'status' => 'required',
+            'stores' => 'required',
             'type' => 'required',
             'gender' => 'required',
             'active' => 'required',

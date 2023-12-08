@@ -17,4 +17,9 @@ protected $table = 'store_floor';
     {
         return $this->belongsTo(Store::class,'store_id','id');
     }
+
+    public function FloorDesk()
+    {
+        return $this->hasMany(StoreFloorDesk::class,'store_floor_id','id');
+    }
 }

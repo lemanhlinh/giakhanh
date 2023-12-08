@@ -28,7 +28,15 @@ class StoreUserDataTable extends DataTable
             ->editColumn('updated_at', function ($q) {
                 return Carbon::parse($q->updated_at)->format('H:i:s Y/m/d');
             })
-            ->addColumn('action', 'storeuser.action');
+            ->addColumn('birthday_format', function ($q) {
+                return Carbon::parse($q->birthday)->format('Y/m/d');
+            })
+            ->addColumn('action', function ($q) {
+                $urlEdit = route('admin.store-user.edit', $q->id);
+                $urlDelete = route('admin.store-user.destroy', $q->id);
+                $lowerModelName = strtolower(class_basename(new StoreUser()));
+                return view('admin.components.buttons.edit', compact('urlEdit'))->render() . view('admin.components.buttons.delete', compact('urlDelete', 'lowerModelName'))->render();
+            });
     }
 
     /**

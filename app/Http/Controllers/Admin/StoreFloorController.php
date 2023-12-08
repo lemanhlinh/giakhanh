@@ -13,6 +13,7 @@ use App\Http\Requests\Store\CreateStoreFloor;
 use App\Http\Requests\Store\UpdateStoreFloor;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use App\Events\MessagePosted;
 
 class StoreFloorController extends Controller
 {
@@ -57,9 +58,11 @@ class StoreFloorController extends Controller
         try {
             $data = $req->validated();
             $page = StoreFloor::findOrFail($id);
-            $page->update($data);
+            $model = $page->update($data);
             DB::commit();
             Session::flash('success', trans('message.update_store_floor_success'));
+            broadcast(new MessagePosted($page))->toOthers();
+
             return redirect()->back();
         } catch (\Exception $exception) {
             \Log::info([

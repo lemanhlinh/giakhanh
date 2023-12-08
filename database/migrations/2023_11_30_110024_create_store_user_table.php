@@ -25,6 +25,7 @@ class CreateStoreUserTable extends Migration
             $table->date('birthday')->nullable();
             $table->tinyInteger('type')->default(0)->comment('0: Quản lý; 1: Nhân viên');
             $table->tinyInteger('active')->default(0)->comment('0: Không hoạt động; 1: Hoạt động');
+            $table->string('stores')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

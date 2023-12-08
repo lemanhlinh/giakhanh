@@ -176,7 +176,7 @@ return [
         App\Providers\RepositoryServiceProvider::class,
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
+         App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Artesaos\SEOTools\Providers\SEOToolsServiceProvider::class,
@@ -238,6 +238,7 @@ return [
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'SEO' => Artesaos\SEOTools\Facades\SEOTools::class,
+        'Redis' => Illuminate\Support\Facades\Redis::class,
 
     ],
 

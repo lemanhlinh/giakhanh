@@ -114,7 +114,7 @@
             <div class="form-group clearfix">
                 <select class="form-control js-select2" name="stores[]" multiple="multiple">
                     @foreach ($stores as $store)
-                        <option value="{{ $store->id }}" @if (isset($workIdsOfTrainee) && in_array($store->id, $workIdsOfTrainee)) selected @elseif (is_array(old('store')) && in_array($store->id, old('store'))) selected @endif>{{ $store->title }}</option>
+                        <option value="{{ $store->id }}" @if (isset($storeIdsOfUser) && in_array($store->id, $storeIdsOfUser)) selected @elseif (old('stores') && in_array($store->id, old('stores'))) selected @endif>{{ $store->title }}</option>
                     @endforeach
                 </select>
             </div>
@@ -153,11 +153,11 @@
             <label>@lang('form.user.active')</label> <span class="text-danger">*</span>
             <div class="form-group clearfix">
                 <div class="icheck-success d-inline">
-                    <input class="" type="radio" id="statusRadio1" name="active" value="{{ \App\Models\User::STATUS_ACTIVE }}" {{ isset($user->status) && $user->status == \App\Models\User::STATUS_ACTIVE ? 'checked' : '' }} required>
+                    <input class="" type="radio" id="statusRadio1" name="active" value="{{ \App\Models\User::STATUS_ACTIVE }}" {{ isset($user->active) && $user->active == \App\Models\User::STATUS_ACTIVE ? 'checked' : '' }} required>
                     <label for="statusRadio1" class="custom-control-label">@lang('form.status.active')</label>
                 </div>
                 <div class="icheck-danger d-inline">
-                    <input class="" type="radio" id="statusRadio2" name="active" value="{{ \App\Models\User::STATUS_INACTIVE }}" {{ isset($user->status) && $user->status == \App\Models\User::STATUS_INACTIVE ? 'checked' : '' }} required>
+                    <input class="" type="radio" id="statusRadio2" name="active" value="{{ \App\Models\User::STATUS_INACTIVE }}" {{ isset($user->active) && $user->active == \App\Models\User::STATUS_INACTIVE ? 'checked' : '' }} required>
                     <label for="statusRadio2" class="custom-control-label">@lang('form.status.inactive')</label>
                 </div>
             </div>

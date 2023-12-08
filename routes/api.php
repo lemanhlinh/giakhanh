@@ -13,12 +13,14 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::group(['namespace' => 'Api'], function (){
-    Route::get('/danh-sach-cua-hang', 'StoreController@listStore')->name('listStore');
-    Route::get('/danh-sach-ban', 'StoreController@listTable')->name('listTable');
-    Route::get('/danh-sach-mon', 'StoreController@listFood')->name('listFood');
-});
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['middleware' => 'api', 'namespace' => 'Api'], function () {
+    Route::post('login', 'AuthController@login');
+    Route::post('logout', 'AuthController@logout');
+    Route::group(['middleware' => ['auth:api']], function () {
+        Route::post('refresh', 'AuthController@refresh');
+        Route::get('/me', 'AuthController@me');
+        Route::get('/danh-sach-cua-hang', 'StoreController@listStore')->name('listStore');
+        Route::get('/danh-sach-ban/{storeId}', 'StoreController@listTable')->name('listTable');
+        Route::get('/danh-sach-mon/{storeId}/{tableId}', 'StoreController@listFood')->name('listFood');
+    });
 });
