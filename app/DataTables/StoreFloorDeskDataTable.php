@@ -2,7 +2,8 @@
 
 namespace App\DataTables;
 
-use App\Models\Store;
+use App\Models\StoreFloor;
+use App\Models\StoreFloorDesk;
 use Carbon\Carbon;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
@@ -10,7 +11,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class StoreDataTable extends DataTable
+class StoreFloorDeskDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -22,41 +23,42 @@ class StoreDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->editColumn('active', function ($q) {
-                $url = route('admin.store.changeActive', $q->id);
-                $status = $q->active == Store::STATUS_ACTIVE ? 'checked' : null;
-                return view('admin.components.buttons.change_status', [
-                    'url' => $url,
-                    'lowerModelName' => 'store',
-                    'status' => $status,
-                ])->render();
-            })
             ->editColumn('created_at', function ($q) {
                 return Carbon::parse($q->created_at)->format('H:i:s Y/m/d');
             })
             ->editColumn('updated_at', function ($q) {
                 return Carbon::parse($q->updated_at)->format('H:i:s Y/m/d');
             })
-            ->addColumn('action', function ($q) {
-                $urlEdit = route('admin.store.edit', $q->id);
-                $urlDelete = route('admin.store.destroy', $q->id);
-                $urlListFloor = route('admin.store.showFloor', $q->id);
-                $lowerModelName = strtolower(class_basename(new Store()));
-                return view('admin.components.buttons.edit', compact('urlEdit'))->render() .
-                    view('admin.components.buttons.delete', compact('urlDelete', 'lowerModelName'))->render().
-                    view('admin.components.buttons.list_floor', compact('urlListFloor'))->render();
-            })->rawColumns(['active','action']);
+            ->addColumn('action', function ($q){
+                $urlDelete = route('admin.store-floor.destroy', $q->id);
+                $lowerModelName = strtolower(class_basename(new StoreFloor()));
+                $types = StoreFloorDesk::TYPE_TYPE;
+                return view('admin.components.modals.update-floor-desk-modal', compact('q','types'))->render() .
+                    view('admin.components.buttons.delete', compact('urlDelete', 'lowerModelName'))->render();
+            });
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Store $model
+     * @param \App\Models\StoreFloorDesk $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Store $model)
+    public function query(StoreFloorDesk $model)
     {
-        return $model->newQuery();
+        $storeId = $this->store_id;
+        $deskId = $this->desk_id;
+        return $model->with([
+            'store' => function ($q) use ($storeId) {
+                $q->where('id', $storeId);
+            }, 'storeFloor' => function ($q) use ($deskId) {
+                $q->where('id', $deskId);
+            }
+        ])->whereHas('store', function ($q) use ($storeId) {
+            $q->where('store_id', $storeId);
+        })->whereHas('storeFloor', function ($q) use ($deskId) {
+            $q->where('store_floor_id', $deskId);
+        });
     }
 
     /**
@@ -67,7 +69,7 @@ class StoreDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('store-table')
+                    ->setTableId('store-floor-desk-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('Bfrtip')
@@ -90,8 +92,8 @@ class StoreDataTable extends DataTable
     {
         return [
             Column::make('id'),
-            Column::make('title'),
-            Column::make('active'),
+            Column::make('name'),
+            Column::make('number_desk'),
             Column::make('created_at'),
             Column::make('updated_at'),
             Column::computed('action')
@@ -109,6 +111,6 @@ class StoreDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'Store_' . date('YmdHis');
+        return 'StoreFloorDesk_' . date('YmdHis');
     }
 }

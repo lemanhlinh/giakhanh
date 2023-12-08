@@ -235,8 +235,37 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
         Route::post('/update/{id}', 'StoreController@update')->name('update')->middleware('permission:edit_store');
         Route::post('/destroy/{id}', 'StoreController@destroy')->name('destroy')->middleware('permission:delete_store');
         Route::post('/change-active-store/{id}', 'StoreController@changeActive')->name('changeActive')->middleware('permission:edit_store');
+        Route::get('/show-floor/{id}', 'StoreController@showFloor')->name('showFloor')->middleware('permission:view_store_floor');
     });
 
+    Route::group(['prefix' => 'store-floor', 'as' => 'store-floor.', 'middleware' => ['permission:view_store_floor']], function () {
+        Route::get('/create', 'StoreFloorController@create')->name('create')->middleware('permission:create_store_floor');
+        Route::post('/store', 'StoreFloorController@store')->name('store')->middleware('permission:create_store_floor');
+        Route::get('/edit/{id}', 'StoreFloorController@edit')->name('edit')->middleware('permission:edit_store_floor');
+        Route::post('/update/{id}', 'StoreFloorController@update')->name('update')->middleware('permission:edit_store_floor');
+        Route::post('/destroy/{id}', 'StoreFloorController@destroy')->name('destroy')->middleware('permission:delete_store_floor');
+        Route::post('/change-active-store-floor/{id}', 'StoreFloorController@changeActive')->name('changeActive')->middleware('permission:edit_store_floor');
+        Route::get('/show-desk/{storeId}/{deskId}', 'StoreFloorController@showDesk')->name('showDesk')->middleware('permission:view_store_floor_desk');
+    });
+
+    Route::group(['prefix' => 'store-floor-desk', 'as' => 'store-floor-desk.', 'middleware' => ['permission:view_store_floor_desk']], function () {
+        Route::get('/create', 'StoreFloorDeskController@create')->name('create')->middleware('permission:create_store_floor_desk');
+        Route::post('/store', 'StoreFloorDeskController@store')->name('store')->middleware('permission:create_store_floor_desk');
+        Route::get('/edit/{id}', 'StoreFloorDeskController@edit')->name('edit')->middleware('permission:edit_store_floor_desk');
+        Route::post('/update/{id}', 'StoreFloorDeskController@update')->name('update')->middleware('permission:edit_store_floor_desk');
+        Route::post('/destroy/{id}', 'StoreFloorDeskController@destroy')->name('destroy')->middleware('permission:delete_store_floor_desk');
+        Route::post('/change-active-store-floor-desk/{id}', 'StoreFloorDeskController@changeActive')->name('changeActive')->middleware('permission:edit_store_floor_desk');
+    });
+
+    Route::group(['prefix' => 'store-user', 'as' => 'store-user.', 'middleware' => ['permission:view_store_user']], function () {
+        Route::get('', 'StoreUserController@index')->name('index');
+        Route::get('/create', 'StoreUserController@create')->name('create')->middleware('permission:create_store_user');
+        Route::post('/store', 'StoreUserController@store')->name('store')->middleware('permission:create_store_user');
+        Route::get('/edit/{id}', 'StoreUserController@edit')->name('edit')->middleware('permission:edit_store_user');
+        Route::post('/update/{id}', 'StoreUserController@update')->name('update')->middleware('permission:edit_store_user');
+        Route::post('/destroy/{id}', 'StoreUserController@destroy')->name('destroy')->middleware('permission:delete_store_user');
+        Route::post('/change-active-store/{id}', 'StoreUserController@changeActive')->name('changeActive')->middleware('permission:edit_store_user');
+    });
 });
 
 

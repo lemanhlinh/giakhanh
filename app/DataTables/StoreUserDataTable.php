@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\Store;
+use App\Models\StoreUser;
 use Carbon\Carbon;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
@@ -10,7 +10,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class StoreDataTable extends DataTable
+class StoreUserDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -22,39 +22,30 @@ class StoreDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->editColumn('active', function ($q) {
-                $url = route('admin.store.changeActive', $q->id);
-                $status = $q->active == Store::STATUS_ACTIVE ? 'checked' : null;
-                return view('admin.components.buttons.change_status', [
-                    'url' => $url,
-                    'lowerModelName' => 'store',
-                    'status' => $status,
-                ])->render();
-            })
             ->editColumn('created_at', function ($q) {
                 return Carbon::parse($q->created_at)->format('H:i:s Y/m/d');
             })
             ->editColumn('updated_at', function ($q) {
                 return Carbon::parse($q->updated_at)->format('H:i:s Y/m/d');
             })
+            ->addColumn('birthday_format', function ($q) {
+                return Carbon::parse($q->birthday)->format('Y/m/d');
+            })
             ->addColumn('action', function ($q) {
-                $urlEdit = route('admin.store.edit', $q->id);
-                $urlDelete = route('admin.store.destroy', $q->id);
-                $urlListFloor = route('admin.store.showFloor', $q->id);
-                $lowerModelName = strtolower(class_basename(new Store()));
-                return view('admin.components.buttons.edit', compact('urlEdit'))->render() .
-                    view('admin.components.buttons.delete', compact('urlDelete', 'lowerModelName'))->render().
-                    view('admin.components.buttons.list_floor', compact('urlListFloor'))->render();
-            })->rawColumns(['active','action']);
+                $urlEdit = route('admin.store-user.edit', $q->id);
+                $urlDelete = route('admin.store-user.destroy', $q->id);
+                $lowerModelName = strtolower(class_basename(new StoreUser()));
+                return view('admin.components.buttons.edit', compact('urlEdit'))->render() . view('admin.components.buttons.delete', compact('urlDelete', 'lowerModelName'))->render();
+            });
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Store $model
+     * @param \App\Models\StoreUser $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Store $model)
+    public function query(StoreUser $model)
     {
         return $model->newQuery();
     }
@@ -67,7 +58,7 @@ class StoreDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('store-table')
+                    ->setTableId('store-user-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('Bfrtip')
@@ -90,10 +81,15 @@ class StoreDataTable extends DataTable
     {
         return [
             Column::make('id'),
-            Column::make('title'),
-            Column::make('active'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
+            Column::make('name')->title(trans('form.user.name')),
+            Column::make('email')->title(trans('form.user.email')),
+            Column::make('phone')->title(trans('form.user.phone')),
+            Column::make('address')->title(trans('form.user.address')),
+            Column::make('birthday_format')->title(trans('form.user.birthday')),
+            Column::make('active')->title(trans('form.user.status'))->render([
+                'renderLabelActive(data)'
+            ]),
+            Column::make('created_at')->title(trans('form.created_at')),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
@@ -109,6 +105,6 @@ class StoreDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'Store_' . date('YmdHis');
+        return 'StoreUser_' . date('YmdHis');
     }
 }

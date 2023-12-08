@@ -138,6 +138,21 @@ class PermissionSeeder extends Seeder
             ['name' => 'edit_media_video', 'display_name' => 'Sửa video', 'guard_name' => 'web'],
             ['name' => 'delete_media_video', 'display_name' => 'Xóa video', 'guard_name' => 'web'],
 
+            ['name' => 'view_store_floor', 'display_name' => 'Xem danh sách tầng', 'guard_name' => 'web'],
+            ['name' => 'create_store_floor', 'display_name' => 'Thêm mới tầng', 'guard_name' => 'web'],
+            ['name' => 'edit_store_floor', 'display_name' => 'Sửa tầng', 'guard_name' => 'web'],
+            ['name' => 'delete_store_floor', 'display_name' => 'Xóa tầng', 'guard_name' => 'web'],
+
+            ['name' => 'view_store_floor_desk', 'display_name' => 'Xem danh sách bàn', 'guard_name' => 'web'],
+            ['name' => 'create_store_floor_desk', 'display_name' => 'Thêm mới bàn', 'guard_name' => 'web'],
+            ['name' => 'edit_store_floor_desk', 'display_name' => 'Sửa bàn', 'guard_name' => 'web'],
+            ['name' => 'delete_store_floor_desk', 'display_name' => 'Xóa bàn', 'guard_name' => 'web'],
+
+            ['name' => 'view_store_user', 'display_name' => 'Xem danh sách user cửa hàng', 'guard_name' => 'web'],
+            ['name' => 'create_store_user', 'display_name' => 'Thêm mới user cửa hàng', 'guard_name' => 'web'],
+            ['name' => 'edit_store_user', 'display_name' => 'Sửa user cửa hàng', 'guard_name' => 'web'],
+            ['name' => 'delete_store_user', 'display_name' => 'Xóa user cửa hàng', 'guard_name' => 'web'],
+
         ];
     }
 }
