@@ -1,6 +1,8 @@
 /node_modules
 /public/hot
 /public/storage
+/public/images/uploads
+/public/wp-content
 /storage/*.key
 /vendor
 .env
