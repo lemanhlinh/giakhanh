@@ -31,7 +31,12 @@ class BooksTableDataTable extends DataTable
             ->editColumn('updated_at', function ($q) {
                 return Carbon::parse($q->updated_at)->format('H:i:s Y/m/d');
             })
-            ->addColumn('action', 'bookstabledatatable.action');
+            ->addColumn('action', function ($q) {
+                $urlEdit = route('admin.book-table.edit', $q->id);
+                $urlDelete = route('admin.book-table.destroy', $q->id);
+                $lowerModelName = strtolower(class_basename(new BookTable()));
+                return view('admin.components.buttons.edit', compact('urlEdit'))->render(). view('admin.components.buttons.delete', compact('urlDelete', 'lowerModelName'))->render();
+            })->rawColumns(['action']);
     }
 
     /**
@@ -79,11 +84,14 @@ class BooksTableDataTable extends DataTable
             Column::make('full_name')->title('Họ và tên'),
             Column::make('email')->title('Email'),
             Column::make('phone')->title('Số điện thoại'),
-            Column::make('store_id')->searchable(false)->title('Cửa hàng'),
+            Column::make('store_id')->searchable(false)->title('Cửa hàng')->width(150),
             Column::make('book_time')->title('Ngày đặt'),
             Column::make('book_hour')->title('Giờ đặt'),
             Column::make('number_customers')->title('Số lượng khách'),
             Column::make('note')->title('Ghi chú')->width('300'),
+            Column::make('status')->title('Trạng thái đơn hàng')->render([
+                'renderLabelOrderStatus(data)'
+            ]),
             Column::make('created_at'),
             Column::make('updated_at'),
             Column::computed('action')

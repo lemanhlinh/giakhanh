@@ -130,5 +130,17 @@ return [
         'parent' => 'Cấp Cha',
         'create' => 'Tạo danh mục',
         'image' => 'Hình ảnh'
+    ],
+    'book-table' => [
+        'full_name' => 'Họ và tên',
+        'email' => 'Email',
+        'phone' => 'Số điện thoại',
+        'store_id' => 'Cửa hàng',
+        'book_time' => 'Ngày đặt',
+        'book_hour' => 'Giờ đặt',
+        'number_customers' => 'Số lượng',
+        'note' => 'Khách ghi chú',
+        'status' => 'Trạng thái',
+        'admin_note' => 'Admin ghi chú',
     ]
 ];

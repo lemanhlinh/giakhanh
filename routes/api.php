@@ -21,6 +21,10 @@ Route::group(['middleware' => 'api', 'namespace' => 'Api'], function () {
         Route::get('/me', 'AuthController@me');
         Route::get('/danh-sach-cua-hang', 'StoreController@listStore')->name('listStore');
         Route::get('/danh-sach-ban/{storeId}', 'StoreController@listTable')->name('listTable');
-        Route::get('/danh-sach-mon/{storeId}/{tableId}', 'StoreController@listFood')->name('listFood');
+        Route::get('/danh-sach-mon', 'StoreController@listFood')->name('listFood');
+        Route::get('/danh-sach-mon-dang-dung/{storeId}/{tableId}', 'StoreController@listFoodUse')->name('listFoodUse');
+        Route::get('/danh-sach-dat-ban/{storeId}/{tableId}', 'StoreController@bookTable')->name('bookTable');
+        Route::post('/them-dat-ban', 'StoreController@createBookTable')->name('createBookTable');
+        Route::get('/lich-su-dat-ban/{storeId}/{tableId}', 'StoreController@historyTable')->name('historyTable');
     });
 });

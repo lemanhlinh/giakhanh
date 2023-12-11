@@ -3,11 +3,15 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\BookTable\CreateBookTable;
+use App\Models\BookTable;
 use App\Models\Product;
 use App\Models\Store;
 use App\Models\StoreFloor;
 use App\Models\StoreFloorDesk;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class StoreController extends Controller
 {
@@ -25,9 +29,41 @@ class StoreController extends Controller
         return $list;
     }
 
-    public function listFood($storeId, $tableId)
+    public function listFood()
     {
-        $list = StoreFloorDesk::where('active',1)->get();
+        $list = Product::where('active',1)->get();
         return $list;
+    }
+
+    public function bookTable($storeId, $tableId)
+    {
+        $list = Product::where('active',1)->get();
+        return $list;
+    }
+
+    public function historyTable($storeId, $tableId)
+    {
+        $list = Product::where('active',1)->get();
+        return $list;
+    }
+
+    public function createBookTable (CreateBookTable $req){
+        DB::beginTransaction();
+        try {
+            $data = $req->validated();
+            BookTable::create($data);
+            DB::commit();
+            return true;
+        } catch (\Exception $ex) {
+            DB::rollBack();
+            \Log::info([
+                'message' => $ex->getMessage(),
+                'line' => __LINE__,
+                'method' => __METHOD__
+            ]);
+
+            return false;
+        }
+        return false;
     }
 }

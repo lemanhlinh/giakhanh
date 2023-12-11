@@ -4,7 +4,7 @@ namespace App\Http\Requests\BookTable;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateBookTable extends FormRequest
+class UpdateBookTable extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,12 +25,12 @@ class CreateBookTable extends FormRequest
     {
         return [
             'full_name' => 'required',
-            'email' => 'nullable',
+            'email' => 'required',
             'phone' => 'required',
             'store_id' => 'required',
             'book_time' => 'required',
             'book_hour' => 'required',
-            'number_customers' => 'nullable',
+            'number_customers' => 'required',
             'note' => 'nullable',
             'status' => 'nullable',
             'admin_note' => 'nullable',
