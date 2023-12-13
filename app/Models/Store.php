@@ -12,8 +12,33 @@ class Store extends Model
 
     protected $guarded = ['id'];
 
+    protected $appends = [
+        'total_use',
+    ];
+
     public function city()
     {
         return $this->belongsTo(City::class, 'city_id', 'id');
+    }
+
+    public function storeFloorDesk()
+    {
+        return $this->hasMany(StoreFloorDesk::class, 'store_id', 'id');
+    }
+
+    public function getTotalUseAttribute()
+    {
+        $desks = $this->storeFloorDesk;
+        $total_use = 0;
+        if ($desks) {
+            foreach ($desks as $desk){
+                if ($desk->status == 3){
+                    $total_use++;
+                }
+            }
+            return $total_use;
+        } else {
+            return $total_use;
+        }
     }
 }

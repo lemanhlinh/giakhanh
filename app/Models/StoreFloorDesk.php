@@ -19,6 +19,12 @@ class StoreFloorDesk extends Model
         self::TYPE_TABLE_VIP => 'Bàn vip'
     ];
 
+//    const STATUS = [
+//        self::TYPE_WAIT => 'Đợi xử lý',
+//        self::TYPE_SUCCESS => 'Thành công',
+//        self::TYPE_CANCER => 'Hủy',
+//    ];
+
     public function Store()
     {
         return $this->belongsTo(Store::class,'store_id','id');
@@ -27,5 +33,10 @@ class StoreFloorDesk extends Model
     public function StoreFloor()
     {
         return $this->belongsTo(StoreFloor::class,'store_floor_id','id');
+    }
+
+    public function BookTable()
+    {
+        return $this->hasMany(BookTable::class,'table_id','id');
     }
 }

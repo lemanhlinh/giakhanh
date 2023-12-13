@@ -61,7 +61,7 @@ class StoreFloorController extends Controller
             $model = $page->update($data);
             DB::commit();
             Session::flash('success', trans('message.update_store_floor_success'));
-//            broadcast(new MessagePosted($page))->toOthers();
+            broadcast(new MessagePosted($page))->toOthers();
 
             return redirect()->back();
         } catch (\Exception $exception) {

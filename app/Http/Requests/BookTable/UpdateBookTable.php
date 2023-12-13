@@ -28,6 +28,7 @@ class UpdateBookTable extends FormRequest
             'email' => 'required',
             'phone' => 'required',
             'store_id' => 'required',
+            'table_id' => 'nullable',
             'book_time' => 'required',
             'book_hour' => 'required',
             'number_customers' => 'required',

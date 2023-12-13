@@ -25,4 +25,9 @@ class BookTable extends Model
     {
         return $this->belongsTo(Store::class, 'store_id', 'id');
     }
+
+    public function floorDesk()
+    {
+        return $this->belongsTo(StoreFloorDesk::class, 'store_id', 'id');
+    }
 }

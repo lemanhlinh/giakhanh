@@ -1,5 +1,5 @@
 {
-	"authHost": "http://giakhanh.local/",
+	"authHost": "http://giakhanh.local",
 	"authEndpoint": "/broadcasting/auth",
 	"clients": [
 		{
