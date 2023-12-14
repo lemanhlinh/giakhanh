@@ -23,7 +23,8 @@ Route::group(['middleware' => 'api', 'namespace' => 'Api'], function () {
         Route::get('/danh-sach-ban/{storeId}', 'StoreController@listTable')->name('listTable');
         Route::get('/chi-tiet-ban/{storeId}/{tableId}', 'StoreController@detailTable')->name('detailTable');
         Route::get('/danh-sach-mon', 'StoreController@listFood')->name('listFood');
-        Route::get('/danh-sach-mon-dang-dung/{storeId}/{tableId}', 'StoreController@listFoodUse')->name('listFoodUse');
+        Route::post('/them-mon-dang-dung', 'StoreController@addFoodUse')->name('addFoodUse');
+        Route::post('/danh-sach-mon-dang-dung', 'StoreController@listFoodUse')->name('listFoodUse');
         Route::post('/danh-sach-dat-ban', 'StoreController@bookTable')->name('bookTable');
         Route::post('/them-dat-ban', 'StoreController@createBookTable')->name('createBookTable');
         Route::post('/su-dung-ban', 'StoreController@usingTable')->name('usingTable');

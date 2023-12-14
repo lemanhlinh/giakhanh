@@ -30,4 +30,9 @@ class BookTable extends Model
     {
         return $this->belongsTo(StoreFloorDesk::class, 'store_id', 'id');
     }
+
+    public function StoreDeskOrder()
+    {
+        return $this->hasMany(StoreDeskOrder::class,'book_table_id','id');
+    }
 }

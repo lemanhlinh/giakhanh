@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Models\Store;
 use App\Models\StoreFloor;
 use App\Models\StoreFloorDesk;
+use App\Models\StoreDeskOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -35,7 +36,9 @@ class StoreController extends Controller
 
     public function detailTable($storeId,$tableId)
     {
-        $data = StoreFloorDesk::where(['active' => 1, 'store_id' => $storeId, 'id' => $tableId])->first();
+        $data = StoreFloorDesk::where(['active' => 1, 'store_id' => $storeId, 'id' => $tableId])->with(['BookTable' => function($query){
+            $query->where('is_come', 1)->with(['StoreDeskOrder']);
+        }])->first();
         return $data;
     }
 
@@ -43,6 +46,55 @@ class StoreController extends Controller
     {
         $list = Product::where('active',1)->get();
         return $list;
+    }
+
+    public function listFoodUse(Request $request)
+    {
+        $book_table_id = $request->input('book_table_id');
+        if ($book_table_id){
+            $storeId = $request->input('store_id');
+            $tableId = $request->input('table_id');
+            $order = StoreDeskOrder::where([
+                'book_table_id'=> $book_table_id,
+                'store_id' => $storeId,
+                'table_id' => $tableId
+            ])->with('products')->get();
+            return $order;
+        }else{
+            return null;
+        }
+
+    }
+
+    public function addFoodUse(Request $request)
+    {
+        $book_table_id = $request->input('book_table_id');
+        $storeId = $request->input('store_id');
+        $tableId = $request->input('table_id');
+        $order_list = $request->input('order_list');
+        foreach ($order_list as $item){
+            $order = StoreDeskOrder::where([
+                'book_table_id'=> $book_table_id,
+                'store_id' => $storeId,
+                'table_id' => $tableId,
+                'product_id' => $item['id']
+            ])->first();
+            if ($order){
+                $data = [
+                    'quantity' => $item['quantity']
+                ];
+                $order->update($data);
+            }else{
+                $data = [
+                    'book_table_id'=> $book_table_id,
+                    'store_id' => $storeId,
+                    'table_id' => $tableId,
+                    'product_id' => $item['id'],
+                    'quantity' => $item['quantity']
+                ];
+                StoreDeskOrder::create($data);
+            }
+        }
     }
 
     public function bookTable(Request $request)
