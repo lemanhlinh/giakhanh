@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\BookTable\CreateBookTable;
-use App\Models\BookTable;
 use App\Models\Product;
 use App\Models\Store;
 use App\Models\StoreCustomer;
@@ -13,14 +11,15 @@ use App\Models\StoreFloorDesk;
 use App\Models\StoreDeskOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Session;
 use Carbon\Carbon;
 
 class StoreController extends Controller
 {
-    public function listStore()
+    public function listStore(Request $request)
     {
-        $list = Store::where('active',1)->orderBy('id','DESC')
+        $stores_id = $request->input('stores_id');
+        $stores_id = explode(',',$stores_id);
+        $list = Store::where('active',1)->whereIn('id', $stores_id)->orderBy('id','DESC')
             ->with(['storeFloorDesk' => function($query){
                 $query->where('active', 1)
                     ->with(['StoreCustomer']);
@@ -39,7 +38,7 @@ class StoreController extends Controller
         return $list;
     }
 
-    public function detailTable($storeId,$tableId)
+    public function detailTable($storeId,$floorId,$tableId)
     {
         $data = StoreFloorDesk::where(['active' => 1, 'store_id' => $storeId, 'id' => $tableId])->with(['StoreCustomerUse' => function($query){
             $query->with(['StoreDeskOrder']);
@@ -252,30 +251,46 @@ class StoreController extends Controller
         return $list;
     }
 
-    public function historyTable($storeId, $tableId)
+    public function historyTable($storeId, $floorId ,$tableId)
     {
         $data = StoreFloorDesk::where(['active' => 1, 'store_id' => $storeId, 'id' => $tableId])->with(['StoreCustomerHistory' => function($query){
             $query->with(['StoreDeskOrder']);
         }])->first();
-        return response()->json(array(
-            'error' => false,
-            'result' => $data
-        ));
+        if ($data){
+            return response()->json(array(
+                'error' => false,
+                'result' => $data,
+                'message' => 'Lịch sử đặt bàn'
+            ));
+        }else{
+            return response()->json(array(
+                'error' => true,
+                'message' => 'Lấy lịch sử đặt bàn không thành công'
+            ));
+        }
+
     }
 
-    public function createBookTable (CreateBookTable $req){
+    public function createBookTable (Request $request){
         DB::beginTransaction();
         try {
-            $data = $req->validated();
-            $storeId = $data['store_id'];
-            $tableId = $data['table_id'];
-            BookTable::create($data);
-//            $bookTables = BookTable::where(['store_id'=>$storeId,'table_id'=>$tableId])->get();
-//            if ($bookTables){
-//
-//            }
+            $data['full_name'] = $request->input('full_name');
+            $data['book_time'] = $request->input('book_time');
+            $data['phone'] = $request->input('phone');
+            $data['book_hour'] = $request->input('book_hour');
+            $data['store_id'] = $request->input('store_id');
+            $data['table_id'] = $request->input('table_id');
+            $data['floor_id'] = $request->input('floor_id');
+            $data['status'] = $request->input('status');
+            $data['type'] = 2;
+            $data['use_table'] = 2;
+            $data['type_payment'] = 2;
+            StoreCustomer::create($data);
             DB::commit();
-            return true;
+            return response()->json(array(
+                'error' => false,
+                'message' => 'Đặt bàn thành công'
+            ));
         } catch (\Exception $ex) {
             DB::rollBack();
             \Log::info([
@@ -284,15 +299,22 @@ class StoreController extends Controller
                 'method' => __METHOD__
             ]);
 
-            return false;
+            return response()->json(array(
+                'error' => true,
+                'message' => 'Đặt bàn không thành công'
+            ));
         }
-        return false;
+        return response()->json(array(
+            'error' => true,
+            'message' => 'Đặt bàn không thành công'
+        ));
     }
 
     public function usingTable (Request $request){
         {
             $storeId = $request->input('store_id');
             $tableId = $request->input('table_id');
+            $floorId = $request->input('floor_id');
             $status = $request->input('status');
             $currentTime = Carbon::now();
             $date = $currentTime->format('Y-m-d');
@@ -310,11 +332,17 @@ class StoreController extends Controller
                 $data2['book_hour'] = $time;
                 $data2['table_id'] = $tableId;
                 $data2['store_id'] = $storeId;
-                $data2['is_come'] = 1;
+                $data2['floor_id'] = $floorId;
+                $data2['time_come'] = $currentTime;
                 $data2['status'] = 2;
-                BookTable::create($data2);
+                $data2['type'] = 2;
+                $data2['use_table'] = 1;
+                StoreCustomer::create($data2);
                 DB::commit();
-                return true;
+                return response()->json(array(
+                    'error' => true,
+                    'message' => 'Sử dụng bàn thành công'
+                ));
             } catch (\Exception $ex) {
                 DB::rollBack();
                 \Log::info([
@@ -323,7 +351,10 @@ class StoreController extends Controller
                     'method' => __METHOD__
                 ]);
 
-                return false;
+                return response()->json(array(
+                    'error' => true,
+                    'message' => 'Chưa sử dùng bàn'
+                ));
             }
             return false;
         }
@@ -333,19 +364,28 @@ class StoreController extends Controller
         {
             $storeId = $request->input('store_id');
             $tableId = $request->input('table_id');
-            $bookId = $request->input('book_id');
+            $floorId = $request->input('floor_id');
+            $customerId = $request->input('customer_id');
             $status = $request->input('status');
             DB::beginTransaction();
             try {
-                $data['is_come'] = 1;
-                $book_table = BookTable::findOrFail($bookId);
-                $book_table->update($data);
+                $check = StoreCustomer::where(['store_id'=>$storeId,'table_id'=>$tableId,'floor_id'=>$floorId,'use_table'=>1])->get();
+                if ($check){
+                    return response()->json(array(
+                        'error' => true,
+                        'message' => 'Bàn này đang có người sử dụng'
+                    ));
+                }else{
+                    $data['use_table'] = 1;
+                    $book_table = StoreCustomer::findOrFail($customerId);
+                    $book_table->update($data);
+                    DB::commit();
+                    return response()->json(array(
+                        'error' => true,
+                        'message' => 'Sử dụng bàn thành công'
+                    ));
+                }
 
-                $data2['status'] = $status;
-                $desk = StoreFloorDesk::findOrFail($tableId);
-                $desk->update($data2);
-                DB::commit();
-                return true;
             } catch (\Exception $ex) {
                 DB::rollBack();
                 \Log::info([
@@ -354,9 +394,15 @@ class StoreController extends Controller
                     'method' => __METHOD__
                 ]);
 
-                return false;
+                return response()->json(array(
+                    'error' => true,
+                    'message' => 'Chưa sử dùng bàn'
+                ));
             }
-            return false;
+            return response()->json(array(
+                'error' => true,
+                'message' => 'Chưa sử dùng bàn'
+            ));
         }
     }
 

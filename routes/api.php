@@ -19,9 +19,9 @@ Route::group(['middleware' => 'api', 'namespace' => 'Api'], function () {
     Route::group(['middleware' => ['auth:api']], function () {
         Route::post('refresh', 'AuthController@refresh');
         Route::get('/me', 'AuthController@me');
-        Route::get('/danh-sach-cua-hang', 'StoreController@listStore')->name('listStore');
+        Route::post('/danh-sach-cua-hang', 'StoreController@listStore')->name('listStore');
         Route::get('/danh-sach-ban/{storeId}', 'StoreController@listTable')->name('listTable');
-        Route::get('/chi-tiet-ban/{storeId}/{tableId}', 'StoreController@detailTable')->name('detailTable');
+        Route::get('/chi-tiet-ban/{storeId}/{floorId}/{tableId}', 'StoreController@detailTable')->name('detailTable');
         Route::get('/danh-sach-mon', 'StoreController@listFood')->name('listFood');
         Route::post('/them-mon-dang-dung', 'StoreController@addFoodUse')->name('addFoodUse');
         Route::post('/update-mon-dang-dung', 'StoreController@updateFoodUse')->name('updateFoodUse');
@@ -32,6 +32,6 @@ Route::group(['middleware' => 'api', 'namespace' => 'Api'], function () {
         Route::post('/su-dung-ban', 'StoreController@usingTable')->name('usingTable');
         Route::post('/khach-den', 'StoreController@updateIsCome')->name('updateIsCome');
         Route::post('/thanh-toan', 'StoreController@paymentTable')->name('paymentTable');
-        Route::get('/lich-su-dat-ban/{storeId}/{tableId}', 'StoreController@historyTable')->name('historyTable');
+        Route::get('/lich-su-dat-ban/{storeId}/{floorId}/{tableId}', 'StoreController@historyTable')->name('historyTable');
     });
 });
