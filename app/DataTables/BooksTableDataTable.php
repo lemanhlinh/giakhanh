@@ -34,7 +34,7 @@ class BooksTableDataTable extends DataTable
             ->addColumn('action', function ($q) {
                 $urlEdit = route('admin.book-table.edit', $q->id);
                 $urlDelete = route('admin.book-table.destroy', $q->id);
-                $lowerModelName = strtolower(class_basename(new BookTable()));
+                $lowerModelName = 'books';
                 return view('admin.components.buttons.edit', compact('urlEdit'))->render(). view('admin.components.buttons.delete', compact('urlDelete', 'lowerModelName'))->render();
             })->rawColumns(['action']);
     }
