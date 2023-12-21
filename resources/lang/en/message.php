@@ -34,6 +34,23 @@ return [
     'update_role_error' => 'Cập nhật vai trò thất bại',
     'delete_role_success' => 'Xóa vai trò thành công',
     'delete_role_error' => 'Xóa vai trò thất bại',
+
     'create_article_category_error' => 'Tạo danh mục tin tức lỗi',
-    'create_article_category_success' => 'Tạo danh mục tin tức thành công'
+    'create_article_category_success' => 'Tạo danh mục tin tức thành công',
+    'update_article_category_success' => 'Update danh mục tin tức thành công',
+    'update_article_category_error' => 'Update danh mục tin tức lỗi',
+    'delete_article_category_success' => 'Xóa danh mục tin tức thành công',
+    'delete_article_category_error' => 'Danh mục này vẫn có bài viết',
+
+    'create_article_error' => 'Tạo tin tức lỗi',
+    'create_article_success' => 'Tạo tin tức thành công',
+    'update_article_success' => 'Update tin tức thành công',
+    'update_article_error' => 'Update tin tức lỗi',
+    'delete_article_success' => 'Xóa tin tức thành công',
+
+    'create_book_table_error' => 'Đặt bàn lỗi',
+    'create_book_table_success' => 'Đặt bàn thành công',
+    'update_book_table_success' => 'Update đặt bàn thành công',
+    'update_book_table_error' => 'Update đặt bàn lỗi',
+    'delete_book_table_success' => 'Xóa đặt bàn thành công',
 ];
