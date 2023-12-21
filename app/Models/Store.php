@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 
 class Store extends Model
 {
@@ -32,8 +33,10 @@ class Store extends Model
         $total_use = 0;
         if ($desks) {
             foreach ($desks as $desk){
-                if ($desk->status == 3){
-                    $total_use++;
+                if ($desk->StoreCustomer){
+                    if ($desk->StoreCustomer && $desk->StoreCustomer->contains('use_table', 1)) {
+                        $total_use++;
+                    }
                 }
             }
             return $total_use;

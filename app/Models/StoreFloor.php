@@ -12,7 +12,7 @@ protected $guarded = ['id'];
 protected $table = 'store_floor';
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 0;
-
+    
     public function Store()
     {
         return $this->belongsTo(Store::class,'store_id','id');

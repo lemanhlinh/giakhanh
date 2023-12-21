@@ -26,8 +26,9 @@ class CreateBookTable extends FormRequest
         return [
             'full_name' => 'required',
             'email' => 'nullable',
-            'phone' => 'required',
+            'phone' => 'required|numeric|integer||min:8|max:15',
             'store_id' => 'required',
+            'floor_id' => 'nullable',
             'table_id' => 'nullable',
             'book_time' => 'required',
             'book_hour' => 'required',

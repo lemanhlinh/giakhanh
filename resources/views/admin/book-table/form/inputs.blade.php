@@ -20,8 +20,8 @@
                     <input type="text" class="form-control" name="email" value="{{ isset($bookTable) ? $bookTable->email : old('email') }}" required>
                     @if ($errors->has('email'))
                         <span class="help-block text-danger">
-                    <strong>{{ $errors->first('email') }}</strong>
-                </span>
+                            <strong>{{ $errors->first('email') }}</strong>
+                        </span>
                     @endif
                 </div>
             </div>
@@ -37,11 +37,45 @@
                 </div>
             </div>
             <div class="col-sm-6">
+                <!-- text input -->
+                <div class="form-group">
+                    <label>@lang('form.book-table.number_customers')</label>
+                    <input type="text" class="form-control" name="number_customers" value="{{ isset($bookTable) ? $bookTable->number_customers : old('number_customers') }}" required>
+                    @if ($errors->has('number_customers'))
+                        <span class="help-block text-danger">
+                    <strong>{{ $errors->first('number_customers') }}</strong>
+                </span>
+                    @endif
+                </div>
+            </div>
+            <div class="col-sm-6">
                 <div class="form-group clearfix">
                     <label>Cơ sở</label>
-                    <select name="store_id" id="store_id" class="form-control" required>
+                    <select name="store_id" id="store_id" class="form-control" onchange="loadFloor(this.value)" required>
                         @forelse( $stores as $key => $store)
                             <option value="{{ $store->id }}" {{ isset($bookTable->store_id) && $bookTable->store_id == $store->id ? 'selected' : old('store_id') == $store->id ? 'selected' : '' }}>{{  $store->title }}</option>
+                        @empty
+                        @endforelse
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group clearfix">
+                    <label>Chọn tầng</label>
+                    <select name="floor_id" id="floor_id" class="form-control" onchange="loadDesk(this.value)" required>
+                        @forelse( $floors as $key => $floor)
+                            <option value="{{ $floor->id }}" {{ isset($bookTable->floor_id) && $bookTable->floor_id == $floor->id ? 'selected' : old('floor_id') == $floor->id ? 'selected' : '' }}>{{  $floor->name }}</option>
+                        @empty
+                        @endforelse
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group clearfix">
+                    <label>Chọn bàn</label>
+                    <select name="table_id" id="table_id" class="form-control" required>
+                        @forelse( $desks as $key => $desk)
+                            <option value="{{ $desk->id }}" {{ isset($bookTable->table_id) && $bookTable->table_id == $desk->id ? 'selected' : old('table_id') == $desk->id ? 'selected' : '' }}>{{  $desk->name }}</option>
                         @empty
                         @endforelse
                     </select>
@@ -67,18 +101,6 @@
                     @if ($errors->has('book_hour'))
                         <span class="help-block text-danger">
                     <strong>{{ $errors->first('book_hour') }}</strong>
-                </span>
-                    @endif
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <!-- text input -->
-                <div class="form-group">
-                    <label>@lang('form.book-table.number_customers')</label>
-                    <input type="text" class="form-control" name="number_customers" value="{{ isset($bookTable) ? $bookTable->number_customers : old('number_customers') }}" required>
-                    @if ($errors->has('number_customers'))
-                        <span class="help-block text-danger">
-                    <strong>{{ $errors->first('number_customers') }}</strong>
                 </span>
                     @endif
                 </div>
@@ -116,4 +138,57 @@
 
 @section('script')
     @parent
+    <script>
+        function loadFloor(store_id) {
+            $("#table_id").html(`<option data-id="0" value="0">Chọn bàn</option>`);
+            $.ajax({
+                type: 'post',
+                url: '{{ route('admin.book-table.loadFloor') }}',
+                dataType: 'JSON',
+                data: {
+                    store_id: store_id,
+                    _token: "{{ csrf_token() }}",
+                },
+                success: function (data) {
+                    let option = ''
+                    option += `<option data-id="0" value="0">Chọn Tầng</option>`;
+                    data.floors.forEach(item => {
+                        option += `<option value="${item.id}">${item.name}</option>`
+                    });
+
+                    $("#floor_id").html(option);
+                    return true;
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+            return false;
+        }
+
+        function loadDesk(floor_id) {
+            $.ajax({
+                type: 'post',
+                url: '{{ route('admin.book-table.loadDesk') }}',
+                dataType: 'JSON',
+                data: {
+                    store_id: $('#store_id').val(),
+                    floor_id: floor_id,
+                    _token: "{{ csrf_token() }}",
+                },
+                success: function (data) {
+                    let option = ''
+                    option += `<option data-id="0" value="0">Chọn bàn</option>`;
+                    data.desks.forEach(item => {
+                        option += `<option value="${item.id}">${item.name}</option>`
+                    });
+
+                    $("#table_id").html(option);
+                    return true;
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+            return false;
+        }
+    </script>
 @endsection
