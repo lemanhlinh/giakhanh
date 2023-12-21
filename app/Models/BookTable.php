@@ -11,8 +11,23 @@ class BookTable extends Model
     protected $table = 'books_table';
     protected $guarded = ['id'];
 
+    const TYPE_WAIT = 1;
+    const TYPE_SUCCESS = 2;
+    const TYPE_CANCER = 3;
+
+    const TYPE = [
+        self::TYPE_WAIT => 'Đợi xử lý',
+        self::TYPE_SUCCESS => 'Thành công',
+        self::TYPE_CANCER => 'Hủy',
+    ];
+
     public function store()
     {
         return $this->belongsTo(Store::class, 'store_id', 'id');
+    }
+
+    public function floorDesk()
+    {
+        return $this->belongsTo(StoreFloorDesk::class, 'store_id', 'id');
     }
 }

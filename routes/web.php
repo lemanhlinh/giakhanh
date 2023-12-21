@@ -31,7 +31,7 @@ Route::get('/cac-loai-rau', 'RedirectController@catProductCacLoaiRau');
 Route::get('/lau-tai-nha', 'RedirectController@catProductLauTaiNha');
 Route::get('/mon-theo-set', 'RedirectController@catProductMonTheoSet');
 
-Route::group(['namespace' => 'Web', 'middleware' => [ 'localize' ], 'prefix' => LaravelLocalization::setLocale()], function (){
+Route::group(['namespace' => 'Web', 'middleware' => [ 'localize','web' ], 'prefix' => LaravelLocalization::setLocale()], function (){
     Route::get('/', 'HomeController@index')->name('home');
     Route::get(LaravelLocalization::transRoute('routes.page'), 'PageController@index')->name('page');
     Route::get(LaravelLocalization::transRoute('routes.article.cat'), 'ArticleController@cat')->name('catArticle');
@@ -185,6 +185,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
         Route::get('/edit/{id}', 'BookTableController@edit')->name('edit')->middleware('permission:edit_book_table');
         Route::post('/update/{id}', 'BookTableController@update')->name('update')->middleware('permission:edit_book_table');
         Route::post('/destroy/{id}', 'BookTableController@destroy')->name('destroy')->middleware('permission:delete_book_table');
+        Route::post('/load-floor', 'BookTableController@loadFloor')->name('loadFloor')->middleware('permission:edit_book_table');
+        Route::post('/load-desk', 'BookTableController@loadDesk')->name('loadDesk')->middleware('permission:edit_book_table');
     });
 
     Route::group(['prefix' => 'media-image', 'as' => 'media-image.', 'middleware' => ['permission:view_media_image']], function () {

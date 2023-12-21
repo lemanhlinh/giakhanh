@@ -19,10 +19,13 @@ class CreateBooksTableTable extends Migration
             $table->string('email');
             $table->integer('phone');
             $table->integer('store_id')->unsigned()->nullable();
+            $table->integer('table_id')->unsigned()->nullable();
             $table->date('book_time');
             $table->string('book_hour');
             $table->integer('number_customers');
-            $table->text('note');
+            $table->text('note')->nullable();
+            $table->text('admin_note')->nullable();
+            $table->tinyInteger('status')->nullable()->default(1);
             $table->timestamps();
         });
     }
