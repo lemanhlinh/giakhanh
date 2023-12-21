@@ -46,5 +46,12 @@ return [
     'create_article_success' => 'Tạo tin tức thành công',
     'update_article_success' => 'Update tin tức thành công',
     'update_article_error' => 'Update tin tức lỗi',
-    'delete_article_success' => 'Xóa tin tức thành công'
+    'delete_article_success' => 'Xóa tin tức thành công',
+
+    'create_book_table_error' => 'Đặt bàn lỗi',
+    'create_book_table_success' => 'Đặt bàn thành công',
+    'update_book_table_success' => 'Update đặt bàn thành công',
+    'update_book_table_error' => 'Update đặt bàn lỗi',
+    'delete_book_table_success' => 'Xóa đặt bàn thành công',
+
 ];
