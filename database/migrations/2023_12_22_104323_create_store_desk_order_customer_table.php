@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateStoreDeskOrderTable extends Migration
+class CreateStoreDeskOrderCustomerTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,16 @@ class CreateStoreDeskOrderTable extends Migration
      */
     public function up()
     {
-        Schema::create('store_desk_order', function (Blueprint $table) {
+        Schema::create('store_desk_order_customer', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('customer_id');
+            $table->integer('store_id');
             $table->integer('table_id');
-            $table->integer('store_id')->nullable();
-            $table->integer('product_id')->nullable();
-            $table->integer('quantity')->nullable();
+            $table->integer('product_id');
+            $table->integer('quantity');
             $table->integer('price')->nullable();
             $table->string('product_name')->nullable();
+            $table->string('customer_name')->nullable();
+            $table->string('customer_phone')->nullable();
             $table->timestamps();
         });
     }
@@ -33,6 +34,6 @@ class CreateStoreDeskOrderTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('store_desk_order');
+        Schema::dropIfExists('store_desk_order_customer');
     }
 }

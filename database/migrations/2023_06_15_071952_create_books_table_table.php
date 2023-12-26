@@ -17,7 +17,7 @@ class CreateBooksTableTable extends Migration
             $table->increments('id');
             $table->string('full_name');
             $table->string('email');
-            $table->integer('phone');
+            $table->string('phone');
             $table->integer('store_id')->unsigned()->nullable();
             $table->integer('table_id')->unsigned()->nullable();
             $table->date('book_time');

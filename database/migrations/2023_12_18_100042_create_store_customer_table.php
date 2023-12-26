@@ -17,7 +17,7 @@ class CreateStoreCustomerTable extends Migration
             $table->increments('id');
             $table->string('full_name');
             $table->string('email')->nullable();
-            $table->integer('phone');
+            $table->string('phone');
             $table->integer('book_table_id')->unsigned()->nullable();
             $table->integer('store_id')->unsigned()->nullable();
             $table->integer('table_id')->unsigned()->nullable();
