@@ -370,7 +370,7 @@ class StoreController extends Controller
             DB::beginTransaction();
             try {
                 $check = StoreCustomer::where(['store_id'=>$storeId,'table_id'=>$tableId,'floor_id'=>$floorId,'use_table'=>1])->get();
-                if ($check){
+                if (count($check)){
                     return response()->json(array(
                         'error' => true,
                         'message' => 'Bàn này đang có người sử dụng'
