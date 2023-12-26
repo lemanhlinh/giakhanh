@@ -34,4 +34,6 @@ Route::group(['middleware' => 'api', 'namespace' => 'Api'], function () {
         Route::post('/thanh-toan', 'StoreController@paymentTable')->name('paymentTable');
         Route::get('/lich-su-dat-ban/{storeId}/{floorId}/{tableId}', 'StoreController@historyTable')->name('historyTable');
     });
+    Route::get('/nhom-mon-an', 'AppController@listCatProduct')->name('listCatProduct');
+    Route::post('/khach-goi-mon', 'AppController@customerAddFoodUse')->name('customerAddFoodUse');
 });

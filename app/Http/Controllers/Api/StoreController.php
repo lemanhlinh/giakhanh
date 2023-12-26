@@ -116,7 +116,7 @@ class StoreController extends Controller
                     'customer_id'=> $customer_id,
                     'store_id' => $storeId,
                     'table_id' => $tableId,
-                    'product_id' => $item['id']
+                    'product_id' => $item['product_id']
                 ])->first();
                 if ($order){
                     $data = [
@@ -129,7 +129,7 @@ class StoreController extends Controller
                             'customer_id'=> $customer_id,
                             'store_id' => $storeId,
                             'table_id' => $tableId,
-                            'product_id' => $item['id'],
+                            'product_id' => $item['product_id'],
                             'price' => $item['price'],
                             'quantity' => $item['quantity']
                         ];
@@ -170,7 +170,7 @@ class StoreController extends Controller
                 'customer_id'=> $customer_id,
                 'store_id' => $storeId,
                 'table_id' => $tableId,
-                'product_id' => $product['id']
+                'product_id' => $product['product_id']
             ])->first();
             if ($order){
                 $data = [

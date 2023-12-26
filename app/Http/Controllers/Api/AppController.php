@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\ProductsCategories;
 use App\Models\StoreCustomer;
 use App\Models\StoreDeskOrder;
 use App\Models\StoreDeskOrderCustomer;
@@ -12,6 +13,13 @@ use App\Events\MessagePosted;
 
 class AppController extends Controller
 {
+    public function listCatProduct(){
+        $cats = ProductsCategories::where(['active'=>1])->with(['products'=>function($query){
+            $query->where('price','!=', null);
+        }])->get();
+        return $cats;
+    }
+
     public function customerAddFoodUse(Request $request)
     {
         $customer_name = $request->input('customer_name');
