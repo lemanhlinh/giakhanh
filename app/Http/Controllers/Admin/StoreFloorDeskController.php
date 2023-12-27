@@ -65,7 +65,7 @@ class StoreFloorDeskController extends Controller
             $store_id = $data['store_id'];
             $store_floor_id = $data['store_floor_id'];
             $url = env('URL_TABLE_APP').'/goi-mon/'.$store_id.'/'.$store_floor_id.'/'.$id;
-            $data['image_qr'] = QrCode::size(300)->generate($url);
+            $data['image_qr'] = QrCode::format('png')->size(300)->generate($url);
             $page->update($data);
             DB::commit();
             Session::flash('success', trans('message.update_store_floor_desk_success'));
