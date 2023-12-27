@@ -62,18 +62,10 @@ class StoreFloorDeskController extends Controller
             $data = $req->validated();
             $page = StoreFloorDesk::findOrFail($id);
 
-            $path = '/images/qr-code/img/';
-
-            if(!\File::exists(public_path($path))) {
-                \File::makeDirectory(public_path($path));
-            }
-            $file_path = $path . time() . '.png';
-
             $store_id = $data['store_id'];
             $store_floor_id = $data['store_floor_id'];
             $url = env('URL_TABLE_APP').'/goi-mon/'.$store_id.'/'.$store_floor_id.'/'.$id;
-            $image = QrCode::format('png')->size(300)->generate($url, $file_path);
-            $data['image_qr']  = $file_path;
+            $data['image_qr'] = QrCode::size(300)->generate($url);
             $page->update($data);
             DB::commit();
             Session::flash('success', trans('message.update_store_floor_desk_success'));
