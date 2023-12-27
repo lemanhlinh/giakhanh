@@ -11,6 +11,7 @@ use App\Http\Requests\Store\CreateStoreFloorDesk;
 use App\Http\Requests\Store\UpdateStoreFloorDesk;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class StoreFloorDeskController extends Controller
 {
@@ -26,7 +27,12 @@ class StoreFloorDeskController extends Controller
         DB::beginTransaction();
         try {
             $data = $req->validated();
+            $store_id = $data['store_id'];
+            $store_floor_id = $data['store_floor_id'];
             $model = StoreFloorDesk::create($data);
+            $url = env('URL_TABLE_APP').'/goi-mon/'.$store_id.'/'.$store_floor_id.'/'.$model->id;
+            $imageQr = QrCode::size(300)->generate($url);
+            $model->update(['image_qr' => $imageQr]);
             DB::commit();
             Session::flash('success', trans('message.create_store_floor_desk_success'));
             return redirect()->back();
@@ -55,6 +61,11 @@ class StoreFloorDeskController extends Controller
         try {
             $data = $req->validated();
             $page = StoreFloorDesk::findOrFail($id);
+
+            $store_id = $data['store_id'];
+            $store_floor_id = $data['store_floor_id'];
+            $url = env('URL_TABLE_APP').'/goi-mon/'.$store_id.'/'.$store_floor_id.'/'.$id;
+            $data['image_qr'] = QrCode::size(300)->generate($url);
             $page->update($data);
             DB::commit();
             Session::flash('success', trans('message.update_store_floor_desk_success'));

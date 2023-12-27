@@ -52,6 +52,7 @@
                         </select>
                     </div>
                 </div>
+                {!! $q->image_qr !!}
                 <div class="modal-footer">
                     <input type="hidden" name="store_id" value="{{ $q->store->id }}">
                     <input type="hidden" name="store_floor_id" value="{{ $q->storeFloor->id }}">
