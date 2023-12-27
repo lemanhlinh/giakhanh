@@ -16,6 +16,7 @@ class CreateStoreFloorDeskTable extends Migration
         Schema::create('store_floor_desk', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->text('image_qr')->nullable();
             $table->integer('number_desk');
             $table->integer('store_id')->unsigned()->nullable();
             $table->integer('store_floor_id')->unsigned()->nullable();
