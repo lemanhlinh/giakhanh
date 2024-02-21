@@ -116,13 +116,28 @@
                     <p class="des-order">Quý khách vui lòng đặt bàn trước 1 giờ để được phục vụ tốt nhất, mọi chi tiết liên hệ: <b>1900 0056 – 0909 911 112</b></p>
                     <form action="{{ route('bookTable') }}" method="post">
                         @csrf
-                        <input type="text" class="form-control" placeholder="Họ và tên" name="full_name">
+                        <input type="text" class="form-control" value="{{ old('full_name') }}" placeholder="Họ và tên" name="full_name" required>
+                        @if ($errors->has('full_name'))
+                            <span class="help-block text-danger">
+                                <strong>{{ $errors->first('full_name') }}</strong>
+                            </span>
+                        @endif
                         <div class="row">
                             <div class="col-md-6">
-                                <input type="text" class="form-control" placeholder="Số điện thoại" name="phone">
+                                <input type="text" class="form-control" value="{{ old('phone') }}" placeholder="Số điện thoại" name="phone" required>
+                                @if ($errors->has('phone'))
+                                    <span class="help-block text-danger">
+                                        <strong>{{ $errors->first('phone') }}</strong>
+                                    </span>
+                                @endif
                             </div>
                             <div class="col-md-6">
-                                <input type="text" class="form-control" placeholder="Địa chỉ Email" name="email">
+                                <input type="text" class="form-control" value="{{ old('email') }}" placeholder="Địa chỉ Email" name="email">
+                                @if ($errors->has('email'))
+                                    <span class="help-block text-danger">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                                @endif
                             </div>
                         </div>
                         <select name="store_id" class="form-control">
@@ -136,7 +151,12 @@
                         </select>
                         <div class="row">
                             <div class="col-md-6">
-                                <input type="date" class="form-control" name="book_time">
+                                <input type="date" class="form-control" name="book_time" value="{{ old('book_time') }}" required>
+                                @if ($errors->has('book_time'))
+                                    <span class="help-block text-danger">
+                                        <strong>{{ $errors->first('book_time') }}</strong>
+                                    </span>
+                                @endif
                             </div>
                             <div class="col-md-6">
                                 <div class="row">
@@ -167,12 +187,17 @@
 
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="number" class="form-control" min="1" placeholder="Số khách" name="number_customers">
+                                        <input type="number" class="form-control" value="{{ old('number_customers') }}" min="1" placeholder="Số khách" name="number_customers">
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <textarea name="note" id="" cols="30" rows="4" class="form-control" placeholder="Ghi chú khi đặt bàn"></textarea>
+                        <textarea name="note" id="" cols="30" rows="4" class="form-control" placeholder="Ghi chú khi đặt bàn">{{ old('note') }}</textarea>
+                        @if ($errors->has('note'))
+                            <span class="help-block text-danger">
+                                <strong>{{ $errors->first('note') }}</strong>
+                            </span>
+                        @endif
                         <button class="btn btn-order-now" type="submit" >Đặt bàn ngay <i class="fas fa-chevron-right"></i></button>
                     </form>
                 </div>
