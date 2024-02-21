@@ -9,10 +9,9 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use App\Models\StoreFloor;
-use App\Models\StoreUser;
+use App\Models\StoreDeskOrder;
 
-class MessagePosted implements ShouldBroadcast
+class OrderFood implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -21,10 +20,9 @@ class MessagePosted implements ShouldBroadcast
      *
      * @return void
      */
-
     public $message;
 
-    public function __construct(StoreFloor $message)
+    public function __construct($message)
     {
         $this->message = $message;
     }
@@ -36,12 +34,11 @@ class MessagePosted implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-//        return new PrivateChannel('channel-name');
-        return ['chatroom'];
+        return ['order-food'];
     }
 
     public function broadcastAs()
     {
-        return 'chatroom.shipped';
+        return 'order.food';
     }
 }

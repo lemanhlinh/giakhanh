@@ -21,6 +21,7 @@ class CreateProductsTable extends Migration
             $table->text('content_include')->nullable();
             $table->integer('price')->nullable();
             $table->tinyInteger('is_home')->default(0)->nullable();
+            $table->tinyInteger('store_id')->nullable();
             $table->tinyInteger('active')->default(0)->comment('0: Không hoạt động; 1: Hoạt động');
             $table->integer('category_id')->unsigned()->nullable();
             $table->integer('category_slug')->unsigned()->nullable();

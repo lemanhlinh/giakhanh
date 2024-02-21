@@ -10,6 +10,18 @@
                     @include('admin.components.buttons.change_lang',['url'=> route('admin.product.create')])
                 @endif
             </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label>Sản phẩm cho cơ sở</label>
+                    <select name="store_id" id="store_id" class="form-control">
+                        <option value="">Cho tất cả các cơ sở</option>
+                        @forelse($stores as $key => $store)
+                            <option value="{{ $store->id }}" {{ isset($product->translations->store_id) && $product->translations->store_id == $store->id ? 'selected' : old('store_id') == $store->id ? 'selected' : '' }}>{{ $store->title }}</option>
+                        @empty
+                        @endforelse
+                    </select>
+                </div>
+            </div>
             <div class="col-sm-6">
                 <!-- text input -->
                 <div class="form-group">

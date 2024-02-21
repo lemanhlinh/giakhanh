@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\ProductsCategories;
 use App\Models\ProductsTranslation;
+use App\Models\Store;
 use Illuminate\Http\Request;
 use App\Repositories\Contracts\ProductInterface;
 use App\Repositories\Contracts\ProductCategoryInterface;
@@ -139,10 +140,11 @@ class ProductController extends Controller
         $categories = ProductsCategories::with(['translations' => function($query) use ($local){
             $query->where(['lang'=> $local ]);
         }])->get();
+        $stores = Store::all();
         $product = $this->productResponstory->getOneById($id,['translations' => function($query) use ($local){
             $query->where(['lang'=> $local ]);
         }]);
-        return view('admin.product.update', compact('product','categories','local'));
+        return view('admin.product.update', compact('product','categories','local','stores'));
     }
 
     /**
@@ -158,7 +160,6 @@ class ProductController extends Controller
         DB::beginTransaction();
         try {
             $data = $req->validated();
-            $product = $this->productResponstory->getOneById($id);
             $local = request()->input('locale','vi');
             if (!empty($data['image']) && $data_root->image != $data['image']){
                 if ($data_root->image){
@@ -169,9 +170,9 @@ class ProductController extends Controller
             if (empty($data['slug'])){
                 $data['slug'] = $req->input('slug')?\Str::slug($req->input('slug'), '-'):\Str::slug($data['title'], '-');
             }
-            $product->update($data);
+            $data_root->update($data);
 
-            $product->translations->where(['product_id'=> $id,'lang' => $local])->update($data);
+            $data_root->translations->where(['product_id'=> $id,'lang' => $local])->update($data);
             DB::commit();
             Session::flash('success', trans('message.update_product_success'));
             return redirect()->back();

@@ -60,9 +60,12 @@ class StoreController extends Controller
         ));
     }
 
-    public function listFood()
+    public function listFood($storeId)
     {
-        $list = Product::where('active',1)->get();
+        $list = Product::where('active',1)->where(function ($query) use ($storeId) {
+            $query->whereNull('store_id')
+                ->orWhere('store_id', $storeId);
+        })->get();
         return $list;
     }
 

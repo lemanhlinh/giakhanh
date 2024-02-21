@@ -69,7 +69,7 @@ class HomeController extends Controller
         $categories_product = ProductsCategoriesTranslation::where(['active' => 1,'lang'=>$lang])->get();
         $products = array();
         foreach ($categories_product as $cat){
-            $products[$cat->id] = ProductsTranslation::select('id','slug','image','title','price','category_id','product_id')->where(['active' => 1, 'category_id' => $cat->id,'lang'=>$lang])->limit(3)->get();
+            $products[$cat->id] = ProductsTranslation::select('id','slug','image','title','price','category_id','product_id')->where(['active' => 1, 'category_id' => $cat->id,'lang'=>$lang])->whereNull('store_id')->limit(3)->get();
         }
         return view('web.home',compact('articles','slider','page','images','videos','categories_product','products'));
     }
