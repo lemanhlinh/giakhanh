@@ -10,12 +10,16 @@ use App\Models\StoreDeskOrder;
 use App\Models\StoreDeskOrderCustomer;
 use Illuminate\Http\Request;
 use App\Events\MessagePosted;
+use App\Events\OrderFood;
 
 class AppController extends Controller
 {
-    public function listCatProduct(){
-        $cats = ProductsCategories::where(['active'=>1])->with(['products'=>function($query){
-            $query->where('price','!=', null);
+    public function listCatProduct($storeId){
+        $cats = ProductsCategories::where(['active'=>1])->with(['products'=>function($query) use ($storeId){
+            $query->where('price','!=', null)->where('active',1)->where(function ($query) use ($storeId) {
+                $query->whereNull('store_id')
+                    ->orWhere('store_id', $storeId);
+            });
         }])->get();
         return $cats;
     }
@@ -77,7 +81,7 @@ class AppController extends Controller
 //            foreach ($products as $item){
 //                $total_price = $total_price + ($item->price * $item->quantity);
 //            }
-//            broadcast(new MessagePosted($customer))->toOthers();
+            broadcast(new OrderFood($customer))->toOthers();
             return response()->json(array(
                 'error' => false,
 //                'total_price' => $total_price,

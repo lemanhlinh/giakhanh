@@ -22,7 +22,7 @@ Route::group(['middleware' => 'api', 'namespace' => 'Api'], function () {
         Route::post('/danh-sach-cua-hang', 'StoreController@listStore')->name('listStore');
         Route::get('/danh-sach-ban/{storeId}', 'StoreController@listTable')->name('listTable');
         Route::get('/chi-tiet-ban/{storeId}/{floorId}/{tableId}', 'StoreController@detailTable')->name('detailTable');
-        Route::get('/danh-sach-mon', 'StoreController@listFood')->name('listFood');
+        Route::get('/danh-sach-mon/{storeId}', 'StoreController@listFood')->name('listFood');
         Route::post('/them-mon-dang-dung', 'StoreController@addFoodUse')->name('addFoodUse');
         Route::post('/update-mon-dang-dung', 'StoreController@updateFoodUse')->name('updateFoodUse');
         Route::post('/xoa-mon-dang-dung', 'StoreController@removeFoodUse')->name('removeFoodUse');
@@ -34,6 +34,6 @@ Route::group(['middleware' => 'api', 'namespace' => 'Api'], function () {
         Route::post('/thanh-toan', 'StoreController@paymentTable')->name('paymentTable');
         Route::get('/lich-su-dat-ban/{storeId}/{floorId}/{tableId}', 'StoreController@historyTable')->name('historyTable');
     });
-    Route::get('/nhom-mon-an', 'AppController@listCatProduct')->name('listCatProduct');
+    Route::get('/nhom-mon-an/{storeId}', 'AppController@listCatProduct')->name('listCatProduct');
     Route::post('/khach-goi-mon', 'AppController@customerAddFoodUse')->name('customerAddFoodUse');
 });

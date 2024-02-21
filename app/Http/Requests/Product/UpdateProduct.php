@@ -30,6 +30,7 @@ class UpdateProduct extends FormRequest
             'content_include' => 'nullable',
             'active' => 'required',
             'is_home' => 'nullable',
+            'store_id' => 'nullable',
             'price' => 'nullable',
             'ordering' => 'nullable',
             'image' => 'nullable',

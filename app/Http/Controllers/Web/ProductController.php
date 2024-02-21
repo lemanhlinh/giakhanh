@@ -42,21 +42,21 @@ class ProductController extends Controller
         SEOTools::opengraph()->addProperty('type', 'articles');
         SEOTools::twitter()->setSite('launamgiakhanh.vn');
 
-        $lang = LaravelLocalization::getCurrentLocale();
+        $lang = LaravelLocalization::getCurrentLocale()?LaravelLocalization::getCurrentLocale():'vi';
         $cat = ProductsCategoriesTranslation::select('id','title','slug','product_category_id')->where(['active' => 1,'lang'=>$lang])->get();
         $products = ProductsTranslation::select('id','slug','image','title','price','category_id','product_id')
             ->where(['active' => 1,'lang'=>$lang])->with(['categoryTranslation' => function($query) use ($lang){
                 $query->where(['active' => 1,'lang'=>$lang]);
-            }])->paginate(12);
+            }])->whereNull('store_id')->paginate(12);
         return view('web.product.home',compact('cat','products'));
     }
 
     public function cat($slug){
-        $lang = LaravelLocalization::getCurrentLocale();
+        $lang = LaravelLocalization::getCurrentLocale()?LaravelLocalization::getCurrentLocale():'vi';
         $cat = ProductsCategoriesTranslation::select('id','title','slug','product_category_id')->where(['active' => 1,'lang'=>$lang,'slug'=>$slug])->first();
         $cats = ProductsCategoriesTranslation::select('id','title','slug','product_category_id')->where(['active' => 1,'lang'=>$lang])->get();
         $products = ProductsTranslation::select('id','slug','image','title','price','category_id','product_id')
-            ->where(['active'=>1,'category_id'=>$cat->id,'lang'=>$lang])->with(['category'])->orderBy('id','DESC')->paginate(12);
+            ->where(['active'=>1,'category_id'=>$cat->id,'lang'=>$lang])->whereNull('store_id')->with(['category'])->orderBy('id','DESC')->paginate(12);
 
         SEOTools::setTitle($cat->seo_title?$cat->seo_title:$cat->title);
         SEOTools::setDescription($cat->seo_description?$cat->seo_description:$cat->description);
@@ -71,11 +71,11 @@ class ProductController extends Controller
     }
 
     public function detail ($slug){
-        $lang = LaravelLocalization::getCurrentLocale();
+        $lang = LaravelLocalization::getCurrentLocale()?LaravelLocalization::getCurrentLocale():'vi';
         $product = ProductsTranslation::where(['active' => 1,'lang'=>$lang,'slug'=>$slug])->first();
         $cat = ProductsCategoriesTranslation::select('id','title','slug','product_category_id')->where(['active' => 1,'lang'=>$lang,'id'=>$product->category_id])->first();
         $products = ProductsTranslation::select('id','slug','image','title','price','category_id','product_id')
-            ->where(['active'=>1,'category_id'=>$cat->id,'lang'=>$lang])->with(['category'])->orderBy('id','DESC')->limit(3)->get();
+            ->where(['active'=>1,'category_id'=>$cat->id,'lang'=>$lang])->whereNull('store_id')->with(['category'])->orderBy('id','DESC')->limit(3)->get();
 
         SEOTools::setTitle($product->seo_title?$product->seo_title:$product->title);
         SEOTools::setDescription($product->seo_description?$product->seo_description:$product->description);
@@ -277,11 +277,43 @@ class ProductController extends Controller
         return redirect()->back();
     }
 
-
-
     public function success ($id){
         Session::forget('cart');
         $order = Order::findOrFail($id);
         return view('web.cart.register_success',compact('order'));
+    }
+
+    public function sendMessZalo (){
+        $client = new Client();
+        $headers = [
+            'access_token' => '',
+            'Content-Type' => 'application/json'
+        ];
+        $body = '{
+            "phone": "84987654321",
+            "template_id": "7895417a7d3f9461cd2e",
+            "template_data": {
+                "ky": "1",
+                "thang": "4/2020",
+                "start_date": "20/03/2020",
+                "end_date": "20/04/2020",
+                "customer": "Nguyễn Thị Hoàng Anh",
+                "cid": "PE010299485",
+                "address": "VNG Campus, TP.HCM",
+                "amount": "100",
+                "total": "100000",
+             },
+            "tracking_id":"tracking_id"
+        }';
+        $request = new Request('POST', 'https://openapi.zalo.me/v3.0/oa/message/transaction', $headers, $body);
+        $res = $client->sendAsync($request)->wait();
+
+        $data = json_decode($res->getBody(), true);
+        if ($data['error'] == 0){
+            return response()->json(array(
+                'error' => true,
+                'message'   => 'Đã gửi thành công',
+            ));
+        }
     }
 }

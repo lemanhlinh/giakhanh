@@ -121,7 +121,7 @@ return [
     ],
 
     'product' => [
-        '' => 'Sản phẩm',
+        '' => 'Thục đơn',
         'title' => 'Tiêu đề',
         'slug' => 'Link',
         'image' => 'Hình ảnh',
@@ -129,20 +129,20 @@ return [
         'price' => 'Giá',
         'is_home' => 'Hiển thị trang chủ',
         'active' => 'Trạng thái',
-        'category' => 'Danh mục sản phẩm',
+        'category' => 'Danh mục thực đơn',
         'date' => 'Ngày',
         'create' => 'Tạo mới',
-        'update' => 'Cập nhật sản phẩm',
+        'update' => 'Cập nhật món ăn',
         'ordering' => 'Thứ tự'
     ],
 
     'product_category' => [
-        '' => 'Danh mục sản phẩm',
+        '' => 'Danh mục món ăn',
         'title' => 'Tên danh mục',
         'slug' => 'Link',
         'active' => 'Trạng thái',
-        'create' => 'Tạo danh mục sản phẩm',
-        'update' => 'Sửa danh mục sản phẩm',
+        'create' => 'Tạo danh mục thực đơn',
+        'update' => 'Sửa danh mục thực đơn',
         'image' => 'Ảnh',
     ],
 
