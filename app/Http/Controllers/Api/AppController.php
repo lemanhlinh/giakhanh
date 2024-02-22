@@ -29,6 +29,7 @@ class AppController extends Controller
         $customer_name = $request->input('customer_name');
         $customer_phone = $request->input('customer_phone');
         $storeId = $request->input('store_id');
+        $floorId = $request->input('floor_id');
         $tableId = $request->input('table_id');
         $order_list = $request->input('order_list');
         $customer = StoreCustomer::where(['store_id'=>$storeId,'table_id'=>$tableId,'use_table'=>1])->first();
@@ -81,7 +82,13 @@ class AppController extends Controller
 //            foreach ($products as $item){
 //                $total_price = $total_price + ($item->price * $item->quantity);
 //            }
-            broadcast(new OrderFood($customer))->toOthers();
+            $order_list = [
+                'order_list'=> $order_list,
+                'store_id' => $storeId,
+                'floor_id' => $floorId,
+                'table_id' => $tableId
+            ];
+            broadcast(new OrderFood($order_list))->toOthers();
             return response()->json(array(
                 'error' => false,
 //                'total_price' => $total_price,
