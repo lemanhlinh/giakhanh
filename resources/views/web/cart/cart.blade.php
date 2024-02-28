@@ -99,7 +99,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <input type="text" value="{{ old('email') }}" class="form-control" name="email" placeholder="Email (bắt buộc)">
+                                    <input type="text" value="{{ old('email') }}" class="form-control" name="email" placeholder="Email (không bắt buộc)">
                                     @if ($errors->has('email'))
                                         <p class="help-block text-danger">
                                             <strong>{{ $errors->first('email') }}</strong>
@@ -107,7 +107,7 @@
                                     @endif
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="text" value="{{ old('address') }}" class="form-control" name="address" placeholder="Địa chỉ (không bắt buộc)" required>
+                                    <input type="text" value="{{ old('address') }}" class="form-control" name="address" placeholder="Địa chỉ (bắt buộc)" required>
                                     @if ($errors->has('address'))
                                         <p class="help-block text-danger">
                                             <strong>{{ $errors->first('address') }}</strong>
