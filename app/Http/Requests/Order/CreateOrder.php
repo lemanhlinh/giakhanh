@@ -25,7 +25,7 @@ class CreateOrder extends FormRequest
     {
         return [
             'full_name' => 'required',
-            'email' => 'nullable|email',
+            'email' => 'nullable',
             'phone' => [
                 'required',
                 'regex:/^(0|\+84)[0-9]{9,10}$/'
@@ -40,7 +40,6 @@ class CreateOrder extends FormRequest
     {
         return [
             'full_name.required' => 'Vui lòng nhập Họ tên.',
-            'email.email' => 'Định dạng email không hợp lệ.',
             'phone.required' => 'Số điện thoại là bắt buộc.',
             'address.required' => 'Địa chỉ là bắt buộc.',
             'phone.regex' => 'Số điện thoại không hợp lệ. Vui lòng nhập số điện thoại bắt đầu bằng số 0 và có 9-10 chữ số.'
