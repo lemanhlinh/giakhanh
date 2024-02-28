@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\SendEmailOrder;
 use App\Models\BookTable;
 use App\Models\Order;
 use App\Models\OrderItem;
@@ -242,6 +243,8 @@ class ProductController extends Controller
         try {
             $data = $req->validated();
             $order = Order::create($data);
+
+            SendEmailOrder::dispatch($data)->delay(now()->addMinute(1));
 
             $cart = Session::get('cart', []);
             foreach ($cart as $productId => $item) {
