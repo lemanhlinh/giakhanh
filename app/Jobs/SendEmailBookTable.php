@@ -2,28 +2,30 @@
 
 namespace App\Jobs;
 
+use App\Mail\MailBookTable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use App\Mail\MailOrder;
 use Illuminate\Support\Facades\Mail;
 
-class SendEmailOrder implements ShouldQueue
+class SendEmailBookTable implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected $data;
+    protected $store;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($data)
+    public function __construct($data, $store)
     {
         $this->data = $data;
+        $this->store = $store;
     }
 
     /**
@@ -34,9 +36,9 @@ class SendEmailOrder implements ShouldQueue
     public function handle()
     {
         if ($this->data['email']){
-            Mail::to($this->data['email'])->cc('linhlemanh209@gmail.com')->send(new MailOrder($this->data));
+            Mail::to($this->data['email'])->cc('linhlemanh209@gmail.com')->send(new MailBookTable($this->data, $this->store));
         }else{
-            Mail::to('linhlemanh209@gmail.com')->send(new MailOrder($this->data));
+            Mail::to('linhlemanh209@gmail.com')->send(new MailBookTable($this->data, $this->store));
         }
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\SendEmailBookTable;
 use App\Jobs\SendEmailOrder;
 use App\Models\BookTable;
 use App\Models\Order;
@@ -10,6 +11,7 @@ use App\Models\OrderItem;
 use App\Models\ProductsCategoriesTranslation;
 use App\Models\ProductsTranslation;
 use App\Models\Setting;
+use App\Models\Store;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\Http\Request;
@@ -94,7 +96,10 @@ class ProductController extends Controller
         DB::beginTransaction();
         try {
             $data = $req->validated();
-            BookTable::create($data);
+            $store_id = $data['store_id'];
+            $store = Store::findOrFail($store_id);
+            BookTable::create($data, $store);
+            SendEmailBookTable::dispatch($data)->delay(now()->addMinute(1));
             DB::commit();
             Session::flash('success', trans('message.create_book_table_success'));
             return redirect()->back();
