@@ -98,8 +98,8 @@ class ProductController extends Controller
             $data = $req->validated();
             $store_id = $data['store_id'];
             $store = Store::findOrFail($store_id);
-            BookTable::create($data, $store);
-            SendEmailBookTable::dispatch($data)->delay(now()->addMinute(1));
+            BookTable::create($data);
+            SendEmailBookTable::dispatch($data, $store)->delay(now()->addMinute(1));
             DB::commit();
             Session::flash('success', trans('message.create_book_table_success'));
             return redirect()->back();
