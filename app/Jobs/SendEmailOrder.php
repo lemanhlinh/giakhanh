@@ -9,6 +9,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use App\Mail\MailOrder;
+use Illuminate\Support\Facades\Mail;
 
 class SendEmailOrder implements ShouldQueue
 {
