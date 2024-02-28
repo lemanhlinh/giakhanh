@@ -25,12 +25,12 @@ class CreateOrder extends FormRequest
     {
         return [
             'full_name' => 'required',
-            'email' => 'required|email',
+            'email' => 'nullable|email',
             'phone' => [
                 'required',
                 'regex:/^(0|\+84)[0-9]{9,10}$/'
             ],
-            'address' => 'nullable',
+            'address' => 'required',
             'gender' => 'required',
             'note' => 'nullable'
         ];
@@ -40,9 +40,9 @@ class CreateOrder extends FormRequest
     {
         return [
             'full_name.required' => 'Vui lòng nhập Họ tên.',
-            'email.required' => 'Vui lòng nhập địa chỉ email.',
             'email.email' => 'Định dạng email không hợp lệ.',
             'phone.required' => 'Số điện thoại là bắt buộc.',
+            'address.required' => 'Địa chỉ là bắt buộc.',
             'phone.regex' => 'Số điện thoại không hợp lệ. Vui lòng nhập số điện thoại bắt đầu bằng số 0 và có 9-10 chữ số.'
         ];
     }
