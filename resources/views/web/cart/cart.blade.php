@@ -82,17 +82,37 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <input type="text" value="{{ old('full_name') }}" class="form-control" name="full_name" placeholder="Họ và tên (bắt buộc)" required>
+                                    @if ($errors->has('full_name'))
+                                        <p class="help-block text-danger">
+                                            <strong>{{ $errors->first('full_name') }}</strong>
+                                        </p>
+                                    @endif
                                 </div>
                                 <div class="col-md-6">
                                     <input type="number" value="{{ old('phone') }}" min="1" class="form-control" name="phone" placeholder="Số điện thoại (bắt buộc)" required>
+                                    @if ($errors->has('phone'))
+                                        <p class="help-block text-danger">
+                                            <strong>{{ $errors->first('phone') }}</strong>
+                                        </p>
+                                    @endif
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <input type="text" value="{{ old('email') }}" class="form-control" name="email" placeholder="Email (bắt buộc)" required>
+                                    <input type="text" value="{{ old('email') }}" class="form-control" name="email" placeholder="Email (bắt buộc)">
+                                    @if ($errors->has('email'))
+                                        <p class="help-block text-danger">
+                                            <strong>{{ $errors->first('email') }}</strong>
+                                        </p>
+                                    @endif
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="text" value="{{ old('address') }}" class="form-control" name="address" placeholder="Địa chỉ (không bắt buộc)">
+                                    <input type="text" value="{{ old('address') }}" class="form-control" name="address" placeholder="Địa chỉ (không bắt buộc)" required>
+                                    @if ($errors->has('address'))
+                                        <p class="help-block text-danger">
+                                            <strong>{{ $errors->first('address') }}</strong>
+                                        </p>
+                                    @endif
                                 </div>
                             </div>
                             <textarea name="note" id="note" cols="30" rows="1" class="form-control" placeholder="Ghi chú thêm (Ví dụ: Giao hàng trong giờ hành chính)">{{ old('note') }}</textarea>
