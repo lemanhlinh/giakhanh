@@ -29,7 +29,7 @@ class MailOrder extends Mailable
      */
     public function build()
     {
-        return $this->from('linhlemanh209@gmail.com')->view('web.components.mail.order')
+        return $this->from('qdang354@gmail.com')->view('web.components.mail.order')
             ->subject('Lẩu nấm gia khánh Email Order');
     }
 }

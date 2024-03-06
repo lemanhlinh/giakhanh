@@ -36,9 +36,9 @@ class SendEmailBookTable implements ShouldQueue
     public function handle()
     {
         if ($this->data['email']){
-            Mail::to($this->data['email'])->cc('linhlemanh209@gmail.com')->send(new MailBookTable($this->data, $this->store));
+            Mail::to($this->data['email'])->cc('qdang354@gmail.com')->send(new MailBookTable($this->data, $this->store));
         }else{
-            Mail::to('linhlemanh209@gmail.com')->send(new MailBookTable($this->data, $this->store));
+            Mail::to('qdang354@gmail.com')->send(new MailBookTable($this->data, $this->store));
         }
     }
 }
