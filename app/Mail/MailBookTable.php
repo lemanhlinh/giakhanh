@@ -30,7 +30,7 @@ class MailBookTable extends Mailable
      */
     public function build()
     {
-        return $this->from('linhlemanh209@gmail.com')->view('web.components.mail.book_table')
+        return $this->from('qdang354@gmail.com')->view('web.components.mail.book_table')
             ->subject('Lẩu nấm gia khánh Email Đặt bàn');
     }
 }

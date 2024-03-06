@@ -34,9 +34,9 @@ class SendEmailOrder implements ShouldQueue
     public function handle()
     {
         if ($this->data['email']){
-            Mail::to($this->data['email'])->cc('linhlemanh209@gmail.com')->send(new MailOrder($this->data));
+            Mail::to($this->data['email'])->cc('qdang354@gmail.com')->send(new MailOrder($this->data));
         }else{
-            Mail::to('linhlemanh209@gmail.com')->send(new MailOrder($this->data));
+            Mail::to('qdang354@gmail.com')->send(new MailOrder($this->data));
         }
     }
 }
