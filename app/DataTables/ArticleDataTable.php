@@ -38,7 +38,7 @@ class ArticleDataTable extends DataTable
                 $status = $q->is_home == ArticlesTranslation::IS_HOME ? 'checked' : null;
                 return view('admin.components.buttons.change_status', [
                     'url' => $url,
-                    'lowerModelName' => 'articles',
+                    'lowerModelName' => 'article',
                     'status' => $status,
                 ])->render();
             })
@@ -54,7 +54,7 @@ class ArticleDataTable extends DataTable
             ->addColumn('action', function ($q) use ($lang){
                 $urlEdit = route('admin.article.edit', $q->article_id).'?local='.$lang;
                 $urlDelete = route('admin.article.destroy', $q->article_id).'?local='.$lang;
-                $lowerModelName = strtolower(class_basename(new ArticlesTranslation()));
+                $lowerModelName = 'article';
                 return view('admin.components.buttons.edit', compact('urlEdit'))->render() . view('admin.components.buttons.delete', compact('urlDelete', 'lowerModelName'))->render();
              })->rawColumns(['active','action','is_home']);
     }
