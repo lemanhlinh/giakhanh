@@ -209,6 +209,7 @@ class ProductController extends Controller
         }
 
         $this->productResponstory->delete($id);
+        ProductsTranslation::where('product_id', $id)->delete();
 
         return [
             'status' => true,
