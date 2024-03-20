@@ -57,7 +57,7 @@ class ProductDataTable extends DataTable
             })
             ->addColumn('action', function ($q) use ($lang){
                 $urlEdit = route('admin.product.edit', $q->product_id).'?local='.$lang;
-                $urlDelete = route('admin.product.destroy', $q->product_id).'?local='.$lang;
+                $urlDelete = route('admin.product.destroy', $q->product_id);
                 $lowerModelName = 'product';
                 return view('admin.components.buttons.edit', compact('urlEdit'))->render() . view('admin.components.buttons.delete', compact('urlDelete', 'lowerModelName'))->render();
             })->rawColumns(['active','action','is_home']);
