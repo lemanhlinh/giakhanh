@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Article;
 use App\Models\ArticlesCategories;
 use App\Models\ArticlesTranslation;
 use Illuminate\Http\Request;
@@ -207,7 +208,7 @@ class ArticleController extends Controller
         }
 
         $this->articleRepository->delete($id);
-
+        ArticlesTranslation::where('article_id', $id)->delete();
         return [
             'status' => true,
             'message' => trans('message.delete_article_success')
