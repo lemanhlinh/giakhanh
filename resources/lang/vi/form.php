@@ -121,7 +121,7 @@ return [
     ],
 
     'product' => [
-        '' => 'Thục đơn',
+        '' => 'Thực đơn',
         'title' => 'Tiêu đề',
         'slug' => 'Link',
         'image' => 'Hình ảnh',

@@ -30,4 +30,9 @@ class ProductsTranslation extends Model
     {
         return $this->belongsTo(ProductsCategoriesTranslation::class, 'category_id', 'product_category_id');
     }
+
+    public function store()
+    {
+        return $this->hasOne(Store::class, 'id', 'store_id');
+    }
 }
