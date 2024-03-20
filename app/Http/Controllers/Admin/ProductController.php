@@ -58,7 +58,8 @@ class ProductController extends Controller
     {
         $local = request()->query('local','vi');
         $categories = $this->productCategoryResponstory->getAll();
-        return view('admin.product.create', compact('categories','local'));
+        $stores = Store::all();
+        return view('admin.product.create', compact('categories','local','stores'));
     }
 
     /**
