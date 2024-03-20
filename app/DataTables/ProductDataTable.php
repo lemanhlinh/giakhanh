@@ -42,6 +42,13 @@ class ProductDataTable extends DataTable
                     'status' => $status,
                 ])->render();
             })
+            ->editColumn('store_id', function ($q) {
+                if (optional($q->store)->title){
+                    return optional($q->store)->title;
+                }else{
+                    return 'Tất cả các cơ sở';
+                }
+            })
             ->editColumn('created_at', function ($q) {
                 return Carbon::parse($q->created_at)->format('H:i:s Y/m/d');
             })
@@ -105,6 +112,7 @@ class ProductDataTable extends DataTable
             ]),
             Column::make('active')->title('Kích hoạt'),
             Column::make('is_home')->title('Hiển thị trang chủ'),
+            Column::make('store_id')->title('Cơ sở'),
             Column::make('created_at'),
             Column::make('updated_at'),
             Column::computed('action')
