@@ -42,7 +42,7 @@ class StoreController extends Controller
     {
         $data = StoreFloorDesk::where(['active' => 1, 'store_id' => $storeId, 'id' => $tableId])->with(['StoreCustomerUse' => function($query){
             $query->with(['StoreDeskOrder']);
-        }])->first();
+        }])->with('store')->first();
 
         $total_price = 0;
         if ($data->StoreCustomerUse && $data->StoreCustomerUse->StoreDeskOrder){

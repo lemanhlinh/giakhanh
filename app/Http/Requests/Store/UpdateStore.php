@@ -29,6 +29,7 @@ class UpdateStore extends FormRequest
             'address' => 'nullable',
             'latitude' => 'nullable',
             'longitude' => 'nullable',
+            'image_qr' => 'nullable',
             'city_id' => 'nullable',
             'active' => 'nullable',
             'ordering' => 'nullable',

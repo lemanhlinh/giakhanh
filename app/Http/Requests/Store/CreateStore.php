@@ -29,6 +29,7 @@ class CreateStore extends FormRequest
             'address' => 'required',
             'latitude' => 'nullable',
             'longitude' => 'nullable',
+            'image_qr' => 'nullable',
             'city_id' => 'nullable',
             'active' => 'nullable',
             'ordering' => 'nullable',

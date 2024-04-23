@@ -99,6 +99,19 @@
                     @endif
                 </div>
             </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>@lang('form.store.image_qr')</label> <span class="text-danger">*</span>
+                    <div class="input-group">
+                        @include('admin.components.buttons.image',['src' => isset($store->image_qr) ? $store->image_qr : old('image_qr'),'name' => 'image_qr'])
+                        @if ($errors->has('image_qr'))
+                            <span class="help-block text-danger">
+                                <strong>{{ $errors->first('image_qr') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="col-sm-5">
@@ -107,4 +120,5 @@
 </div>
 @section('script')
     @parent
+    <script src="{{ asset('ckfinder/ckfinder.js') }}"></script>
 @endsection
