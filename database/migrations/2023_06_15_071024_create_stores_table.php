@@ -21,6 +21,7 @@ class CreateStoresTable extends Migration
             $table->string('latitude');
             $table->string('longitude');
             $table->integer('city_id');
+            $table->string('image_qr');
             $table->tinyInteger('active')->default(0)->comment('0: Không hoạt động; 1: Hoạt động');
             $table->integer('ordering')->default(0)->nullable();
             $table->timestamps();

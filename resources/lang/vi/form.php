@@ -210,6 +210,7 @@ return [
         'phone' => 'Số điện thoại',
         'latitude' => 'Vĩ độ',
         'longitude' => 'Kinh độ',
+        'image_qr' => 'Ảnh QR',
         'city_id' => 'Tỉnh/Thành phố',
         'active' => 'Trạng thái',
         'ordering' => 'Thứ tự'
